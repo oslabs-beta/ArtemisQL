@@ -1,2 +1,3 @@
 # ArtemisQL
-A GraphQL migration tool and database visualizer
+
+A GraphQL migration tool and relational database visualizer
