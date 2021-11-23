@@ -1,2 +1,3 @@
-# jjjtQL
-A GraphQL migration tool and database visualizer
+# ArtemisQL
+
+A GraphQL migration tool and relational database visualizer
