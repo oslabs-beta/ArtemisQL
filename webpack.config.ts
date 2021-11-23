@@ -1,12 +1,10 @@
 import path from 'path';
 import webpack from 'webpack';
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-// import 'webpack-dev-server';
-// import CodeMirror from 'react-codemirror2';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const config: webpack.Configuration = {
   mode: 'development', // process.env.NODE_ENV
-  entry: "./client/index.tsx",
+  entry: './client/index.tsx',
   devtool: 'inline-source-map',
   // target: 'electron-renderer',
   module: {
@@ -15,17 +13,17 @@ const config: webpack.Configuration = {
         test: /\.(ts|js)x?$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
             presets: [
-              "@babel/preset-env",
-              "@babel/preset-react",
-              "@babel/preset-typescript",
+              '@babel/preset-env',
+              '@babel/preset-react',
+              '@babel/preset-typescript',
             ],
           },
         },
       },
-       {
+      {
         test: [/\.s[ac]ss$/i, /\.css$/i],
         use: [
           // Creates `style` nodes from JS strings
@@ -35,15 +33,15 @@ const config: webpack.Configuration = {
           // Compiles Sass to CSS
           // 'sass-loader',
         ],
-      }
+      },
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
-    path: path.resolve(__dirname, "build"),
-    filename: "bundle.js",
+    path: path.resolve(__dirname, 'build'),
+    filename: 'bundle.js',
   },
   devServer: {
     static: {
@@ -55,14 +53,14 @@ const config: webpack.Configuration = {
     port: 8080,
     proxy: {
       '/': 'http://localhost:3000',
-    }
+    },
   },
 
   plugins: [
     new HtmlWebpackPlugin({
       title: 'development',
       template: './index.html',
-  })],
+    })],
 
 };
 

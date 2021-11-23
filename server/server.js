@@ -1,12 +1,14 @@
 const express = require('express');
-const app = express();
 const path = require('path');
 
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true}));
+const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  res.send('Hello World!!! ʕ·ᴥ·ʔ server.js update')
+  // res.send('Hello World!!! ʕ·ᴥ·ʔ server.js update');
+  return res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
 });
 
 app.listen(3000, () => {
