@@ -22,7 +22,7 @@
   "dependencies": {
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
-    "@mui/material": "^5.2.0",
+    "@mui/material": "~5.1.0",
     "@types/webpack-dev-server": "^4.5.0",
     "css-loader": "^6.5.1",
     "express": "^4.17.1",
@@ -30,6 +30,7 @@
     "pg": "^8.7.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-flow-renderer": "^9.6.11",
     "react-router": "^6.0.2",
     "style-loader": "^3.3.1",
     "ts-node": "^10.4.0",
@@ -59,5 +60,8 @@
     "webpack": "^5.64.2",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.5.0"
+  },
+  "resolutions": {
+    "@mui/utils": "~5.1.0"
   }
 }
