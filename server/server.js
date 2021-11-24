@@ -1,5 +1,7 @@
 const express = require('express');
 const path = require('path');
+const { Pool } = require('pg');
+const Router = require('./router');
 
 const PORT = 3000;
 const app = express();
@@ -18,9 +20,16 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.post('/submit', (req, res) => {
-  return res.status(200).send('submit endpoint reached');
+// connecting our server to a database
+const PG_URI = 'postgres://dsthvptf:Y8KtTaY290gb7KlcxkoTLHTnEECegH0r@fanny.db.elephantsql.com/dsthvptf';
+
+// create a new pool here using the connection string above
+const pool = new Pool({
+  connectionString: PG_URI,
 });
+
+// route to router file
+app.use('/', Router);
 
 // catch-all route handler
 app.use('*', (req, res) => res.status(400).send('This is not the page you\'re looking for...'));
