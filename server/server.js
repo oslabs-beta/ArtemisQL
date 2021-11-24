@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const { Pool } = require('pg');
 const Router = require('./router');
 
 const PORT = 3000;
@@ -19,14 +18,6 @@ if (process.env.NODE_ENV === 'production') {
     return res.status(200).sendFile(path.join(__dirname, '../index.html'));
   });
 }
-
-// connecting our server to a database
-const PG_URI = 'postgres://dsthvptf:Y8KtTaY290gb7KlcxkoTLHTnEECegH0r@fanny.db.elephantsql.com/dsthvptf';
-
-// create a new pool here using the connection string above
-const pool = new Pool({
-  connectionString: PG_URI,
-});
 
 // route to router file
 app.use('/', Router);
