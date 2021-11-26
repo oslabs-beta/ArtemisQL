@@ -27,6 +27,7 @@
     "@mui/utils": "5.1.1",
     "@types/webpack-dev-server": "^4.5.0",
     "css-loader": "^6.5.1",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "html-webpack-plugin": "^5.5.0",
     "pg": "^8.7.1",

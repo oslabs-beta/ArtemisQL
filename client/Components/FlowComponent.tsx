@@ -1,29 +1,69 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import ReactFlow, { Background, MiniMap, Controls, Handle } from 'react-flow-renderer';
-import mockData from '../../mockData'
+
+function FlowComponent({ data }) {
+  const elements = [
+    // Connect Nodes
+    { id: 'can be what ever', source: 'films', target: 'people', sourceHandle: 'b'}
+    // { id: '1-2', source: '1', target: '2', sourceHandle: 'a'},
+    // { id: '1-3', source: '1', target: '3', sourceHandle: 'a', targetHandle: 'b'},
+    // { id: '2-3', source: '2', target: '3', sourceHandle: 'b'},
+    // { id: '3-4', source: '3', target: '4', sourceHandle: 'a'},
+    // { id: '4-5', source: '4', target: '5', sourceHandle: 'a'},
+    // { id: '5-6', source: '5', target: '6', sourceHandle: 'b'},
+    // { id: '6-7', source: '6', target: '7', sourceHandle: 'a'}
+  ];
+  // Populating our element array of nodes so react flow can render them.
+  let positionX = 0;
+  let positionY = 0;
+  let row = 0;
+  
+  // Iterates through all the tables
+  for (const key in data) {
+    console.log('tables', key);
+    // columns is an array of objects
+    const columns = data[key];
+    console.log('columns', columns);
+    // Iterate through all the columns of a specific table to get the column name
+    const columnName = columns.map((col) => <p>{col.column_name} <span style={{color: 'red', alignText: 'right'}}>{col.data_type}</span></p>);
+    // console.log('columnName', columnName); 
+    // declares a new node object
+    const newNode = {
+      id: key,
+      type: 'special',
+      data: { 
+        label:
+        // Table name and all its columns
+        <div>
+          <h3>{key}</h3>
+          {columnName}
+        </div>
+    },
+      position: { x: positionX, y: positionY }, 
+    };
+
+    row += 1;
+    positionY += 500;
+    if (row % 2 === 0) {
+      positionY = 0;
+      positionX += 300;
+    }
+
+    // push newNode into elements array
+    elements.push(newNode);
+  }
 
 
-const elements = [
-  //Connect Nodes
-  { id: '1-2', source: '1', target: '2', sourceHandle: 'a'},
-  { id: '1-3', source: '1', target: '3', sourceHandle: 'a', targetHandle: 'b'},
-  { id: '2-3', source: '2', target: '3', sourceHandle: 'b'},
-  { id: '3-4', source: '3', target: '4', sourceHandle: 'a'},
-  { id: '4-5', source: '4', target: '5', sourceHandle: 'a'},
-  { id: '5-6', source: '5', target: '6', sourceHandle: 'b'},
-  { id: '6-7', source: '6', target: '7', sourceHandle: 'a'}
-];
 
-function FlowComponent() {
   return (
     <div style={{ height: 500 }}>
-      <ReactFlow elements={elements} nodeTypes={nodeTypes} >
+      <ReactFlow elements={elements} nodeTypes={nodeTypes} defaultZoom={0}>
         <Background
-            variant="dots"
-            gap={12}
-            size={.5}
+          variant="dots"
+          gap={12}
+          size={0.5}
         /> 
-        <MiniMap
+        {/* <MiniMap
           nodeColor={(node) => {
             switch (node.type) {
               case 'input':
@@ -37,55 +77,15 @@ function FlowComponent() {
             }
           }}
           nodeStrokeWidth={3}
-        />
-      <Controls />
+        /> */}
+        <Controls />
       </ReactFlow>
 
     </div>
-  )
+  );
 }
 
-
-// Populating our element array of nodes so react flow can render them.
-
-let id = 1;
-let positionX = 0;
-let positionY = 0;
-
-// Iterates through all the tables
-for (let key in mockData.allTables){
-  
-  //assign current value to val
-  let val = mockData.allTables[key];
-
-  //Iterate through all the column of a specific table to get the column name
-  const columnName = val.map(col => 
-    <p>{col.column_name}</p>
-  )
-  
-  // declares a new node object
-  const newNode = {
-    id: id.toString(),
-    type: 'special',
-    data: { label:
-    // Table name and all its columns
-    <div>
-      <h3>{key}</h3>
-      {columnName}
-    </div>
-   },
-    position: { x: positionX, y: positionY }
-  }
-  id++;
-  positionX += 200;
-  // positionY += 100;
-
-  // push newNode into elements array
-  elements.push(newNode)
-}
-
-
-//CSS for the node
+// CSS for the node
 const customNodeStyles = {
   background: '#9CA8B3',
   color: '#FFF',
@@ -94,10 +94,10 @@ const customNodeStyles = {
 };
 
 // Custom Node
-const CustomNodeComponent= ( {data} ) => {
+const CustomNode = ({ data }) => {
   return (
     <div style={customNodeStyles}>
-
+    
       {/* Handle are the dots */}
       <Handle type="target" id="a" position="left" style={{ top: '28%'}}/>
       <Handle type="target" id="b" position="left" style={{ top: '78%'}}/>
@@ -124,7 +124,7 @@ const CustomNodeComponent= ( {data} ) => {
 
 // Giving the custom node a type name
 const nodeTypes = {
-  special: CustomNodeComponent,
+  special: CustomNode,
 };
 
 export default FlowComponent;

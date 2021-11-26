@@ -1,14 +1,19 @@
 const express = require('express');
 const { Pool } = require('pg');
 
+
 // declare SQLController object that will later be exported
 const SQLController = {};
 
 SQLController.getTables = (req, res, next) => {
   // const PG_URI = (!req.body.uri) ? 'postgres://dsthvptf:Y8KtTaY290gb7KlcxkoTLHTnEECegH0r@fanny.db.elephantsql.com/dsthvptf' : req.body.uri;
   // create a new pool here using the connection string above
+  // console.log('process.env', process.env);
+  // console.log('process.env.SECRET_KEY', process.env.SECRET_KEY);
   const db = new Pool({
+    // Taras' Starwars DB
     connectionString: 'postgres://dsthvptf:Y8KtTaY290gb7KlcxkoTLHTnEECegH0r@fanny.db.elephantsql.com/dsthvptf',
+    // connectionString: process.env.DEMO_DB_URI,
   });
   const queryString = `
     SELECT 
@@ -31,9 +36,11 @@ SQLController.getTables = (req, res, next) => {
       ON rco.constraint_name = cons.constraint_name
     LEFT JOIN information_schema.key_column_usage rel_kcu
       ON rco.unique_constraint_name = rel_kcu.constraint_name
+
     LEFT JOIN information_schema.tables tbls
       ON cols.table_name = tbls.table_name
-    where cols.table_schema = 'public' AND tbls.table_type = 'BASE TABLE'
+      
+    WHERE cols.table_schema = 'public' AND tbls.table_type = 'BASE TABLE'
     ORDER BY cols.table_name`;
   db.query(queryString)
     .then((data) => {
@@ -67,7 +74,7 @@ SQLController.formatQueryResult = (req, res, next) => {
   // else if it already exist push to it
 
 /*
-{
+{ Table_Name: Array of OBJECTS which contains column information such as col name, pk, fk, data type
   People:         [{each column info},{each column info},{each column info}],
   Species:        [{each column info},{each column info},{each column info}],
   Films:          [{each column info},{each column info},{each column info}],
