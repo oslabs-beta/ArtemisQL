@@ -35,6 +35,9 @@
             { "js": "never", "jsx": "never", "ts": "never", "tsx": "never" }
         ],
         "eol-last": "off",
-        "arrow-body-style": "off"
+        "arrow-body-style": "off",
+        "no-trailing-spaces": "off",
+        "guard-for-in" : "off",
+        "no-restricted-syntax": "off"
     }
 }
