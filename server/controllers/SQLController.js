@@ -1,11 +1,9 @@
-const express = require('express');
 const { Pool } = require('pg');
-
 
 // declare SQLController object that will later be exported
 const SQLController = {};
 
-SQLController.getTables = (req, res, next) => {
+SQLController.getAllMetadata = (req, res, next) => {
   // const PG_URI = (!req.body.uri) ? 'postgres://dsthvptf:Y8KtTaY290gb7KlcxkoTLHTnEECegH0r@fanny.db.elephantsql.com/dsthvptf' : req.body.uri;
   // create a new pool here using the connection string above
   // console.log('process.env', process.env);
