@@ -17,7 +17,7 @@ const elements = [
 function FlowComponent() {
   return (
     <div style={{ height: 500 }}>
-      <ReactFlow elements={elements} nodeTypes={nodeTypes} >
+      <ReactFlow elements={elements} nodeTypes={nodeTypes} defaultZoom={0} >
         <Background
             variant="dots"
             gap={12}
