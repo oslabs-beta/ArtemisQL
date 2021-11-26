@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get(
   '/submit',
-  SQLController.getTables,
+  SQLController.getAllMetadata,
   SQLController.formatQueryResult,
   (req, res) => {
     return res.status(200).json(res.locals.cache);
