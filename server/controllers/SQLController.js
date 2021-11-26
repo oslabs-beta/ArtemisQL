@@ -3,6 +3,7 @@ const { Pool } = require('pg');
 // declare SQLController object that will later be exported
 const SQLController = {};
 
+// get all database metadata (tables and columns) from user's selected DB
 SQLController.getAllMetadata = (req, res, next) => {
   // const PG_URI = (!req.body.uri) ? 'postgres://dsthvptf:Y8KtTaY290gb7KlcxkoTLHTnEECegH0r@fanny.db.elephantsql.com/dsthvptf' : req.body.uri;
   // create a new pool here using the connection string above
@@ -51,8 +52,20 @@ SQLController.getAllMetadata = (req, res, next) => {
     });
 };
 
+// format sql results to client
 SQLController.formatQueryResult = (req, res, next) => {
-  // middleware to format sql results to client
+  /* desired format for client:
+  
+  Key(Table_Name)
+  Value(Array of OBJECTS which contains column information such as col name, pk, fk, data type)
+  { 
+    People:         [{each column info},{each column info},{each column info}],
+    Species:        [{each column info},{each column info},{each column info}],
+    Films:          [{each column info},{each column info},{each column info}],
+    People_in_Film: [{each column info},{each column info},{each column info}],
+  }
+
+*/
   // iterate through the array of object columns info.
   const cache = {};
   for (let i = 0; i < res.locals.queryTables.length; i += 1) {
@@ -67,19 +80,6 @@ SQLController.formatQueryResult = (req, res, next) => {
   res.locals.cache = cache;
   console.log('cache: ', cache);
   return next();
-
-  // also push it
-  // else if it already exist push to it
-
-/*
-{ Table_Name: Array of OBJECTS which contains column information such as col name, pk, fk, data type
-  People:         [{each column info},{each column info},{each column info}],
-  Species:        [{each column info},{each column info},{each column info}],
-  Films:          [{each column info},{each column info},{each column info}],
-  People_in_Film: [{each column info},{each column info},{each column info}],
-}
-
-*/
 };
 
 module.exports = SQLController;
