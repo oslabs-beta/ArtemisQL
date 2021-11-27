@@ -32,13 +32,13 @@ const typeConverter = require('../converters/typeConverter');
 // create GraphQL Schema (type defs)
 GQLController.createSchemaTypeDefs = (req, res, next) => {
   const schema = {};
-  // res.locals.cache
   const { cache } = res.locals;
   
   const { baseTables, joinTables } = typeConverter.sortTables(cache);
   
   const baseTableNames = Object.keys(baseTables);
   const joinTableNames = Object.keys(joinTables);
+  
   // [people, films, species, vessels]
   for (const key of baseTableNames) {
     schema[key] = typeConverter.createInitialTypeDef(key);
@@ -46,10 +46,18 @@ GQLController.createSchemaTypeDefs = (req, res, next) => {
   console.log('SCHEMA AFTER BASETABLE TYPEDEF CREATION', schema);
 
   for (const key of joinTableNames) {
-    schema[key] = typeConverter.finalizeTypeDef(key, schema);
+    // schema from line 34 gets mutated every time we invoke typeConverter.finalizeTypeDef
+    // because schema is being passed in by reference
+    typeConverter.addForeignKeysToTypeDef(key, schema);
   }
-  // console.log('SCHEMA AFTER JOINTABLE TYPEDEF CREATION', schema);
 
+
+  console.log('SCHEMA AFTER JOINTABLE TYPEDEF CREATION', schema);
+  const finalString = typeConverter.finalizeTypeDef(schema);
+  console.log('FINAL STRING IN MIDDLEWARE: ', finalString);
+
+  res.locals.finalString = finalString;
+  
   return next();
 };
 
