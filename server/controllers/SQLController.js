@@ -78,7 +78,7 @@ SQLController.formatQueryResult = (req, res, next) => {
     }
   }
   res.locals.cache = cache;
-  console.log('cache: ', cache);
+  // console.log('cache: ', cache);
   return next();
 };
 
