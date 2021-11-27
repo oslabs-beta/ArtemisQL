@@ -126,10 +126,8 @@ function checkNullable(isNullable) {
 }
 */
 
-
-
 // input: base table name, join table name
-// output: object 
+// output: type def object (to add as properties in schema object)
 typeConverter.createInitialTypeDef = (baseTableName) => {
   const TYPE = {};
   //   TYPE[baseTableName] = {};
@@ -156,26 +154,79 @@ typeConverter.createInitialTypeDef = (baseTableName) => {
     }
   }
   
-  // iterate through join table names
-
   // console.log('schema', TYPE);
-  return TYPE; // There's something wrong here!, look into it again.
+  return TYPE; 
 };
 
 // ITERATE THROUGH JOIN TABLES AND APPEND FOREIGN_TABLES TO TYPE OBJECT
+
+//   loop through JoinTableObject
+//   for each table, get the foreign keys (constraight_type = "FOREIGN KEY")
+//   get 2 foreign_tables [a, b]
+//   iterate to first foreign_table (a)'s typdef and append 'b: [b]' to typedef
+//   iterate to second foreign_table  (b)'s typedef and append 'a: [a]' to typedef
+
 // input: join table name
 // output: nothing - update schema object
-typeConverter.finalizeTypeDef = (joinTableName) => {
-  
-}
 /*
-const tempObject ={};
-for (const key in joinTables){
-    joinTables[key].
-    if(key.constraint_type === 'FOREIGN KEY')
+  { 
+    Species in films
+     film : species
+     species: films
+     
+    people in films 
+     film : people
+     people: films
     
-}
+    planets in films
+     film : planets
+     planets : film 
+    
+    vessels in films
+     vessel : film
+     film : vessel
+    
+    pilots
+     person : vessel
+     vessel : person
+   }
 */
+// junction tables in SQL contains the primary key columns of TWO tables you want to relate
+// https://docs.microsoft.com/en-us/sql/ssms/visual-db-tools/map-many-to-many-relationships-visual-database-tools?view=sql-server-ver15
+typeConverter.finalizeTypeDef = (joinTableName, schema) => {
+  // iterate through array (ex. vessels_in_films)
+  for (let i = 0; i < joinTables[joinTableName].length; i += 1) {
+    const column = joinTables[joinTableName][i];
+    const foreignKeys = [];
+    // get both foreign keys (using constraint_type) and push foreign_table to an array 
+    // (ex. ['films', 'vessels'])
+    if (column.constraint_type === 'FOREIGN KEY') {
+      foreignKeys.push(column.foreign_table);
+    }
+    // get first foreign key (array[0]) (ex. films)
+    // go to base table object referenced in second foreign key (array[1]) (ex. vessels)
+    // add property to vessels base table with information from first fK 
+    if (schema[foreignKeys[0]]) { // films  
+      // singularize the value
+      const singularize = singular(foreignKeys[0]);
+      // capitalize the first letter 
+      let pascalize = singularize[1].toUpperCase();
+      pascalize += singularize.slice(1, singularize.length);  
+      // vessels -> { films: [Film] }
+      schema[foreignKeys[0]][foreignKeys[1]] = `[${pascalize}]`;
+    }  
+    if (schema[foreignKeys[1]]) { // vessels  
+      // singularize the value
+      const singularize = singular(foreignKeys[1]);
+      // capitalize the first letter 
+      let pascalize = singularize[0].toUpperCase();
+      pascalize += singularize.slice(1, singularize.length);  
+      // films -> { vessels: [Vessel] }
+      schema[foreignKeys[1]][foreignKeys[0]] = `[${pascalize}]`;
+    }
+  }
+  return schema;
+};
 
 module.exports = typeConverter;
 // SQL QUERY DATA
