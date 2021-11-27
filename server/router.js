@@ -9,6 +9,7 @@ router.get(
   SQLController.getAllMetadata,
   SQLController.formatQueryResult,
   GQLController.createSchemaTypeDefs,
+  GQLController.createSchemaQuery,
   (req, res) => {
     // cache (for SQL visualizer)
     // finalString (GraphQL Schema)

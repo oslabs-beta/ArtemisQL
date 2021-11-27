@@ -56,7 +56,7 @@ function FlowComponent({ data }) {
 
 
   return (
-    <div style={{ height: 500 }}>
+    <div style={{ height: 800 }}>
       <ReactFlow elements={elements} nodeTypes={nodeTypes} defaultZoom={0}>
         <Background
           variant="dots"

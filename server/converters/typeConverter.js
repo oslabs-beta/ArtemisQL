@@ -37,7 +37,7 @@ typeConverter.sortTables = (cache) => {
   // const baseTables = {};
   
   for (const key in cache) {
-    console.log('key in cache', key);
+    // console.log('key in cache', key);
     if (checkIfJoinTable(cache, key)) joinTables[key] = cache[key];
     else baseTables[key] = cache[key]; 
   }
@@ -163,12 +163,17 @@ typeConverter.finalizeTypeDef = (schema) => {
   let finalString = '';
   // update table name to be singular and capitalized
   for (let key in schema) {
-    const singularize = singular(key);
+    // check if '_' is present in a key and removing it + capitalize the next letter
+    // before: Starship_spec after: StarshipSpec (TYPE TABLE NAME)
+    const stringArray = key.split('_');
+    let pascalize = stringArray.map(ele => ele[0].toUpperCase() + ele.slice(1)).join(''); 
+ 
+    const singularize = singular(pascalize);
     // capitalize the first letter 
-    let pascalize = key[0].toUpperCase();
-    pascalize += singularize.slice(1, singularize.length);
+    // let pascalize = key[0].toUpperCase();
+    // pascalize += singularize.slice(1, singularize.length);
     // Do we need to update the schema?
-    const typeKey = `type ${pascalize}`;
+    const typeKey = `type ${singularize}`;
     // schema[typeKey] = schema[key];
     finalString += `\n${typeKey} {\n`;
     // console.log('finalString', finalString);
