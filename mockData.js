@@ -1,760 +1,797 @@
-// const mockData = {
-//     "allTables": {
-//         "planets": [
-//             {
-//                 "table_name": "planets",
-//                 "column_name": "_id",
-//                 "ordinal_position": 1,
-//                 "column_default": "nextval('planets__id_seq'::regclass)",
-//                 "data_type": "integer",
-//                 "udt_name": "int4"
-//             },
-//             {
-//                 "table_name": "planets",
-//                 "column_name": "name",
-//                 "ordinal_position": 2,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "planets",
-//                 "column_name": "rotation_period",
-//                 "ordinal_position": 3,
-//                 "column_default": null,
-//                 "data_type": "integer",
-//                 "udt_name": "int4"
-//             },
-//             {
-//                 "table_name": "planets",
-//                 "column_name": "orbital_period",
-//                 "ordinal_position": 4,
-//                 "column_default": null,
-//                 "data_type": "integer",
-//                 "udt_name": "int4"
-//             },
-//             {
-//                 "table_name": "planets",
-//                 "column_name": "diameter",
-//                 "ordinal_position": 5,
-//                 "column_default": null,
-//                 "data_type": "integer",
-//                 "udt_name": "int4"
-//             },
-//             {
-//                 "table_name": "planets",
-//                 "column_name": "climate",
-//                 "ordinal_position": 6,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "planets",
-//                 "column_name": "gravity",
-//                 "ordinal_position": 7,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "planets",
-//                 "column_name": "terrain",
-//                 "ordinal_position": 8,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "planets",
-//                 "column_name": "surface_water",
-//                 "ordinal_position": 9,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "planets",
-//                 "column_name": "population",
-//                 "ordinal_position": 10,
-//                 "column_default": null,
-//                 "data_type": "bigint",
-//                 "udt_name": "int8"
-//             }
-//         ],
-//         "pilots": [
-//             {
-//                 "table_name": "pilots",
-//                 "column_name": "_id",
-//                 "ordinal_position": 1,
-//                 "column_default": "nextval('pilots__id_seq'::regclass)",
-//                 "data_type": "integer",
-//                 "udt_name": "int4"
-//             },
-//             {
-//                 "table_name": "pilots",
-//                 "column_name": "person_id",
-//                 "ordinal_position": 2,
-//                 "column_default": null,
-//                 "data_type": "bigint",
-//                 "udt_name": "int8"
-//             },
-//             {
-//                 "table_name": "pilots",
-//                 "column_name": "vessel_id",
-//                 "ordinal_position": 3,
-//                 "column_default": null,
-//                 "data_type": "bigint",
-//                 "udt_name": "int8"
-//             }
-//         ],
-//         "people_in_films": [
-//             {
-//                 "table_name": "people_in_films",
-//                 "column_name": "_id",
-//                 "ordinal_position": 1,
-//                 "column_default": "nextval('people_in_films__id_seq'::regclass)",
-//                 "data_type": "integer",
-//                 "udt_name": "int4"
-//             },
-//             {
-//                 "table_name": "people_in_films",
-//                 "column_name": "person_id",
-//                 "ordinal_position": 2,
-//                 "column_default": null,
-//                 "data_type": "bigint",
-//                 "udt_name": "int8"
-//             },
-//             {
-//                 "table_name": "people_in_films",
-//                 "column_name": "film_id",
-//                 "ordinal_position": 3,
-//                 "column_default": null,
-//                 "data_type": "bigint",
-//                 "udt_name": "int8"
-//             }
-//         ],
-//         "films": [
-//             {
-//                 "table_name": "films",
-//                 "column_name": "_id",
-//                 "ordinal_position": 1,
-//                 "column_default": "nextval('films__id_seq'::regclass)",
-//                 "data_type": "integer",
-//                 "udt_name": "int4"
-//             },
-//             {
-//                 "table_name": "films",
-//                 "column_name": "title",
-//                 "ordinal_position": 2,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "films",
-//                 "column_name": "episode_id",
-//                 "ordinal_position": 3,
-//                 "column_default": null,
-//                 "data_type": "integer",
-//                 "udt_name": "int4"
-//             },
-//             {
-//                 "table_name": "films",
-//                 "column_name": "opening_crawl",
-//                 "ordinal_position": 4,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "films",
-//                 "column_name": "director",
-//                 "ordinal_position": 5,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "films",
-//                 "column_name": "producer",
-//                 "ordinal_position": 6,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "films",
-//                 "column_name": "release_date",
-//                 "ordinal_position": 7,
-//                 "column_default": null,
-//                 "data_type": "date",
-//                 "udt_name": "date"
-//             }
-//         ],
-//         "species": [
-//             {
-//                 "table_name": "species",
-//                 "column_name": "_id",
-//                 "ordinal_position": 1,
-//                 "column_default": "nextval('species__id_seq'::regclass)",
-//                 "data_type": "integer",
-//                 "udt_name": "int4"
-//             },
-//             {
-//                 "table_name": "species",
-//                 "column_name": "name",
-//                 "ordinal_position": 2,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "species",
-//                 "column_name": "classification",
-//                 "ordinal_position": 3,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "species",
-//                 "column_name": "average_height",
-//                 "ordinal_position": 4,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "species",
-//                 "column_name": "average_lifespan",
-//                 "ordinal_position": 5,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "species",
-//                 "column_name": "hair_colors",
-//                 "ordinal_position": 6,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "species",
-//                 "column_name": "skin_colors",
-//                 "ordinal_position": 7,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "species",
-//                 "column_name": "eye_colors",
-//                 "ordinal_position": 8,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "species",
-//                 "column_name": "language",
-//                 "ordinal_position": 9,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "species",
-//                 "column_name": "homeworld_id",
-//                 "ordinal_position": 10,
-//                 "column_default": null,
-//                 "data_type": "bigint",
-//                 "udt_name": "int8"
-//             }
-//         ],
-//         "species_in_films": [
-//             {
-//                 "table_name": "species_in_films",
-//                 "column_name": "_id",
-//                 "ordinal_position": 1,
-//                 "column_default": "nextval('species_in_films__id_seq'::regclass)",
-//                 "data_type": "integer",
-//                 "udt_name": "int4"
-//             },
-//             {
-//                 "table_name": "species_in_films",
-//                 "column_name": "film_id",
-//                 "ordinal_position": 2,
-//                 "column_default": null,
-//                 "data_type": "bigint",
-//                 "udt_name": "int8"
-//             },
-//             {
-//                 "table_name": "species_in_films",
-//                 "column_name": "species_id",
-//                 "ordinal_position": 3,
-//                 "column_default": null,
-//                 "data_type": "bigint",
-//                 "udt_name": "int8"
-//             }
-//         ],
-//         "vessels": [
-//             {
-//                 "table_name": "vessels",
-//                 "column_name": "_id",
-//                 "ordinal_position": 1,
-//                 "column_default": "nextval('vessels__id_seq'::regclass)",
-//                 "data_type": "integer",
-//                 "udt_name": "int4"
-//             },
-//             {
-//                 "table_name": "vessels",
-//                 "column_name": "name",
-//                 "ordinal_position": 2,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "vessels",
-//                 "column_name": "manufacturer",
-//                 "ordinal_position": 3,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "vessels",
-//                 "column_name": "model",
-//                 "ordinal_position": 4,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "vessels",
-//                 "column_name": "vessel_type",
-//                 "ordinal_position": 5,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "vessels",
-//                 "column_name": "vessel_class",
-//                 "ordinal_position": 6,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "vessels",
-//                 "column_name": "cost_in_credits",
-//                 "ordinal_position": 7,
-//                 "column_default": null,
-//                 "data_type": "bigint",
-//                 "udt_name": "int8"
-//             },
-//             {
-//                 "table_name": "vessels",
-//                 "column_name": "length",
-//                 "ordinal_position": 8,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "vessels",
-//                 "column_name": "max_atmosphering_speed",
-//                 "ordinal_position": 9,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "vessels",
-//                 "column_name": "crew",
-//                 "ordinal_position": 10,
-//                 "column_default": null,
-//                 "data_type": "integer",
-//                 "udt_name": "int4"
-//             },
-//             {
-//                 "table_name": "vessels",
-//                 "column_name": "passengers",
-//                 "ordinal_position": 11,
-//                 "column_default": null,
-//                 "data_type": "integer",
-//                 "udt_name": "int4"
-//             },
-//             {
-//                 "table_name": "vessels",
-//                 "column_name": "cargo_capacity",
-//                 "ordinal_position": 12,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "vessels",
-//                 "column_name": "consumables",
-//                 "ordinal_position": 13,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             }
-//         ],
-//         "vessels_in_films": [
-//             {
-//                 "table_name": "vessels_in_films",
-//                 "column_name": "_id",
-//                 "ordinal_position": 1,
-//                 "column_default": "nextval('vessels_in_films__id_seq'::regclass)",
-//                 "data_type": "integer",
-//                 "udt_name": "int4"
-//             },
-//             {
-//                 "table_name": "vessels_in_films",
-//                 "column_name": "vessel_id",
-//                 "ordinal_position": 2,
-//                 "column_default": null,
-//                 "data_type": "bigint",
-//                 "udt_name": "int8"
-//             },
-//             {
-//                 "table_name": "vessels_in_films",
-//                 "column_name": "film_id",
-//                 "ordinal_position": 3,
-//                 "column_default": null,
-//                 "data_type": "bigint",
-//                 "udt_name": "int8"
-//             }
-//         ],
-//         "people": [
-//             {
-//                 "table_name": "people",
-//                 "column_name": "_id",
-//                 "ordinal_position": 1,
-//                 "column_default": "nextval('people__id_seq'::regclass)",
-//                 "data_type": "integer",
-//                 "udt_name": "int4"
-//             },
-//             {
-//                 "table_name": "people",
-//                 "column_name": "name",
-//                 "ordinal_position": 2,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "people",
-//                 "column_name": "mass",
-//                 "ordinal_position": 3,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "people",
-//                 "column_name": "hair_color",
-//                 "ordinal_position": 4,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "people",
-//                 "column_name": "skin_color",
-//                 "ordinal_position": 5,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "people",
-//                 "column_name": "eye_color",
-//                 "ordinal_position": 6,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "people",
-//                 "column_name": "birth_year",
-//                 "ordinal_position": 7,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "people",
-//                 "column_name": "gender",
-//                 "ordinal_position": 8,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "people",
-//                 "column_name": "species_id",
-//                 "ordinal_position": 9,
-//                 "column_default": null,
-//                 "data_type": "bigint",
-//                 "udt_name": "int8"
-//             },
-//             {
-//                 "table_name": "people",
-//                 "column_name": "homeworld_id",
-//                 "ordinal_position": 10,
-//                 "column_default": null,
-//                 "data_type": "bigint",
-//                 "udt_name": "int8"
-//             },
-//             {
-//                 "table_name": "people",
-//                 "column_name": "height",
-//                 "ordinal_position": 11,
-//                 "column_default": null,
-//                 "data_type": "integer",
-//                 "udt_name": "int4"
-//             }
-//         ],
-//         "planets_in_films": [
-//             {
-//                 "table_name": "planets_in_films",
-//                 "column_name": "_id",
-//                 "ordinal_position": 1,
-//                 "column_default": "nextval('planets_in_films__id_seq'::regclass)",
-//                 "data_type": "integer",
-//                 "udt_name": "int4"
-//             },
-//             {
-//                 "table_name": "planets_in_films",
-//                 "column_name": "film_id",
-//                 "ordinal_position": 2,
-//                 "column_default": null,
-//                 "data_type": "bigint",
-//                 "udt_name": "int8"
-//             },
-//             {
-//                 "table_name": "planets_in_films",
-//                 "column_name": "planet_id",
-//                 "ordinal_position": 3,
-//                 "column_default": null,
-//                 "data_type": "bigint",
-//                 "udt_name": "int8"
-//             }
-//         ],
-//         "starship_specs": [
-//             {
-//                 "table_name": "starship_specs",
-//                 "column_name": "_id",
-//                 "ordinal_position": 1,
-//                 "column_default": "nextval('starship_specs__id_seq'::regclass)",
-//                 "data_type": "integer",
-//                 "udt_name": "int4"
-//             },
-//             {
-//                 "table_name": "starship_specs",
-//                 "column_name": "hyperdrive_rating",
-//                 "ordinal_position": 2,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "starship_specs",
-//                 "column_name": "MGLT",
-//                 "ordinal_position": 3,
-//                 "column_default": null,
-//                 "data_type": "character varying",
-//                 "udt_name": "varchar"
-//             },
-//             {
-//                 "table_name": "starship_specs",
-//                 "column_name": "vessel_id",
-//                 "ordinal_position": 4,
-//                 "column_default": null,
-//                 "data_type": "bigint",
-//                 "udt_name": "int8"
-//             }
-//         ]
-//     },
-
-//     "foreignKeys": [
-//         {
-//             "foreign_table": "people",
-//             "rel": ">-",
-//             "primary_table": "planets",
-//             "fk_columns": "homeworld_id",
-//             "constraint_name": "people_fk1",
-//             "constraint_type": "FOREIGN KEY"
-//         },
-//         {
-//             "foreign_table": "people",
-//             "rel": ">-",
-//             "primary_table": "species",
-//             "fk_columns": "species_id",
-//             "constraint_name": "people_fk0",
-//             "constraint_type": "FOREIGN KEY"
-//         },
-//         {
-//             "foreign_table": "people_in_films",
-//             "rel": ">-",
-//             "primary_table": "films",
-//             "fk_columns": "film_id",
-//             "constraint_name": "people_in_films_fk1",
-//             "constraint_type": "FOREIGN KEY"
-//         },
-//         {
-//             "foreign_table": "people_in_films",
-//             "rel": ">-",
-//             "primary_table": "people",
-//             "fk_columns": "person_id",
-//             "constraint_name": "people_in_films_fk0",
-//             "constraint_type": "FOREIGN KEY"
-//         },
-//         {
-//             "foreign_table": "pilots",
-//             "rel": ">-",
-//             "primary_table": "people",
-//             "fk_columns": "person_id",
-//             "constraint_name": "pilots_fk0",
-//             "constraint_type": "FOREIGN KEY"
-//         },
-//         {
-//             "foreign_table": "pilots",
-//             "rel": ">-",
-//             "primary_table": "vessels",
-//             "fk_columns": "vessel_id",
-//             "constraint_name": "pilots_fk1",
-//             "constraint_type": "FOREIGN KEY"
-//         },
-//         {
-//             "foreign_table": "planets_in_films",
-//             "rel": ">-",
-//             "primary_table": "films",
-//             "fk_columns": "film_id",
-//             "constraint_name": "planets_in_films_fk0",
-//             "constraint_type": "FOREIGN KEY"
-//         },
-//         {
-//             "foreign_table": "planets_in_films",
-//             "rel": ">-",
-//             "primary_table": "planets",
-//             "fk_columns": "planet_id",
-//             "constraint_name": "planets_in_films_fk1",
-//             "constraint_type": "FOREIGN KEY"
-//         },
-//         {
-//             "foreign_table": "species",
-//             "rel": ">-",
-//             "primary_table": "planets",
-//             "fk_columns": "homeworld_id",
-//             "constraint_name": "species_fk0",
-//             "constraint_type": "FOREIGN KEY"
-//         },
-//         {
-//             "foreign_table": "species_in_films",
-//             "rel": ">-",
-//             "primary_table": "films",
-//             "fk_columns": "film_id",
-//             "constraint_name": "species_in_films_fk0",
-//             "constraint_type": "FOREIGN KEY"
-//         },
-//         {
-//             "foreign_table": "species_in_films",
-//             "rel": ">-",
-//             "primary_table": "species",
-//             "fk_columns": "species_id",
-//             "constraint_name": "species_in_films_fk1",
-//             "constraint_type": "FOREIGN KEY"
-//         },
-//         {
-//             "foreign_table": "starship_specs",
-//             "rel": ">-",
-//             "primary_table": "vessels",
-//             "fk_columns": "vessel_id",
-//             "constraint_name": "starship_specs_fk0",
-//             "constraint_type": "FOREIGN KEY"
-//         },
-//         {
-//             "foreign_table": "vessels_in_films",
-//             "rel": ">-",
-//             "primary_table": "films",
-//             "fk_columns": "film_id",
-//             "constraint_name": "vessels_in_films_fk1",
-//             "constraint_type": "FOREIGN KEY"
-//         },
-//         {
-//             "foreign_table": "vessels_in_films",
-//             "rel": ">-",
-//             "primary_table": "vessels",
-//             "fk_columns": "vessel_id",
-//             "constraint_name": "vessels_in_films_fk0",
-//             "constraint_type": "FOREIGN KEY"
-//         }
-//     ],
-//     "primaryKeys": [
-//         {
-//             "table_name": "films",
-//             "constraint_name": "films_pk",
-//             "primary_key_columns": "_id"
-//         },
-//         {
-//             "table_name": "people",
-//             "constraint_name": "people_pk",
-//             "primary_key_columns": "_id"
-//         },
-//         {
-//             "table_name": "people_in_films",
-//             "constraint_name": "people_in_films_pk",
-//             "primary_key_columns": "_id"
-//         },
-//         {
-//             "table_name": "pilots",
-//             "constraint_name": "pilots_pk",
-//             "primary_key_columns": "_id"
-//         },
-//         {
-//             "table_name": "planets",
-//             "constraint_name": "planets_pk",
-//             "primary_key_columns": "_id"
-//         },
-//         {
-//             "table_name": "planets_in_films",
-//             "constraint_name": "planets_in_films_pk",
-//             "primary_key_columns": "_id"
-//         },
-//         {
-//             "table_name": "species",
-//             "constraint_name": "species_pk",
-//             "primary_key_columns": "_id"
-//         },
-//         {
-//             "table_name": "species_in_films",
-//             "constraint_name": "species_in_films_pk",
-//             "primary_key_columns": "_id"
-//         },
-//         {
-//             "table_name": "starship_specs",
-//             "constraint_name": "starship_specs_pk",
-//             "primary_key_columns": "_id"
-//         },
-//         {
-//             "table_name": "vessels",
-//             "constraint_name": "vessels_pk",
-//             "primary_key_columns": "_id"
-//         },
-//         {
-//             "table_name": "vessels_in_films",
-//             "constraint_name": "vessels_in_films_pk",
-//             "primary_key_columns": "_id"
-//         }
-//     ]
-// }
-
-// export default mockData;
+// SQL QUERY DATA
+/*
+{
+  "films": [
+      {
+          "column_name": "_id",
+          "table_name": "films",
+          "data_type": "integer",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "films_pk",
+          "constraint_type": "PRIMARY KEY",
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "director",
+          "table_name": "films",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "episode_id",
+          "table_name": "films",
+          "data_type": "integer",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "opening_crawl",
+          "table_name": "films",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "producer",
+          "table_name": "films",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "release_date",
+          "table_name": "films",
+          "data_type": "date",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "title",
+          "table_name": "films",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      }
+  ],
+  "people": [
+      {
+          "column_name": "_id",
+          "table_name": "people",
+          "data_type": "integer",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "people_pk",
+          "constraint_type": "PRIMARY KEY",
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "birth_year",
+          "table_name": "people",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "eye_color",
+          "table_name": "people",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "gender",
+          "table_name": "people",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "hair_color",
+          "table_name": "people",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "height",
+          "table_name": "people",
+          "data_type": "integer",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "homeworld_id",
+          "table_name": "people",
+          "data_type": "bigint",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": "people_fk1",
+          "constraint_type": "FOREIGN KEY",
+          "foreign_table": "planets",
+          "foreign_column": "_id"
+      },
+      {
+          "column_name": "mass",
+          "table_name": "people",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "name",
+          "table_name": "people",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "skin_color",
+          "table_name": "people",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "species_id",
+          "table_name": "people",
+          "data_type": "bigint",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": "people_fk0",
+          "constraint_type": "FOREIGN KEY",
+          "foreign_table": "species",
+          "foreign_column": "_id"
+      }
+  ],
+  "people_in_films": [
+      {
+          "column_name": "_id",
+          "table_name": "people_in_films",
+          "data_type": "integer",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "people_in_films_pk",
+          "constraint_type": "PRIMARY KEY",
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "film_id",
+          "table_name": "people_in_films",
+          "data_type": "bigint",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "people_in_films_fk1",
+          "constraint_type": "FOREIGN KEY",
+          "foreign_table": "films",
+          "foreign_column": "_id"
+      },
+      {
+          "column_name": "person_id",
+          "table_name": "people_in_films",
+          "data_type": "bigint",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "people_in_films_fk0",
+          "constraint_type": "FOREIGN KEY",
+          "foreign_table": "people",
+          "foreign_column": "_id"
+      }
+  ],
+  "pilots": [
+      {
+          "column_name": "_id",
+          "table_name": "pilots",
+          "data_type": "integer",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "pilots_pk",
+          "constraint_type": "PRIMARY KEY",
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "person_id",
+          "table_name": "pilots",
+          "data_type": "bigint",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "pilots_fk0",
+          "constraint_type": "FOREIGN KEY",
+          "foreign_table": "people",
+          "foreign_column": "_id"
+      },
+      {
+          "column_name": "vessel_id",
+          "table_name": "pilots",
+          "data_type": "bigint",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "pilots_fk1",
+          "constraint_type": "FOREIGN KEY",
+          "foreign_table": "vessels",
+          "foreign_column": "_id"
+      }
+  ],
+  "planets": [
+      {
+          "column_name": "_id",
+          "table_name": "planets",
+          "data_type": "integer",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "planets_pk",
+          "constraint_type": "PRIMARY KEY",
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "climate",
+          "table_name": "planets",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "diameter",
+          "table_name": "planets",
+          "data_type": "integer",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "gravity",
+          "table_name": "planets",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "name",
+          "table_name": "planets",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "orbital_period",
+          "table_name": "planets",
+          "data_type": "integer",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "population",
+          "table_name": "planets",
+          "data_type": "bigint",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "rotation_period",
+          "table_name": "planets",
+          "data_type": "integer",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "surface_water",
+          "table_name": "planets",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "terrain",
+          "table_name": "planets",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      }
+  ],
+  "planets_in_films": [
+      {
+          "column_name": "_id",
+          "table_name": "planets_in_films",
+          "data_type": "integer",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "planets_in_films_pk",
+          "constraint_type": "PRIMARY KEY",
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "film_id",
+          "table_name": "planets_in_films",
+          "data_type": "bigint",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "planets_in_films_fk0",
+          "constraint_type": "FOREIGN KEY",
+          "foreign_table": "films",
+          "foreign_column": "_id"
+      },
+      {
+          "column_name": "planet_id",
+          "table_name": "planets_in_films",
+          "data_type": "bigint",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "planets_in_films_fk1",
+          "constraint_type": "FOREIGN KEY",
+          "foreign_table": "planets",
+          "foreign_column": "_id"
+      }
+  ],
+  "species": [
+      {
+          "column_name": "_id",
+          "table_name": "species",
+          "data_type": "integer",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "species_pk",
+          "constraint_type": "PRIMARY KEY",
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "average_height",
+          "table_name": "species",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "average_lifespan",
+          "table_name": "species",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "classification",
+          "table_name": "species",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "eye_colors",
+          "table_name": "species",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "hair_colors",
+          "table_name": "species",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "homeworld_id",
+          "table_name": "species",
+          "data_type": "bigint",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": "species_fk0",
+          "constraint_type": "FOREIGN KEY",
+          "foreign_table": "planets",
+          "foreign_column": "_id"
+      },
+      {
+          "column_name": "language",
+          "table_name": "species",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "name",
+          "table_name": "species",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "skin_colors",
+          "table_name": "species",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      }
+  ],
+  "species_in_films": [
+      {
+          "column_name": "_id",
+          "table_name": "species_in_films",
+          "data_type": "integer",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "species_in_films_pk",
+          "constraint_type": "PRIMARY KEY",
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "film_id",
+          "table_name": "species_in_films",
+          "data_type": "bigint",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "species_in_films_fk0",
+          "constraint_type": "FOREIGN KEY",
+          "foreign_table": "films",
+          "foreign_column": "_id"
+      },
+      {
+          "column_name": "species_id",
+          "table_name": "species_in_films",
+          "data_type": "bigint",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "species_in_films_fk1",
+          "constraint_type": "FOREIGN KEY",
+          "foreign_table": "species",
+          "foreign_column": "_id"
+      }
+  ],
+  "starship_specs": [
+      {
+          "column_name": "MGLT",
+          "table_name": "starship_specs",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "_id",
+          "table_name": "starship_specs",
+          "data_type": "integer",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "starship_specs_pk",
+          "constraint_type": "PRIMARY KEY",
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "hyperdrive_rating",
+          "table_name": "starship_specs",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "vessel_id",
+          "table_name": "starship_specs",
+          "data_type": "bigint",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "starship_specs_fk0",
+          "constraint_type": "FOREIGN KEY",
+          "foreign_table": "vessels",
+          "foreign_column": "_id"
+      }
+  ],
+  "vessels": [
+      {
+          "column_name": "_id",
+          "table_name": "vessels",
+          "data_type": "integer",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "vessels_pk",
+          "constraint_type": "PRIMARY KEY",
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "cargo_capacity",
+          "table_name": "vessels",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "consumables",
+          "table_name": "vessels",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "cost_in_credits",
+          "table_name": "vessels",
+          "data_type": "bigint",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "crew",
+          "table_name": "vessels",
+          "data_type": "integer",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "length",
+          "table_name": "vessels",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "manufacturer",
+          "table_name": "vessels",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "max_atmosphering_speed",
+          "table_name": "vessels",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "model",
+          "table_name": "vessels",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "name",
+          "table_name": "vessels",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "passengers",
+          "table_name": "vessels",
+          "data_type": "integer",
+          "character_maximum_length": null,
+          "is_nullable": "YES",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "vessel_class",
+          "table_name": "vessels",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "vessel_type",
+          "table_name": "vessels",
+          "data_type": "character varying",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": null,
+          "constraint_type": null,
+          "foreign_table": null,
+          "foreign_column": null
+      }
+  ],
+  "vessels_in_films": [
+      {
+          "column_name": "_id",
+          "table_name": "vessels_in_films",
+          "data_type": "integer",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "vessels_in_films_pk",
+          "constraint_type": "PRIMARY KEY",
+          "foreign_table": null,
+          "foreign_column": null
+      },
+      {
+          "column_name": "film_id",
+          "table_name": "vessels_in_films",
+          "data_type": "bigint",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "vessels_in_films_fk1",
+          "constraint_type": "FOREIGN KEY",
+          "foreign_table": "films",
+          "foreign_column": "_id"
+      },
+      {
+          "column_name": "vessel_id",
+          "table_name": "vessels_in_films",
+          "data_type": "bigint",
+          "character_maximum_length": null,
+          "is_nullable": "NO",
+          "constraint_name": "vessels_in_films_fk0",
+          "constraint_type": "FOREIGN KEY",
+          "foreign_table": "vessels",
+          "foreign_column": "_id"
+      }
+  ]
+}
+*/

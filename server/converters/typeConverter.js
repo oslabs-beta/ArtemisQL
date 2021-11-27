@@ -43,8 +43,6 @@ typeConverter.sortTables = (cache) => {
   }
 
   return { baseTables, joinTables };
-  // console.log('joinTables', joinTables);
-  // console.log('baseTables', baseTables);
 };
 
 // ITERATE THROUGH BASE TABLES, CONVERT TYPES (CB), CHECK FOR NULLABLES (CB) AND CREATE TYPE OBJECT
@@ -75,61 +73,9 @@ function checkNullable(isNullable) {
   }
   return '';
 }
-// ideal type:
-/*
-{
-  species: {
-    _id: 'ID!',
-    name: 'String!',
-    classification: 'String',
-    average_height: 'String',
-    average_lifespan: 'String',
-    hair_colors: 'String',
-    skin_colors: 'String',
-    eye_colors: 'String',
-    language: 'String',
-    planets: '[Planet]',
-    films: '[Film]',
-  },
-  vessels: {
-    _id: 'ID!',
-    name: 'String!',
-    manufacturer: 'String',
-    model: 'String',
-    vessel_type: 'String!',
-    vessel_class: 'String!',
-    cost_in_credits: 'ID',
-    length: 'String',
-    max_atmosphering_speed: 'String',
-    crew: 'Int',
-    passengers: 'Int',
-    cargo_capacity: 'String',
-    consumables: 'String',
-    people: '[Person]',
-    films: '[Film]',
-  },
-    people: {
-    _id: 'ID!',
-    name: 'String!',
-    mass: 'String',
-    hair_color: 'String',
-    skin_color: 'String',
-    eye_color: 'String',
-    birth_year: 'String',
-    gender: 'String',
-    species: '[Species]',
-    planets: '[Planet]',
-    height: 'Int',
-    films: '[Film]',
-    vessels: '[Vessel]',
-  },
-}
-*/
-
-
 
 // input: base table name, join table name
-// output: object 
+// output: type def object (to add as properties in schema object)
 typeConverter.createInitialTypeDef = (baseTableName) => {
   const TYPE = {};
   //   TYPE[baseTableName] = {};
@@ -156,822 +102,173 @@ typeConverter.createInitialTypeDef = (baseTableName) => {
     }
   }
   
-  // iterate through join table names
-
   // console.log('schema', TYPE);
-  return TYPE; // There's something wrong here!, look into it again.
+  return TYPE; 
 };
 
 // ITERATE THROUGH JOIN TABLES AND APPEND FOREIGN_TABLES TO TYPE OBJECT
-// input: join table name
-// output: nothing - update schema object
-typeConverter.finalizeTypeDef = (joinTableName) => {
-  
-}
-/*
-const tempObject ={};
-for (const key in joinTables){
-    joinTables[key].
-    if(key.constraint_type === 'FOREIGN KEY')
-    
-}
-*/
 
-module.exports = typeConverter;
-// SQL QUERY DATA
-/*
+//   loop through JoinTableObject
+//   for each table, get the foreign keys (constraight_type = "FOREIGN KEY")
+//   get 2 foreign_tables [a, b]
+//   get first foreign_table (a)'s typdef and append 'b: [b]' to typedef
+//   get second foreign_table  (b)'s typedef and append 'a: [a]' to typedef
+
+// input: join table name
+// output: nothing - mutate schema object
+
+// junction tables in SQL contains the primary key columns of TWO tables you want to relate
+// https://docs.microsoft.com/en-us/sql/ssms/visual-db-tools/map-many-to-many-relationships-visual-database-tools?view=sql-server-ver15
+typeConverter.addForeignKeysToTypeDef = (joinTableName, schema) => {
+  // iterate through array (ex. vessels_in_films)
+  const foreignKeys = [];
+  for (let i = 0; i < joinTables[joinTableName].length; i += 1) {
+    const column = joinTables[joinTableName][i];
+    // get both foreign keys (using constraint_type) and push foreign_table to an array 
+    // (ex. ['films', 'vessels'])
+    if (column.constraint_type === 'FOREIGN KEY') {
+      foreignKeys.push(column.foreign_table);
+    }
+  }
+  // console.log('foreignKeys', foreignKeys);
+  // get first foreign key (array[0]) (ex. films)
+  // go to base table object referenced in second foreign key (array[1]) (ex. vessels)
+  // add property to vessels base table with information from first fK 
+  
+  if (schema[foreignKeys[0]]) { // films 
+    // singularize the value
+    const singularize = singular(foreignKeys[1]);
+    // capitalize the first letter 
+    let pascalize = singularize[0].toUpperCase();
+    pascalize += singularize.slice(1, singularize.length);  
+    // films -> { vessels: [Vessel] }
+    schema[foreignKeys[0]][foreignKeys[1]] = `[${pascalize}]`;
+  }  
+
+  if (schema[foreignKeys[1]]) { // vessels  
+    // singularize the value
+    const singularize = singular(foreignKeys[0]);
+    // capitalize the first letter 
+    let pascalize = singularize[0].toUpperCase();
+    pascalize += singularize.slice(1, singularize.length);  
+    // vessels -> { films: [Film] }
+    schema[foreignKeys[1]][foreignKeys[0]] = `[${pascalize}]`;
+  }
+  // return schema;
+};
+
+// input: schema object
+// output: string -> formatted type def for client
+typeConverter.finalizeTypeDef = (schema) => {
+  let finalString = '';
+  // update table name to be singular and capitalized
+  for (let key in schema) {
+    const singularize = singular(key);
+    // capitalize the first letter 
+    let pascalize = key[0].toUpperCase();
+    pascalize += singularize.slice(1, singularize.length);
+    // Do we need to update the schema?
+    const typeKey = `type ${pascalize}`;
+    // schema[typeKey] = schema[key];
+    finalString += `\n${typeKey} {\n`;
+    // console.log('finalString', finalString);
+    // looping through schema[key]
+    const table = schema[key];
+    
+    for (const column in table) {
+    // 2 spaces + '_id: ID!' + line break
+      const newColumn = `  ${column}: ${table[column]}\n`;
+      //   console.log('newColumn', newColumn);
+      // append to finalString
+      finalString += newColumn;
+    }
+    finalString += '} \n';
+  }
+  // stringify schema
+  // replace commas, inner quotes, colons after typeDef
+  return finalString;
+};
+
+/* SCHEMA
 {
-  "films": [
-      {
-          "column_name": "_id",
-          "table_name": "films",
-          "data_type": "integer",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "films_pk",
-          "constraint_type": "PRIMARY KEY",
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "director",
-          "table_name": "films",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "episode_id",
-          "table_name": "films",
-          "data_type": "integer",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "opening_crawl",
-          "table_name": "films",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "producer",
-          "table_name": "films",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "release_date",
-          "table_name": "films",
-          "data_type": "date",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "title",
-          "table_name": "films",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      }
-  ],
-  "people": [
-      {
-          "column_name": "_id",
-          "table_name": "people",
-          "data_type": "integer",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "people_pk",
-          "constraint_type": "PRIMARY KEY",
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "birth_year",
-          "table_name": "people",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "eye_color",
-          "table_name": "people",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "gender",
-          "table_name": "people",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "hair_color",
-          "table_name": "people",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "height",
-          "table_name": "people",
-          "data_type": "integer",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "homeworld_id",
-          "table_name": "people",
-          "data_type": "bigint",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": "people_fk1",
-          "constraint_type": "FOREIGN KEY",
-          "foreign_table": "planets",
-          "foreign_column": "_id"
-      },
-      {
-          "column_name": "mass",
-          "table_name": "people",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "name",
-          "table_name": "people",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "skin_color",
-          "table_name": "people",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "species_id",
-          "table_name": "people",
-          "data_type": "bigint",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": "people_fk0",
-          "constraint_type": "FOREIGN KEY",
-          "foreign_table": "species",
-          "foreign_column": "_id"
-      }
-  ],
-  "people_in_films": [
-      {
-          "column_name": "_id",
-          "table_name": "people_in_films",
-          "data_type": "integer",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "people_in_films_pk",
-          "constraint_type": "PRIMARY KEY",
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "film_id",
-          "table_name": "people_in_films",
-          "data_type": "bigint",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "people_in_films_fk1",
-          "constraint_type": "FOREIGN KEY",
-          "foreign_table": "films",
-          "foreign_column": "_id"
-      },
-      {
-          "column_name": "person_id",
-          "table_name": "people_in_films",
-          "data_type": "bigint",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "people_in_films_fk0",
-          "constraint_type": "FOREIGN KEY",
-          "foreign_table": "people",
-          "foreign_column": "_id"
-      }
-  ],
-  "pilots": [
-      {
-          "column_name": "_id",
-          "table_name": "pilots",
-          "data_type": "integer",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "pilots_pk",
-          "constraint_type": "PRIMARY KEY",
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "person_id",
-          "table_name": "pilots",
-          "data_type": "bigint",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "pilots_fk0",
-          "constraint_type": "FOREIGN KEY",
-          "foreign_table": "people",
-          "foreign_column": "_id"
-      },
-      {
-          "column_name": "vessel_id",
-          "table_name": "pilots",
-          "data_type": "bigint",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "pilots_fk1",
-          "constraint_type": "FOREIGN KEY",
-          "foreign_table": "vessels",
-          "foreign_column": "_id"
-      }
-  ],
-  "planets": [
-      {
-          "column_name": "_id",
-          "table_name": "planets",
-          "data_type": "integer",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "planets_pk",
-          "constraint_type": "PRIMARY KEY",
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "climate",
-          "table_name": "planets",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "diameter",
-          "table_name": "planets",
-          "data_type": "integer",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "gravity",
-          "table_name": "planets",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "name",
-          "table_name": "planets",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "orbital_period",
-          "table_name": "planets",
-          "data_type": "integer",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "population",
-          "table_name": "planets",
-          "data_type": "bigint",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "rotation_period",
-          "table_name": "planets",
-          "data_type": "integer",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "surface_water",
-          "table_name": "planets",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "terrain",
-          "table_name": "planets",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      }
-  ],
-  "planets_in_films": [
-      {
-          "column_name": "_id",
-          "table_name": "planets_in_films",
-          "data_type": "integer",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "planets_in_films_pk",
-          "constraint_type": "PRIMARY KEY",
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "film_id",
-          "table_name": "planets_in_films",
-          "data_type": "bigint",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "planets_in_films_fk0",
-          "constraint_type": "FOREIGN KEY",
-          "foreign_table": "films",
-          "foreign_column": "_id"
-      },
-      {
-          "column_name": "planet_id",
-          "table_name": "planets_in_films",
-          "data_type": "bigint",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "planets_in_films_fk1",
-          "constraint_type": "FOREIGN KEY",
-          "foreign_table": "planets",
-          "foreign_column": "_id"
-      }
-  ],
-  "species": [
-      {
-          "column_name": "_id",
-          "table_name": "species",
-          "data_type": "integer",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "species_pk",
-          "constraint_type": "PRIMARY KEY",
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "average_height",
-          "table_name": "species",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "average_lifespan",
-          "table_name": "species",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "classification",
-          "table_name": "species",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "eye_colors",
-          "table_name": "species",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "hair_colors",
-          "table_name": "species",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "homeworld_id",
-          "table_name": "species",
-          "data_type": "bigint",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": "species_fk0",
-          "constraint_type": "FOREIGN KEY",
-          "foreign_table": "planets",
-          "foreign_column": "_id"
-      },
-      {
-          "column_name": "language",
-          "table_name": "species",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "name",
-          "table_name": "species",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "skin_colors",
-          "table_name": "species",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      }
-  ],
-  "species_in_films": [
-      {
-          "column_name": "_id",
-          "table_name": "species_in_films",
-          "data_type": "integer",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "species_in_films_pk",
-          "constraint_type": "PRIMARY KEY",
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "film_id",
-          "table_name": "species_in_films",
-          "data_type": "bigint",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "species_in_films_fk0",
-          "constraint_type": "FOREIGN KEY",
-          "foreign_table": "films",
-          "foreign_column": "_id"
-      },
-      {
-          "column_name": "species_id",
-          "table_name": "species_in_films",
-          "data_type": "bigint",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "species_in_films_fk1",
-          "constraint_type": "FOREIGN KEY",
-          "foreign_table": "species",
-          "foreign_column": "_id"
-      }
-  ],
-  "starship_specs": [
-      {
-          "column_name": "MGLT",
-          "table_name": "starship_specs",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "_id",
-          "table_name": "starship_specs",
-          "data_type": "integer",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "starship_specs_pk",
-          "constraint_type": "PRIMARY KEY",
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "hyperdrive_rating",
-          "table_name": "starship_specs",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "vessel_id",
-          "table_name": "starship_specs",
-          "data_type": "bigint",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "starship_specs_fk0",
-          "constraint_type": "FOREIGN KEY",
-          "foreign_table": "vessels",
-          "foreign_column": "_id"
-      }
-  ],
-  "vessels": [
-      {
-          "column_name": "_id",
-          "table_name": "vessels",
-          "data_type": "integer",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "vessels_pk",
-          "constraint_type": "PRIMARY KEY",
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "cargo_capacity",
-          "table_name": "vessels",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "consumables",
-          "table_name": "vessels",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "cost_in_credits",
-          "table_name": "vessels",
-          "data_type": "bigint",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "crew",
-          "table_name": "vessels",
-          "data_type": "integer",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "length",
-          "table_name": "vessels",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "manufacturer",
-          "table_name": "vessels",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "max_atmosphering_speed",
-          "table_name": "vessels",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "model",
-          "table_name": "vessels",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "name",
-          "table_name": "vessels",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "passengers",
-          "table_name": "vessels",
-          "data_type": "integer",
-          "character_maximum_length": null,
-          "is_nullable": "YES",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "vessel_class",
-          "table_name": "vessels",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "vessel_type",
-          "table_name": "vessels",
-          "data_type": "character varying",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": null,
-          "constraint_type": null,
-          "foreign_table": null,
-          "foreign_column": null
-      }
-  ],
-  "vessels_in_films": [
-      {
-          "column_name": "_id",
-          "table_name": "vessels_in_films",
-          "data_type": "integer",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "vessels_in_films_pk",
-          "constraint_type": "PRIMARY KEY",
-          "foreign_table": null,
-          "foreign_column": null
-      },
-      {
-          "column_name": "film_id",
-          "table_name": "vessels_in_films",
-          "data_type": "bigint",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "vessels_in_films_fk1",
-          "constraint_type": "FOREIGN KEY",
-          "foreign_table": "films",
-          "foreign_column": "_id"
-      },
-      {
-          "column_name": "vessel_id",
-          "table_name": "vessels_in_films",
-          "data_type": "bigint",
-          "character_maximum_length": null,
-          "is_nullable": "NO",
-          "constraint_name": "vessels_in_films_fk0",
-          "constraint_type": "FOREIGN KEY",
-          "foreign_table": "vessels",
-          "foreign_column": "_id"
-      }
-  ]
-}
+    films: {
+      _id: 'ID!',
+      director: 'String!',
+      episode_id: 'Int!',
+      opening_crawl: 'String!',
+      producer: 'String!',
+      release_date: 'String!',
+      title: 'String!',
+      people: '[Person]',
+      planets: '[Planet]',
+      species: '[Species]',
+      vessels: '[Vessel]'
+    },
+    people: {
+      _id: 'ID!',
+      birth_year: 'String',
+      eye_color: 'String',
+      gender: 'String',
+      hair_color: 'String',
+      height: 'Int',
+      planets: '[Planet]',
+      mass: 'String',
+      name: 'String!',
+      skin_color: 'String',
+      species: '[Species]',
+      films: '[Film]',
+      vessels: '[Vessel]'
+    },
+    planets: {
+      _id: 'ID!',
+      climate: 'String',
+      diameter: 'Int',
+      gravity: 'String',
+      name: 'String',
+      orbital_period: 'Int',
+      population: 'Float',
+      rotation_period: 'Int',
+      surface_water: 'String',
+      terrain: 'String',
+      films: '[Film]'
+    },
+    species: {
+      _id: 'ID!',
+      average_height: 'String',
+      average_lifespan: 'String',
+      classification: 'String',
+      eye_colors: 'String',
+      hair_colors: 'String',
+      planets: '[Planet]',
+      language: 'String',
+      name: 'String!',
+      skin_colors: 'String',
+      films: '[Film]'
+    },
+    starship_specs: {
+      MGLT: 'String',
+      _id: 'ID!',
+      hyperdrive_rating: 'String',
+      vessels: '[Vessel]'
+    },
+    vessels: {
+      _id: 'ID!',
+      cargo_capacity: 'String',
+      consumables: 'String',
+      cost_in_credits: 'Float',
+      crew: 'Int',
+      length: 'String',
+      manufacturer: 'String',
+      max_atmosphering_speed: 'String',
+      model: 'String',
+      name: 'String!',
+      passengers: 'Int',
+      vessel_class: 'String!',
+      vessel_type: 'String!',
+      people: '[Person]',
+      films: '[Film]'
+    }
+  }
+
 */
+module.exports = typeConverter;
