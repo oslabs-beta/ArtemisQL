@@ -1,4 +1,4 @@
-const { singular } = require('pluralize');
+import { singular } from 'pluralize';
 
 // input: column's data_type
 // output: string (GraphQL Data type)

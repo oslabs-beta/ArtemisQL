@@ -15,7 +15,7 @@ function MainContainer() {
         setData(cache);
         setSchemaType(finalString);
       })
-      .catch((err) => console.log(err))
+      .catch((err) => console.log(err));
   }, []);
 
   return (
