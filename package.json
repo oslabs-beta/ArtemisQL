@@ -4,9 +4,9 @@
   "description": "A GraphQL migration tool and relational database visualizer",
   "main": "index.js",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "node server/server.ts",
     "build": "webpack",
-    "dev": "nodemon server/server.js & webpack serve --open --hot",
+    "dev": "nodemon server/server.ts & webpack serve --open --hot",
     "test": "jest --verbose"
   },
   "repository": {

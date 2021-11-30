@@ -1,4 +1,5 @@
-const express = require('express');
+import express, { Request, Response } from 'express';
+
 const SQLController = require('./controllers/SQLController');
 const GQLController = require('./controllers/GQLController');
 
@@ -11,7 +12,7 @@ router.get(
   GQLController.createSchemaTypeDefs,
   GQLController.createSchemaQuery,
   GQLController.createSchemaMutation,
-  (req, res) => {
+  (req: Request, res: Response) => {
     // cache (for SQL visualizer)
     // finalString (GraphQL Schema)
     // TBD (GraphQL Resolver)
@@ -19,4 +20,5 @@ router.get(
   },
 );
 
-module.exports = router;
+// module.exports = router;
+export default router;
