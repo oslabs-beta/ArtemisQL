@@ -14,9 +14,7 @@ queryConverter.createQuerySchema = (tableName) => {
 
   const singularize = singular(pascalize);
   let camelCase = singularize[0].toLowerCase();
-  camelCase += singularize.slice(1, singularize.length)
-
-  console.log('before appending to the tableQuery')
+  camelCase += singularize.slice(1, singularize.length);
 
   // camelcase + singuralize table name(_id without _: _id data type) : TableName
   // film(id: ID!): Film
@@ -24,7 +22,7 @@ queryConverter.createQuerySchema = (tableName) => {
   // starshipSpecs: [StarshipSpec]
   // starshipSpec(id: ID!): StarshipSpec
   const tableQuery = 
-    `  ${tableName}: [${singularize}] \n  ${camelCase}(id: ID!): ${singularize} \n`
+    `  ${tableName}: [${singularize}] \n  ${camelCase}(id: ID!): ${singularize} \n`;
 
   // console.log('table query', tableQuery);
   return tableQuery;
@@ -46,7 +44,7 @@ queryConverter.createQuerySchema = (tableName) => {
   starshipSpec(id: ID!): StarshipSpec
   vessels: [Vessel]
   vessel(id: ID!): Vessel
-}`
+}`;
 
 // SCHEMA
 /*

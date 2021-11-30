@@ -50,6 +50,7 @@ typeConverter.sortTables = (cache) => {
 // output: string (GraphQL Data type)
 function convertDataType(type, columnName) {
   if (columnName === '_id') return 'ID';
+  if (columnName.includes('_id')) return 'Int';
   switch (type) {
     case 'character varying': return 'String';
     case 'character': return 'String';
@@ -74,7 +75,7 @@ function checkNullable(isNullable) {
   return '';
 }
 
-// input: base table name, join table name
+// input: base table name
 // output: type def object (to add as properties in schema object)
 typeConverter.createInitialTypeDef = (baseTableName) => {
   const TYPE = {};
@@ -162,11 +163,11 @@ typeConverter.addForeignKeysToTypeDef = (joinTableName, schema) => {
 typeConverter.finalizeTypeDef = (schema) => {
   let finalString = '';
   // update table name to be singular and capitalized
-  for (let key in schema) {
+  for (const key in schema) {
     // check if '_' is present in a key and removing it + capitalize the next letter
     // before: Starship_spec after: StarshipSpec (TYPE TABLE NAME)
     const stringArray = key.split('_');
-    let pascalize = stringArray.map(ele => ele[0].toUpperCase() + ele.slice(1)).join(''); 
+    const pascalize = stringArray.map((ele) => ele[0].toUpperCase() + ele.slice(1)).join(''); 
  
     const singularize = singular(pascalize);
     // capitalize the first letter 
