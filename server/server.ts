@@ -1,7 +1,7 @@
 import express, { Application, Request, Response } from 'express';
+import Router from './router';
 
 const path = require('path');
-const Router = require('./router');
 // require('dotenv').config();
 
 const PORT = 3000;
