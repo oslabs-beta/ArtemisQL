@@ -5,7 +5,7 @@ const { Pool } = require('pg');
 
 // get all database metadata (tables and columns) from user's selected DB
 const getAllMetadata = (req: Request, res: Response, next) => {
-  // const PG_URI = (!req.body.uri) ? 'postgres://dsthvptf:Y8KtTaY290gb7KlcxkoTLHTnEECegH0r@fanny.db.elephantsql.com/dsthvptf' : req.body.uri;
+  // const PG_URI: string = (!req.body.uri) ? 'postgres://dsthvptf:Y8KtTaY290gb7KlcxkoTLHTnEECegH0r@fanny.db.elephantsql.com/dsthvptf' : req.body.uri;
   // create a new pool here using the connection string above
   // console.log('process.env', process.env);
   // console.log('process.env.SECRET_KEY', process.env.SECRET_KEY);
