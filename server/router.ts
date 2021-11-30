@@ -11,6 +11,7 @@ router.get(
   SQLController.formatQueryResult,
   GQLController.createSchemaTypeDefs,
   GQLController.createSchemaQuery,
+  GQLController.createSchemaMutation,
   (req: Request, res: Response) => {
     // cache (for SQL visualizer)
     // finalString (GraphQL Schema)
