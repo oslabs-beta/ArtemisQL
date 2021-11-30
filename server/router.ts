@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express';
-
-const SQLController = require('./controllers/SQLController');
-const GQLController = require('./controllers/GQLController');
+import SQLController from './controllers/SQLController';
+import GQLController from './controllers/GQLController';
 
 const router = express.Router();
 
