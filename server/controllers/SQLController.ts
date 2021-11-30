@@ -1,10 +1,10 @@
+import { Request, Response } from 'express';
+import { SQLControllerType } from './SQLControllerTypes';
+
 const { Pool } = require('pg');
 
-// declare SQLController object that will later be exported
-const SQLController = {};
-
 // get all database metadata (tables and columns) from user's selected DB
-SQLController.getAllMetadata = (req, res, next) => {
+const getAllMetadata = (req: Request, res: Response, next) => {
   // const PG_URI = (!req.body.uri) ? 'postgres://dsthvptf:Y8KtTaY290gb7KlcxkoTLHTnEECegH0r@fanny.db.elephantsql.com/dsthvptf' : req.body.uri;
   // create a new pool here using the connection string above
   // console.log('process.env', process.env);
@@ -53,7 +53,7 @@ SQLController.getAllMetadata = (req, res, next) => {
 };
 
 // format sql results to client
-SQLController.formatQueryResult = (req, res, next) => {
+const formatQueryResult = (req, res, next) => {
   /* desired format for client:
   
   Key(Table_Name)
@@ -82,4 +82,7 @@ SQLController.formatQueryResult = (req, res, next) => {
   return next();
 };
 
-module.exports = SQLController;
+// module.exports = SQLController;
+// declare SQLController object that will later be exported
+const SQLController: SQLControllerType = { getAllMetadata, formatQueryResult };
+export default SQLController;
