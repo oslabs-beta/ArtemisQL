@@ -1,44 +1,18 @@
 const GQLController = {};
 const typeConverter = require('../converters/typeConverter');
 const queryConverter = require('../converters/queryConverter');
+const mutationConverter = require('../converters/mutationConverter');
 
-/*
-  desired output to client:
-  type Vessel { 
-    cost_in_credits: Float
-    length: String
-    vessel_type: String!
-    model: String
-    manufacturer: String
-    name: String!
-    vessel_class: String!
-    max_atmosphering_speed: String
-    crew: Int
-    passengers: Int
-    cargo_capacity: String
-    consumables: String
-    _id: Int!
-  }
-*/
-
-// possibly defining the date type:
-// const typeDefs = gql` // same for Date
-//   scalar DateTime
-
-//   type Query {
-//     time: DateTime
-//   }
-// `;
-
-// create GraphQL Schema (type defs)
+// Create GraphQL Schema (Type Defs)
 GQLController.createSchemaTypeDefs = (req, res, next) => {
-  console.log('createSchemaTypeDefs Triggered')
+  console.log('createSchemaTypeDefs Triggered');
   const schema = {};
   const { cache } = res.locals;
   const { baseTables, joinTables } = typeConverter.sortTables(cache);
   
   const baseTableNames = Object.keys(baseTables);
   const joinTableNames = Object.keys(joinTables);
+  res.locals.baseTables = baseTables;
   res.locals.baseTableNames = baseTableNames;
   res.locals.joinTableNames = joinTableNames;
 
@@ -47,22 +21,13 @@ GQLController.createSchemaTypeDefs = (req, res, next) => {
     schema[key] = typeConverter.createInitialTypeDef(key);
   }
 
-  console.log('after first for loop')
-
   for (const key of joinTableNames) {
     // schema from line 34 gets mutated every time we invoke typeConverter.finalizeTypeDef
     // because schema is being passed in by reference
     typeConverter.addForeignKeysToTypeDef(key, schema);
   }
 
-  console.log('after second for loop')
-
-  // console.log('SCHEMA AFTER JOINTABLE TYPEDEF CREATION', schema);
-  // console.log('BASE TABLE', baseTables);
   const typeString = typeConverter.finalizeTypeDef(schema);
-  // console.log('FINAL STRING IN MIDDLEWARE: ', finalString);
-
-  console.log('after finalizeTypeDef')
 
   res.locals.schema = schema;
   res.locals.typeString = typeString;
@@ -71,27 +36,59 @@ GQLController.createSchemaTypeDefs = (req, res, next) => {
 
 // create GraphQL Schema (queries)
 GQLController.createSchemaQuery = (req, res, next) => {
-  console.log('before tehe schema');
   const { schema, typeString } = res.locals;
-  console.log('after the  schema');
 
   let queryString = `\ntype Query { \n`;
-  // const tableNames = Object.keys(schema);
+ 
   for (const key in schema) {
     queryString += queryConverter.createQuerySchema(key);
   }
 
-  console.log('after for loop');
-
-  queryString += `}`
+  queryString += `}`;
   
-  // res.locals.queryString = queryString;
   res.locals.finalString = typeString + queryString;
   
-  console.log('FINAL QUERY STRING', res.locals.finalString);
   return next();
-}
+};
+
 // create GraphQL Schema (mutations)
+GQLController.createSchemaMutation = (req, res, next) => {
+  const { baseTables } = res.locals;
+
+  const mutationObj = {};
+  // loop through base tables object
+
+  for (const key in baseTables) {
+    /* -------------------------------------------------------------------------- */
+    /*                                 invoke add                                 */
+    /* -------------------------------------------------------------------------- */
+    const [add, addMutations] = mutationConverter.add(key, baseTables[key]);
+    mutationObj[add] = addMutations;
+    
+    /* -------------------------------------------------------------------------- */
+    /*                                invoke update                               */
+    /* -------------------------------------------------------------------------- */
+    const [update, updateMutations] = mutationConverter.update(key, baseTables[key]);
+    mutationObj[update] = updateMutations;
+
+
+    /* -------------------------------------------------------------------------- */
+    /*                                invoke delete                               */
+    /* -------------------------------------------------------------------------- */
+    const [del, deleteMutations] = mutationConverter.delete(key, baseTables[key]);
+    mutationObj[del] = deleteMutations;
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /*                    format/stringify the mutation object                    */
+  /* -------------------------------------------------------------------------- */
+  // console.log('MUTATION OBJ OUTSIDE FOR LOOP', mutationObj);
+  // append to mutation string
+  const mutationString = mutationConverter.stringify(mutationObj);
+  console.log('MUTATION STRING', mutationString);
+  res.locals.finalString += mutationString; 
+  return next();
+};
 
 // create GraphQL Resolvers
 
