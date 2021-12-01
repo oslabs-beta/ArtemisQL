@@ -37,3 +37,12 @@ module.exports.capitalizeAndSingularize = (tableName: string): string => {
   const singularize: string = singular(pascalize);
   return singularize;
 };
+
+// input: table name string
+// output: pascalized and singularlized table name string
+module.exports.capitalizeAndSingularize = (tableName: string): string => {
+  const split = tableName.split('_');
+  const pascalize = split.map((ele) => ele[0].toUpperCase() + ele.slice(1)).join(''); 
+  const singularize: string = singular(pascalize);
+  return singularize;
+};

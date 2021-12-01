@@ -7,6 +7,7 @@ import { GQLControllerType, MutationObjectType } from './controllerTypes';
 import typeConverter from '../converters/typeConverter';
 import queryConverter from '../converters/queryConverter';
 import mutationConverter from '../converters/mutationConverter';
+import resolvers from '../converters/resolvers';
 
 // Create GraphQL Schema (Type Defs)
 const createSchemaTypeDefs = (req: Request, res: Response, next: NextFunction) => {
@@ -20,7 +21,7 @@ const createSchemaTypeDefs = (req: Request, res: Response, next: NextFunction) =
   res.locals.baseTables = baseTables;
   res.locals.baseTableNames = baseTableNames;
   res.locals.joinTableNames = joinTableNames;
-
+  console.log('baseTables', baseTables);
   // [people, films, species, vessels]
   for (const key of baseTableNames) {
     schema[key] = typeConverter.createInitialTypeDef(key);
@@ -91,14 +92,44 @@ const createSchemaMutation = (req: Request, res: Response, next: NextFunction) =
   // console.log('MUTATION OBJ OUTSIDE FOR LOOP', mutationObj);
   // append to mutation string
   const mutationString = mutationConverter.stringify(mutationObj);
-  console.log('MUTATION STRING', mutationString);
+  // console.log('MUTATION STRING', mutationString);
+  res.locals.mutationObj = mutationObj;
   res.locals.finalString += mutationString; 
   return next();
 };
 
 // create GraphQL Resolvers
 const createResolver = (req: Request, res: Response, next: NextFunction) => {
-  // test
+  console.log('createResolver triggered');
+  const { baseTableNames, finalString, mutationObj } = res.locals;
+  let resolverString = `const resolvers = { \n`;
+
+  // QUERY
+  resolverString += `  Query: {`;
+  for (const key of baseTableNames) {
+    resolverString += resolvers.createQuery(key);
+  }
+  // console.log('RESOLVER STRING AFTER QUERY LOOP', resolverString);
+  resolverString += `\n  },`;
+
+  // MUTATION
+  resolverString += `
+
+  Mutation: {`;
+
+  console.log('mutationObj', mutationObj);
+  const mutationTypes = Object.keys(mutationObj);
+
+  for (const key of mutationTypes) {
+    resolverString += resolvers.createMutation(key);
+  }
+  resolverString += `\n  },`;
+  // console.log('resolverString AFTER MUTATION LOOP', resolverString);
+  
+  // RELATIONSHIPS
+  
+  res.locals.finalString = finalString + resolverString;
+  return next();
 };
 
 const GQLController: GQLControllerType = { 
