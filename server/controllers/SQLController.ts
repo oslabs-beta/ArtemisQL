@@ -1,11 +1,10 @@
+import { Request, Response, NextFunction } from 'express';
+import { SQLControllerType } from './controllerTypes';
 const { Pool } = require('pg');
 
-// declare SQLController object that will later be exported
-const SQLController = {};
-
 // get all database metadata (tables and columns) from user's selected DB
-SQLController.getAllMetadata = (req, res, next) => {
-  // const PG_URI = (!req.body.uri) ? 'postgres://dsthvptf:Y8KtTaY290gb7KlcxkoTLHTnEECegH0r@fanny.db.elephantsql.com/dsthvptf' : req.body.uri;
+const getAllMetadata = async (req: Request, res: Response, next: NextFunction) => {
+  // const PG_URI: string = (!req.body.uri) ? 'postgres://dsthvptf:Y8KtTaY290gb7KlcxkoTLHTnEECegH0r@fanny.db.elephantsql.com/dsthvptf' : req.body.uri;
   // create a new pool here using the connection string above
   // console.log('process.env', process.env);
   // console.log('process.env.SECRET_KEY', process.env.SECRET_KEY);
@@ -41,19 +40,25 @@ SQLController.getAllMetadata = (req, res, next) => {
       
     WHERE cols.table_schema = 'public' AND tbls.table_type = 'BASE TABLE'
     ORDER BY cols.table_name`;
-  db.query(queryString)
-    .then((data) => {
+  
+    try {
+      const data = await db.query(queryString);
+      if (!data) {
+        throw (new Error('Error querying from sql database'))
+      }
       res.locals.queryTables = data.rows; // data.rows is an array of objects
       return next();
-    })
-    .catch((err) => {
+    } catch (err) {
       console.log(err);
-      return next(err);
-    });
+      return next({
+        log: `Express error handler caught error in the getAllMetadata controller, ${err}`,
+        message: { err: 'An error occurred in the getAllMetadata controller' }
+      });
+    };
 };
 
 // format sql results to client
-SQLController.formatQueryResult = (req, res, next) => {
+const formatQueryResult = (req: Request, res: Response, next: NextFunction) => {
   /* desired format for client:
   
   Key(Table_Name)
@@ -82,4 +87,7 @@ SQLController.formatQueryResult = (req, res, next) => {
   return next();
 };
 
-module.exports = SQLController;
+// module.exports = SQLController;
+// declare SQLController object that will later be exported
+const SQLController: SQLControllerType = { getAllMetadata, formatQueryResult };
+export default SQLController;
