@@ -14,7 +14,7 @@ function SchemaComponent({schema, resolvers}) {
         </Highlight>
       </Container>
     </div>
-  )
+  );
 }
 
 export default SchemaComponent;
