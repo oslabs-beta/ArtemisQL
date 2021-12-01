@@ -1,48 +1,85 @@
 import React, { useEffect, useState } from 'react';
 import ReactFlow, { Background, MiniMap, Controls, Handle } from 'react-flow-renderer';
 
-function FlowComponent({ data }) {
-  const elements = [
-    // Connect Nodes
-    { id: 'can be what ever', source: 'films', target: 'people', sourceHandle: 'b'}
-    // { id: '1-2', source: '1', target: '2', sourceHandle: 'a'},
-    // { id: '1-3', source: '1', target: '3', sourceHandle: 'a', targetHandle: 'b'},
-    // { id: '2-3', source: '2', target: '3', sourceHandle: 'b'},
-    // { id: '3-4', source: '3', target: '4', sourceHandle: 'a'},
-    // { id: '4-5', source: '4', target: '5', sourceHandle: 'a'},
-    // { id: '5-6', source: '5', target: '6', sourceHandle: 'b'},
-    // { id: '6-7', source: '6', target: '7', sourceHandle: 'a'}
-  ];
+const FlowComponent = ({ data }) => {
+
+  // check incoming data
+  console.log(data);
+
+  // declare elements array to store table nodes and edges
+  const elements = [];
   
-  // Populating our element array of nodes so react flow can render them.
+  // declare coordinate variables for table node positions/mapping
   let positionX = 0;
   let positionY = 0;
   let row = 0;
-  
-  // Iterates through all the tables
+
+  // Iterate through each table...
   for (const key in data) {
-    console.log('tables', key);
-    // columns is an array of objects
-    const columns = data[key];
-    console.log('columns', columns);
-    // Iterate through all the columns of a specific table to get the column name
-    const columnName = columns.map((col) => <p>{col.column_name} <span style={{color: 'red', alignText: 'right'}}>{col.data_type}</span></p>);
-    // console.log('columnName', columnName); 
-    // declares a new node object
+    
+    // initialize tableName, tableName as key, table to value
+    const tableName = key;
+    const table = data[key];
+
+    // declare primary / foreign key variables
+    let primaryKey = false;
+    let foreignKeys = [];
+    
+    //console.log('tableName', tableName)
+    //console.log('table', table);
+
+    // Iterate through each column of each table creating creating columnName and dataType rows
+    const columns = table.map((column) => {
+      
+      let count = 0;
+      let hasForeignKey = false;
+      
+      // check for primary key
+      if (column.constraint_type === 'PRIMARY KEY') primaryKey = true;
+      // check for foreign keys 
+      else if (column.constraint_type === 'FOREIGN KEY') {
+        hasForeignKey = true;
+        // declare an object to store edges
+        const edge = {
+          id: count++,
+          source: tableName,
+          target: column.foreign_table,
+          sourceHandle: column.column_name
+        }
+        // append edge object to elements array
+        elements.push(edge);
+      }
+
+      // append columnName and hasForeignKey to foreignKeys array
+      foreignKeys.push([column.column_name, hasForeignKey])
+      
+      // return new column and data type to render in newNode
+      return (
+        <p>{column.column_name} 
+          <span style={{color: 'gray', alignText: 'right'}}>
+            {column.data_type}
+          </span>
+        </p>
+      )
+    });
+
+    // create a new node object
     const newNode = {
-      id: key,
+      id: tableName,
       type: 'special',
       data: { 
         label:
-        // Table name and all its columns
-        <div>
-          <h3>{key}</h3>
-          {columnName}
-        </div>
-    },
+          <div>
+            <h3>{tableName}</h3>
+            {columns}
+          </div>,
+        pk: primaryKey,
+        fk: foreignKeys
+      },
       position: { x: positionX, y: positionY }, 
     };
 
+    // assign table position
     row += 1;
     positionY += 500;
     if (row % 2 === 0) {
@@ -50,11 +87,9 @@ function FlowComponent({ data }) {
       positionX += 300;
     }
 
-    // push newNode into elements array
+    // push newNode and edge into elements array
     elements.push(newNode);
   }
-
-
 
   return (
     <div style={{ height: 800 }}>
@@ -86,46 +121,60 @@ function FlowComponent({ data }) {
   );
 }
 
-// CSS for the node
-const customNodeStyles = {
-  background: '#9CA8B3',
-  color: '#FFF',
-  padding: 10,
-  borderRadius: 5,
-};
-
 // Custom Node
 const CustomNode = ({ data }) => {
+  let index = 75;
+  let key = 0;
   return (
     <div style={customNodeStyles}>
-    
-      {/* Handle are the dots */}
-      <Handle type="target" id="a" position="left" style={{ top: '28%'}}/>
-      <Handle type="target" id="b" position="left" style={{ top: '78%'}}/>
-
+      
+      {/* table data */}
       <div>{data.label}</div>
 
-      <Handle
-        type="source"
-        position="right"
-        id="a"
-        style={{ top: '20%' }}
-      />
+      {/* primary key handle */}
+      {data.pk ? (
+        <Handle
+          type="target"
+          position="right"
+          id={`${data.id}`}
+          key={key++}
+          style={{ top: `${index}px`, borderRadius: 5 }}
+        />
+      ) : (
+        ''
+      )}
 
-      <Handle
-        type="source"
-        position="right"
-        id="b"
-        style={{ top: '70%'}}
-      />
+      {/* foreign key handles */}
+      {data.fk.map((el) => {
+        if (el[1] === true) {
+          return (
+            <Handle
+              type="source"
+              position="left"
+              id={`${el[0]}`}
+              key={key++}
+              style={{ top: `${index += 20}px`, borderRadius: 5 }}
+            />
+        )} else {
+          index += 30;
+        } 
+      })}
 
     </div>
   );
 };
 
-// Giving the custom node a type name
+// assign custom node to special type
 const nodeTypes = {
   special: CustomNode,
+};
+
+// CSS styling for custom node
+const customNodeStyles = {
+  backgroundColor: 'lightgray',
+  color: 'black',
+  padding: 10,
+  borderRadius: 5,
 };
 
 export default FlowComponent;
