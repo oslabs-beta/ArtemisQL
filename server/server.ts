@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application, Request, Response, NextFunction } from 'express';
 import Router from './router';
 
 const path = require('path');
@@ -28,7 +28,7 @@ app.use('/', Router);
 app.use('*', (req: Request, res: Response) => res.status(400).send('This is not the page you\'re looking for...'));
 
 // global error handler
-app.use((err, req: Request, res: Response, next) => {
+app.use((err, req: Request, res: Response, next: NextFunction) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
     status: 400,

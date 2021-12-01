@@ -1,10 +1,15 @@
-const GQLController = {};
-const typeConverter = require('../converters/typeConverter');
-const queryConverter = require('../converters/queryConverter');
-const mutationConverter = require('../converters/mutationConverter');
+import { Request, Response, NextFunction } from 'express';
+import { GQLControllerType, MutationObjectType } from './controllerTypes';
+
+// const typeConverter = require('../converters/typeConverter');
+// const queryConverter = require('../converters/queryConverter');
+// const mutationConverter = require('../converters/mutationConverter');
+import typeConverter from '../converters/typeConverter';
+import queryConverter from '../converters/queryConverter';
+import mutationConverter from '../converters/mutationConverter';
 
 // Create GraphQL Schema (Type Defs)
-GQLController.createSchemaTypeDefs = (req, res, next) => {
+const createSchemaTypeDefs = (req: Request, res: Response, next: NextFunction) => {
   console.log('createSchemaTypeDefs Triggered');
   const schema = {};
   const { cache } = res.locals;
@@ -35,7 +40,7 @@ GQLController.createSchemaTypeDefs = (req, res, next) => {
 };
 
 // create GraphQL Schema (queries)
-GQLController.createSchemaQuery = (req, res, next) => {
+const createSchemaQuery = (req, res, next) => {
   const { schema, typeString } = res.locals;
 
   let queryString = `\ntype Query { \n`;
@@ -52,30 +57,31 @@ GQLController.createSchemaQuery = (req, res, next) => {
 };
 
 // create GraphQL Schema (mutations)
-GQLController.createSchemaMutation = (req, res, next) => {
+const createSchemaMutation = (req: Request, res: Response, next: NextFunction) => {
   const { baseTables } = res.locals;
 
-  const mutationObj = {};
+  const mutationObj: MutationObjectType = {};
   // loop through base tables object
 
   for (const key in baseTables) {
     /* -------------------------------------------------------------------------- */
     /*                                 invoke add                                 */
     /* -------------------------------------------------------------------------- */
-    const [add, addMutations] = mutationConverter.add(key, baseTables[key]);
+    const [add, addMutations] = mutationConverter.add(key, baseTables[key]) as [string, object];
     mutationObj[add] = addMutations;
     
     /* -------------------------------------------------------------------------- */
     /*                                invoke update                               */
     /* -------------------------------------------------------------------------- */
-    const [update, updateMutations] = mutationConverter.update(key, baseTables[key]);
+    // stopgap: 'as', guarantees that mutationConverter will return an array with first el as string and second el as object
+    // ideally, need to create a type of function update that returns an array
+    const [update, updateMutations] = mutationConverter.update(key, baseTables[key]) as [string, object];
     mutationObj[update] = updateMutations;
-
 
     /* -------------------------------------------------------------------------- */
     /*                                invoke delete                               */
     /* -------------------------------------------------------------------------- */
-    const [del, deleteMutations] = mutationConverter.delete(key, baseTables[key]);
+    const [del, deleteMutations] = mutationConverter.delete(key, baseTables[key]) as [string, object];
     mutationObj[del] = deleteMutations;
   }
 
@@ -91,5 +97,15 @@ GQLController.createSchemaMutation = (req, res, next) => {
 };
 
 // create GraphQL Resolvers
+const createResolver = (req: Request, res: Response, next: NextFunction) => {
+  // test
+};
 
-module.exports = GQLController;
+const GQLController: GQLControllerType = { 
+  createSchemaTypeDefs,
+  createSchemaQuery,
+  createSchemaMutation,
+  createResolver,
+};
+export default GQLController;
+// module.exports = GQLController;
