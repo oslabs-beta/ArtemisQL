@@ -22,10 +22,11 @@
   "dependencies": {
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
-    "@mui/icons-material": "5.1.1",
+    "@mui/icons-material": "^5.1.1",
     "@mui/material": "5.1.1",
     "@mui/utils": "5.1.1",
     "@types/webpack-dev-server": "^4.5.0",
+    "axios": "^0.24.0",
     "css-loader": "^6.5.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",

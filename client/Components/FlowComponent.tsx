@@ -13,6 +13,7 @@ function FlowComponent({ data }) {
     // { id: '5-6', source: '5', target: '6', sourceHandle: 'b'},
     // { id: '6-7', source: '6', target: '7', sourceHandle: 'a'}
   ];
+  
   // Populating our element array of nodes so react flow can render them.
   let positionX = 0;
   let positionY = 0;

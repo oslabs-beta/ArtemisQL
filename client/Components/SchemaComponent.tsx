@@ -1,9 +1,6 @@
-import React from 'react'
+import React from 'react';
 import { Container, Button } from '@mui/material';
 import Highlight from 'react-highlight';
-
-
-
 
 function SchemaComponent({schemaType}) {
   return (
@@ -17,7 +14,7 @@ function SchemaComponent({schemaType}) {
         </Highlight>
       </Container>
     </div>
-  )
+  );
 }
 
 export default SchemaComponent;

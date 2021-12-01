@@ -4,15 +4,16 @@ const { Pool } = require('pg');
 
 // get all database metadata (tables and columns) from user's selected DB
 const getAllMetadata = async (req: Request, res: Response, next: NextFunction) => {
-  // const PG_URI: string = (!req.body.uri) ? 'postgres://dsthvptf:Y8KtTaY290gb7KlcxkoTLHTnEECegH0r@fanny.db.elephantsql.com/dsthvptf' : req.body.uri;
-  // create a new pool here using the connection string above
-  // console.log('process.env', process.env);
-  // console.log('process.env.SECRET_KEY', process.env.SECRET_KEY);
+  const PG_URI: string = (!req.query.dbLink) ? 'postgres://dsthvptf:Y8KtTaY290gb7KlcxkoTLHTnEECegH0r@fanny.db.elephantsql.com/dsthvptf' : req.query.dbLink.toString();
+
+  // do try catch here, for the catch return
+
   const db = new Pool({
     // Taras' Starwars DB
-    connectionString: 'postgres://dsthvptf:Y8KtTaY290gb7KlcxkoTLHTnEECegH0r@fanny.db.elephantsql.com/dsthvptf',
+    connectionString: PG_URI,
     // connectionString: process.env.DEMO_DB_URI,
   });
+
   const queryString = `
     SELECT 
       cols.column_name,
@@ -41,20 +42,21 @@ const getAllMetadata = async (req: Request, res: Response, next: NextFunction) =
     WHERE cols.table_schema = 'public' AND tbls.table_type = 'BASE TABLE'
     ORDER BY cols.table_name`;
   
-    try {
-      const data = await db.query(queryString);
-      if (!data) {
-        throw (new Error('Error querying from sql database'))
-      }
-      res.locals.queryTables = data.rows; // data.rows is an array of objects
-      return next();
-    } catch (err) {
-      console.log(err);
-      return next({
-        log: `Express error handler caught error in the getAllMetadata controller, ${err}`,
-        message: { err: 'An error occurred in the getAllMetadata controller' }
-      });
-    };
+  try {
+    const data = await db.query(queryString);
+    if (!data) {
+      throw (new Error('Error querying from sql database'))
+    }
+    res.locals.queryTables = data.rows; // data.rows is an array of objects
+    return next();
+  } catch (err) {
+    console.log(err);
+    // Pool.end();
+    return next({
+      log: `Express error handler caught error in the getAllMetadata controller, ${err}`,
+      message: { err: 'An error occurred in the getAllMetadata controller' }
+    });
+  };
 };
 
 // format sql results to client
