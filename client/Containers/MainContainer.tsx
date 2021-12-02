@@ -18,6 +18,7 @@ import axios from 'axios';
 function MainContainer() {
   const [data, setData] = useState({});
   const [schemaType, setSchemaType] = useState();
+  const [resolvers, setResolvers] = useState();
   const [dataBaseUrl, setDataBaseUrl] = useState('');
   const [message, setMessage] = useState('');
   // conditional rendering
@@ -45,6 +46,7 @@ function MainContainer() {
         if (res.status = 200) {
           setData(res.data.cache);
           setSchemaType(res.data.finalString);
+          setResolvers(res.data.resolverString)
           setSchema(true);
         }
       })
@@ -103,7 +105,7 @@ function MainContainer() {
               <FlowComponent data={data} />
             </Grid>
             <Grid item xs={12} md={4}>
-              <SchemaComponent schema={schemaType} resolvers={fakeResolver}/>
+              <SchemaComponent schema={schemaType} resolvers={resolvers}/>
             </Grid>
           </Grid>
         </div>
