@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ReactFlow, { Background, MiniMap, Controls, Handle } from 'react-flow-renderer';
+import ReactFlow, { Background, Controls, Handle } from 'react-flow-renderer';
 
 const FlowComponent = ({ data }) => {
 
@@ -44,7 +44,8 @@ const FlowComponent = ({ data }) => {
           id: count++,
           source: tableName,
           target: column.foreign_table,
-          sourceHandle: column.column_name
+          sourceHandle: column.column_name,
+          style: { stroke: '#93c763'}
         }
         // append edge object to elements array
         elements.push(edge);
@@ -70,7 +71,7 @@ const FlowComponent = ({ data }) => {
       data: { 
         label:
           <div>
-            <h3>{tableName}</h3>
+            <h2>{tableName}</h2>
             {columns}
           </div>,
         pk: primaryKey,
@@ -108,7 +109,7 @@ const FlowComponent = ({ data }) => {
 
 // Custom Node
 const CustomNode = ({ data }) => {
-  let index = 75;
+  let index = 85;
   let key = 0;
   return (
     <div style={customNodeStyles}>
@@ -156,8 +157,9 @@ const nodeTypes = {
 
 // CSS styling for custom node
 const customNodeStyles = {
-  backgroundColor: 'lightgray',
-  color: '#282b2e',
+  backgroundColor: '#e0e0e0',
+  fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
+  color: '#403D39',
   padding: 10,
   borderRadius: 5,
   borderStyle: 'solid',
