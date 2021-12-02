@@ -19,7 +19,7 @@ const theme = createTheme({
     secondary: {
       main: '#403D39',
     }
-  },
+  }
 });
 
 function App() {

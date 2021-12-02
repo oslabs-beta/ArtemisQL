@@ -14,6 +14,7 @@ import FlowComponent from '../Components/FlowComponent';
 import SchemaComponent from '../Components/SchemaComponent';
 import axios from 'axios';
 
+
 function MainContainer() {
   const [data, setData] = useState({});
   const [schemaType, setSchemaType] = useState();
@@ -86,13 +87,13 @@ function MainContainer() {
                 >
                   <MenuIcon />
                 </IconButton>
-                <Typography variant="h4" component="div" sx={{ flexGrow: 2 }}>
+                <Typography color="#EB5E28" variant="h4" component="div" sx={{ flexGrow: 2 }}>
                   ArtemisQL
                 </Typography>
-                <Button color="inherit">Docs</Button>
-                <Button color="inherit">Github</Button>
-                <Button color="inherit">Team</Button>
-                <Button color="inherit">Playground</Button>
+                <Button className="button" color="inherit">Docs</Button>
+                <Button className="button" color="inherit">Github</Button>
+                <Button className="button" color="inherit">Team</Button>
+                <Button className="button" color="inherit">Playground</Button>
               </Toolbar>
             </AppBar>
           </Box>
@@ -102,7 +103,7 @@ function MainContainer() {
               <FlowComponent data={data} />
             </Grid>
             <Grid item xs={12} md={4}>
-              <SchemaComponent schema={schema} resolvers={fakeResolver}/>
+              <SchemaComponent schema={schemaType} resolvers={fakeResolver}/>
             </Grid>
           </Grid>
         </div>
@@ -120,7 +121,7 @@ function MainContainer() {
           </Grid>
   
           <Grid item xs={6}>
-            <Button fullWidth variant="contained" onClick={() => getDataFromDB(dataBaseUrl)} endIcon={<SendIcon/>}>Submit</Button>
+            <Button fullWidth variant="contained" color="secondary" onClick={() => getDataFromDB(dataBaseUrl)} endIcon={<SendIcon/>}>Submit</Button>
           </Grid>
   
           <Grid item xs={6}>
