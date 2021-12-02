@@ -9,19 +9,25 @@ import queryConverter from '../converters/queryConverter';
 import mutationConverter from '../converters/mutationConverter';
 import resolvers from '../converters/resolvers';
 
+const { capitalizeAndSingularize } = require('../utils/helperFunc.ts');
+
 // Create GraphQL Schema (Type Defs)
 const createSchemaTypeDefs = (req: Request, res: Response, next: NextFunction) => {
   console.log('createSchemaTypeDefs Triggered');
   const schema = {};
   const { cache } = res.locals;
   const { baseTables, joinTables } = typeConverter.sortTables(cache);
-  
+  res.locals.baseTableQuery = typeConverter.createBaseTableQuery(baseTables);
+  // console.log('baseTablesQuery', res.locals.baseTableQuery);
+  // console.log('BASE TABLES', baseTables);
   const baseTableNames = Object.keys(baseTables);
   const joinTableNames = Object.keys(joinTables);
   res.locals.baseTables = baseTables;
+  res.locals.joinTables = joinTables;
+  // console.log('joinTables', joinTables);
   res.locals.baseTableNames = baseTableNames;
   res.locals.joinTableNames = joinTableNames;
-  console.log('baseTables', baseTables);
+  // console.log('baseTables', baseTables);
   // [people, films, species, vessels]
   for (const key of baseTableNames) {
     schema[key] = typeConverter.createInitialTypeDef(key);
@@ -101,10 +107,18 @@ const createSchemaMutation = (req: Request, res: Response, next: NextFunction) =
 // create GraphQL Resolvers
 const createResolver = (req: Request, res: Response, next: NextFunction) => {
   console.log('createResolver triggered');
-  const { baseTableNames, finalString, mutationObj } = res.locals;
+  const { 
+    baseTableNames,
+    finalString,
+    mutationObj,
+    baseTableQuery,
+    baseTables,
+    joinTables,
+  } = res.locals;
+
   let resolverString = `const resolvers = { \n`;
 
-  // QUERY
+  /* QUERY */ 
   resolverString += `  Query: {`;
   for (const key of baseTableNames) {
     resolverString += resolvers.createQuery(key);
@@ -112,23 +126,38 @@ const createResolver = (req: Request, res: Response, next: NextFunction) => {
   // console.log('RESOLVER STRING AFTER QUERY LOOP', resolverString);
   resolverString += `\n  },`;
 
-  // MUTATION
+  /* Mutation */ 
   resolverString += `
 
   Mutation: {`;
 
-  console.log('mutationObj', mutationObj);
+  // console.log('mutationObj', mutationObj);
   const mutationTypes = Object.keys(mutationObj);
 
   for (const key of mutationTypes) {
     resolverString += resolvers.createMutation(key);
   }
-  resolverString += `\n  },`;
+  resolverString += `\n  },\n\n`;
   // console.log('resolverString AFTER MUTATION LOOP', resolverString);
   
-  // RELATIONSHIPS
+  /* Relationships */   
+  // loop through all base table names
+  for (const key of baseTableNames) {
+    // at each base table name
+    resolverString += `  ${capitalizeAndSingularize(key)} {`;
+    // 1. check own table columns - append to string
+    resolverString += resolvers.checkOwnTable(key, baseTables);
+    // 2. check all base table cols - append to string
+    resolverString += resolvers.checkBaseTableCols(key, baseTableQuery);
+    // 3. check join tables and cols - append to string
+    resolverString += resolvers.checkJoinTableCols(key, joinTables);
+    // close current table bracket
+    resolverString += `\n  }\n`;
+  }
+  // close resolver bracket
+  resolverString += `}\n`;
   
-  res.locals.finalString = finalString + resolverString;
+  res.locals.resolverString = resolverString;
   return next();
 };
 

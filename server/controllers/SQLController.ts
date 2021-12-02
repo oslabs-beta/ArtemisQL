@@ -41,20 +41,21 @@ const getAllMetadata = async (req: Request, res: Response, next: NextFunction) =
     WHERE cols.table_schema = 'public' AND tbls.table_type = 'BASE TABLE'
     ORDER BY cols.table_name`;
   
-    try {
-      const data = await db.query(queryString);
-      if (!data) {
-        throw (new Error('Error querying from sql database'))
-      }
-      res.locals.queryTables = data.rows; // data.rows is an array of objects
-      return next();
-    } catch (err) {
-      console.log(err);
-      return next({
-        log: `Express error handler caught error in the getAllMetadata controller, ${err}`,
-        message: { err: 'An error occurred in the getAllMetadata controller' }
-      });
-    };
+  try {
+    const data = await db.query(queryString);
+    if (!data) {
+      throw (new Error('Error querying from sql database'))
+    }
+    res.locals.queryTables = data.rows; // data.rows is an array of objects
+    // console.log('queryTables', res.locals.queryTables);
+    return next();
+  } catch (err) {
+    console.log(err);
+    return next({
+      log: `Express error handler caught error in the getAllMetadata controller, ${err}`,
+      message: { err: 'An error occurred in the getAllMetadata controller' },
+    });
+  }
 };
 
 // format sql results to client

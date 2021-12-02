@@ -15,7 +15,7 @@ router.get(
   (req: Request, res: Response) => {
     // cache (for SQL visualizer)
     // finalString (GraphQL Schema)
-    // TBD (GraphQL Resolver)
+    // resolverString (GraphQL Resolver)
     return res.status(200).json(res.locals);
   },
 );
