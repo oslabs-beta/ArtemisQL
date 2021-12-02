@@ -4,15 +4,16 @@ const { Pool } = require('pg');
 
 // get all database metadata (tables and columns) from user's selected DB
 const getAllMetadata = async (req: Request, res: Response, next: NextFunction) => {
-  // const PG_URI: string = (!req.body.uri) ? 'postgres://dsthvptf:Y8KtTaY290gb7KlcxkoTLHTnEECegH0r@fanny.db.elephantsql.com/dsthvptf' : req.body.uri;
-  // create a new pool here using the connection string above
-  // console.log('process.env', process.env);
-  // console.log('process.env.SECRET_KEY', process.env.SECRET_KEY);
+  const PG_URI: string = (!req.query.dbLink) ? 'postgres://dsthvptf:Y8KtTaY290gb7KlcxkoTLHTnEECegH0r@fanny.db.elephantsql.com/dsthvptf' : req.query.dbLink.toString();
+
+  // do try catch here, for the catch return
+
   const db = new Pool({
     // Taras' Starwars DB
-    connectionString: 'postgres://dsthvptf:Y8KtTaY290gb7KlcxkoTLHTnEECegH0r@fanny.db.elephantsql.com/dsthvptf',
+    connectionString: PG_URI,
     // connectionString: process.env.DEMO_DB_URI,
   });
+
   const queryString = `
     SELECT 
       cols.column_name,
