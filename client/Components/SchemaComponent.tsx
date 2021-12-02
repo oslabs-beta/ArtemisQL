@@ -10,9 +10,11 @@ function SchemaComponent({schema, resolvers}) {
         <Button id="schemaButton" variant="outlined" style={buttonStyles} onClick={() => setText(schema)}>Schema</Button>
         <Button id="resolverButton" variant="outlined" style={buttonStyles} onClick={() => setText(resolvers)}>Resolvers</Button>
         <Button id="exportButton" variant="outlined" style={buttonStyles} onClick={() => console.log('button clicked!')}>Copy</Button>
-        <Highlight  language="javascript">
-          {text}
-        </Highlight>
+        <div  style={{height: '760px', overflow: 'scroll' }}>
+          <Highlight  language="javascript">
+            {text}
+          </Highlight>
+        </div>
       </Container>
     </div>
   );
