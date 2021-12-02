@@ -10,8 +10,8 @@ const FlowComponent = ({ data }) => {
   const elements = [];
   
   // declare coordinate variables for table node positions/mapping
-  let positionX = 0;
-  let positionY = 0;
+  let positionX = 20;
+  let positionY = 20;
   let row = 0;
 
   // Iterate through each table...
@@ -56,7 +56,7 @@ const FlowComponent = ({ data }) => {
       // return new column and data type to render in newNode
       return (
         <p>{column.column_name} 
-          <span style={{color: 'gray', alignText: 'right'}}>
+          <span style={{color: 'gray', paddingLeft: 5}}>
             {column.data_type}
           </span>
         </p>
@@ -83,7 +83,7 @@ const FlowComponent = ({ data }) => {
     row += 1;
     positionY += 500;
     if (row % 2 === 0) {
-      positionY = 0;
+      positionY = 20;
       positionX += 300;
     }
 
@@ -92,28 +92,13 @@ const FlowComponent = ({ data }) => {
   }
 
   return (
-    <div style={{ height: 800 }}>
-      <ReactFlow elements={elements} nodeTypes={nodeTypes} defaultZoom={0}>
+    <div style={{ height: 800, borderStyle: 'solid', borderWidth: 1, borderRadius: 2, borderColor: '#282b2e'}}>
+      <ReactFlow elements={elements} nodeTypes={nodeTypes} defaultZoom={0.75}>
         <Background
           variant="dots"
           gap={12}
           size={0.5}
         /> 
-        {/* <MiniMap
-          nodeColor={(node) => {
-            switch (node.type) {
-              case 'input':
-                return 'red';
-              case 'default':
-                return '#00ff00';
-              case 'output':
-                return 'rgb(0,0,255)';
-              default:
-                return '#eee';
-            }
-          }}
-          nodeStrokeWidth={3}
-        /> */}
         <Controls />
       </ReactFlow>
 
@@ -172,9 +157,12 @@ const nodeTypes = {
 // CSS styling for custom node
 const customNodeStyles = {
   backgroundColor: 'lightgray',
-  color: 'black',
+  color: '#282b2e',
   padding: 10,
   borderRadius: 5,
+  borderStyle: 'solid',
+  borderWidth: 2,
+  borderColor: '#93c763'
 };
 
 export default FlowComponent;

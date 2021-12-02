@@ -7,8 +7,9 @@ function SchemaComponent({schema, resolvers}) {
   return (
     <div>
       <Container>
-        <Button id="schemaButton" variant="outlined" onClick={() => setText(schema)}>Schema</Button>
-        <Button id="resolverButton" variant="outlined" onClick={() => setText(resolvers)}>Resolvers</Button>
+        <Button id="schemaButton" variant="outlined" style={buttonStyles} onClick={() => setText(schema)}>Schema</Button>
+        <Button id="resolverButton" variant="outlined" style={buttonStyles} onClick={() => setText(resolvers)}>Resolvers</Button>
+        <Button id="exportButton" variant="outlined" style={buttonStyles} onClick={() => console.log('button clicked!')}>Copy</Button>
         <Highlight  language="javascript">
           {text}
         </Highlight>
@@ -17,4 +18,10 @@ function SchemaComponent({schema, resolvers}) {
   );
 }
 
+const buttonStyles = {
+  marginRight: 10,
+  color: '#282b2e',
+  borderWidth: 2,
+  borderColor: '#93c763'
+}
 export default SchemaComponent;
