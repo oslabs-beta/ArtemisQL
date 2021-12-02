@@ -13,6 +13,7 @@ import SendIcon from '@mui/icons-material/Send';
 import FlowComponent from '../Components/FlowComponent';
 import SchemaComponent from '../Components/SchemaComponent';
 import axios from 'axios';
+import logo from '/Users/johnbryan/codesmith/ArtemisQL/client/assets/ArtemisQL.png'
 
 
 function MainContainer() {
@@ -89,9 +90,8 @@ function MainContainer() {
               >
                 <MenuIcon />
               </IconButton>
-              <Typography color="#ff6d00" variant="h4" component="div" sx={{ flexGrow: 2 }}>
-                ArtemisQL
-              </Typography>
+              <img src={logo} style={{width: '260px', height: '90px'}}/>
+              <Typography color="#ff6d00" variant="h4" component="div" sx={{ flexGrow: 2 }}></Typography>
               <Button className="button" color="inherit">Docs</Button>
               <Button className="button" color="inherit">Github</Button>
               <Button className="button" color="inherit">Team</Button>
@@ -125,11 +125,13 @@ function MainContainer() {
               aria-label="menu"
               sx={{ mr: 2 }}
             >
-              <MenuIcon />
+              <MenuIcon/>
+              
             </IconButton>
+            <img src={logo} style={{width: '260px', height: '90px'}}/>
             <Typography color="#ff6d00" variant="h4" component="div" sx={{ flexGrow: 2 }}>
-              ArtemisQL
             </Typography>
+            
             <Button className="button" color="inherit">Docs</Button>
             <Button className="button" color="inherit">Github</Button>
             <Button className="button" color="inherit">Team</Button>
@@ -137,33 +139,48 @@ function MainContainer() {
           </Toolbar>
         </AppBar>
       </Box>
-      <div style={ {display: 'flex', alignItems: 'center', height: '100%' }}>
-      <Container maxWidth='sm'>
-        <Grid container spacing={2} align="center" justify="center">
+      <div style={ {display: 'flex', alignItems: 'center', height: '85%' }}>
+        <Container maxWidth='sm' style={{border: '1px solid #403D39', borderRadius: '5px', boxShadow: '5px 5px #888888', height: '120px'}}>
+          <Grid container spacing={2} align="center" justify="center">
 
-          <Grid item xs={12}>
-            <TextField name="urlInput" onChange={(event) => onChangeHandler(event)} fullWidth variant="standard" label="Database URL" />
-            {message}
-          </Grid>
-  
-          <Grid item xs={6}>
-            <Button fullWidth variant="contained" color="secondary" onClick={() => getDataFromDB(dataBaseUrl)} endIcon={<SendIcon/>}>Submit</Button>
-          </Grid>
-  
-          <Grid item xs={6}>
-            <Button fullWidth variant="contained" color="secondary" onClick={() => getSampleDB()} endIcon={<StorageIcon/>}>Demo Database</Button>
-          </Grid>
+            <Grid item xs={12}>
+              <TextField name="urlInput" onChange={(event) => onChangeHandler(event)} fullWidth variant="standard" label="Database URL" />
+              {message}
+            </Grid>
     
-        </Grid> 
-      </Container>
-    </div>
+            <Grid item xs={6}>
+              <Button fullWidth variant="contained" color="primary" onClick={() => getDataFromDB(dataBaseUrl)} endIcon={<SendIcon/>}>Submit</Button>
+            </Grid>
+    
+            <Grid item xs={6}>
+              <Button fullWidth variant="contained" color="primary" onClick={() => getSampleDB()} endIcon={<StorageIcon/>}>Demo Database</Button>
+            </Grid>
+      
+          </Grid> 
+        </Container>
+      </div>
+    
+      {/* <AppBar position="static" color="primary">
+        <Container maxWidth="md">
+          <Toolbar>
+            <Typography variant="body1" color="inherit" align="center" justifyContent="center">
+              {/* © 2021 ArtemisQL */}
+            {/* </Typography>
+          </Toolbar>
+        </Container>
+      </AppBar> */} 
     </div>
     
   );
 }
 
-const buttonStyles = {
-  "&:hover": "#ff6d00"
-}
+// const buttonStyles = {
+//   backgroundColor: '#78909c',
+//   color: 'white',
+//   '&:hover': {
+//     backgroundColor: '#78909c',
+//     color: '#ff6d00',
+//   }
+// }
 
 export default MainContainer;

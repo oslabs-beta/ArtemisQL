@@ -3,23 +3,34 @@ import MainContainer from './Containers/MainContainer';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 /* Our Color Palette
-Floral White: #FFFCF2
-Pale Silver: #CCC5B9
-Black Olive:#403D39
+Blue Gray: #78909c
+Light Gray: #eeeeee
+Black Olive: #403D39
 Eerie Black: #252422
-Flame: #EB5E28
-Dark Blue: #31394D
+Orange: #ff6d00
+Lime green: #93c763
 */
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#252422',
+      main: '#78909c',
     },
     secondary: {
       main: '#403D39',
     },
-  }
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            backgroundColor: '#EB5E28',
+          },
+        },
+      },
+    },
+  },
 });
 
 function App() {

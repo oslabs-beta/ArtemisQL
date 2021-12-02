@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button } from '@mui/material';
+import { Container, Button, Grid } from '@mui/material';
 import Highlight from 'react-highlight';
 
 function SchemaComponent({schema, resolvers}) {
@@ -8,32 +8,40 @@ function SchemaComponent({schema, resolvers}) {
   
   const copyCode = () => {
     navigator.clipboard.writeText(text);
-    console.log('code copied!')
+    //console.log('code copied!')
   }
 
   return (
-    <div>
+    <Grid item xs={12}>
       <Container>
-        <div  style={{height: '750px', overflow: 'scroll', borderRadius: '5px' }}>
+        <div  style={{height: '790px', overflow: 'scroll', borderRadius: '5px' }}>
           <Highlight  language="javascript">
             {text}
           </Highlight>
         </div>
         <br/>
-        <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
-          <Button id="schemaButton" variant="outlined" style={buttonStyles} onClick={() => setText(schema)}>Schema</Button>
-          <Button id="resolverButton" variant="outlined" style={buttonStyles} onClick={() => setText(resolvers)}>Resolvers</Button>
-          <Button id="exportButton" variant="outlined" style={buttonStyles} onClick={() => copyCode()}>Copy</Button>
-        </div>
+
+        <Grid container spacing={2} align="center" justify="space-around">
+          <Grid item xs={4}>
+            <Button id="schemaButton" fullWidth variant="standard" style={buttonStyles} onClick={() => setText(schema)}>Schema</Button>
+          </Grid>
+          <Grid item xs={4}>
+            <Button id="resolverButton" fullWidth variant="standard" style={buttonStyles} onClick={() => setText(resolvers)}>Resolvers</Button>
+          </Grid>
+          <Grid item xs={4}>
+            <Button id="exportButton" fullWidth variant="standard" style={buttonStyles} onClick={() => copyCode()}>Copy</Button>
+          </Grid>
+        </Grid>
       </Container>
-    </div>
+    </Grid>
   );
 }
 
 const buttonStyles = {
   color: 'white',
-  backgroundColor: '#93c763',
-  borderWidth: 2,
-  borderColor: '#93c763'
+  backgroundColor: '#78909c',
+  borderColor: '#78909c',
+  borderWidth: 2
 }
+
 export default SchemaComponent;
