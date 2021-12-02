@@ -11,10 +11,11 @@ router.get(
   GQLController.createSchemaTypeDefs,
   GQLController.createSchemaQuery,
   GQLController.createSchemaMutation,
+  GQLController.createResolver,
   (req: Request, res: Response) => {
     // cache (for SQL visualizer)
     // finalString (GraphQL Schema)
-    // TBD (GraphQL Resolver)
+    // resolverString (GraphQL Resolver)
     return res.status(200).json(res.locals);
   },
 );

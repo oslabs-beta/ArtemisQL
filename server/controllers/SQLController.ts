@@ -48,15 +48,15 @@ const getAllMetadata = async (req: Request, res: Response, next: NextFunction) =
       throw (new Error('Error querying from sql database'))
     }
     res.locals.queryTables = data.rows; // data.rows is an array of objects
+    // console.log('queryTables', res.locals.queryTables);
     return next();
   } catch (err) {
     console.log(err);
-    // Pool.end();
     return next({
       log: `Express error handler caught error in the getAllMetadata controller, ${err}`,
-      message: { err: 'An error occurred in the getAllMetadata controller' }
+      message: { err: 'An error occurred in the getAllMetadata controller' },
     });
-  };
+  }
 };
 
 // format sql results to client

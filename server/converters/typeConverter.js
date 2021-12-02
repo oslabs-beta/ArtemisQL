@@ -41,6 +41,18 @@ typeConverter.sortTables = (cache) => {
   return { baseTables, joinTables };
 };
 
+// input: base table (object of array, where each element in the array is an field/column object)
+// output: array of objects, where each object is a join table field/column
+typeConverter.createBaseTableQuery = (baseTable) => {
+  const array = [];
+  for (const baseTableName in baseTable) {
+    for (const column of baseTable[baseTableName]) {
+      array.push(column);
+    }
+  }
+  return array;
+};
+
 // input: base table name
 // output: type def object (to add as properties in schema object)
 typeConverter.createInitialTypeDef = (baseTableName) => {
