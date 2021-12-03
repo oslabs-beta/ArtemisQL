@@ -12,8 +12,10 @@ import StorageIcon from '@mui/icons-material/Storage';
 import SendIcon from '@mui/icons-material/Send';
 import FlowComponent from '../Components/FlowComponent';
 import SchemaComponent from '../Components/SchemaComponent';
+import NavComponent from '../Components/NavComponent'
 import axios from 'axios';
 import logo from '/Users/johnbryan/codesmith/ArtemisQL/client/assets/ArtemisQL.png'
+
 
 
 function MainContainer() {
@@ -47,7 +49,7 @@ function MainContainer() {
         if (res.status = 200) {
           setData(res.data.cache);
           setSchemaType(res.data.finalString);
-          setResolvers(res.data.resolverString)
+          setResolvers(res.data.resolverString);
           setSchema(true);
         }
       })
@@ -76,35 +78,14 @@ function MainContainer() {
 
   if (showSchema) {
     return (
-    // render two components
+
       <div>
-        <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="static">
-            <Toolbar>
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                sx={{ mr: 2 }}
-              >
-                <MenuIcon />
-              </IconButton>
-              <img src={logo} style={{width: '260px', height: '90px'}}/>
-              <Typography color="#ff6d00" variant="h4" component="div" sx={{ flexGrow: 2 }}></Typography>
-              <Button className="button" color="inherit">Docs</Button>
-              <Button className="button" color="inherit">Github</Button>
-              <Button className="button" color="inherit">Team</Button>
-              <Button className="button" color="inherit">Playground</Button>
-            </Toolbar>
-          </AppBar>
-        </Box>
-        <br/>
         <Grid container spacing={1} justifyContent="center">
-          <Grid item xs={12} md={9}>
+          <Grid item xs={12} md={8}>
             <FlowComponent data={data} />
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={4}>
+
             <SchemaComponent schema={schemaType} resolvers={resolvers}/>
           </Grid>
         </Grid>
@@ -113,32 +94,6 @@ function MainContainer() {
   } 
 
   return (
-    // What are we going to render.
-    <div>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon/>
-              
-            </IconButton>
-            <img src={logo} style={{width: '260px', height: '90px'}}/>
-            <Typography color="#ff6d00" variant="h4" component="div" sx={{ flexGrow: 2 }}>
-            </Typography>
-            
-            <Button className="button" color="inherit">Docs</Button>
-            <Button className="button" color="inherit">Github</Button>
-            <Button className="button" color="inherit">Team</Button>
-            <Button className="button" color="inherit">Playground</Button>
-          </Toolbar>
-        </AppBar>
-      </Box>
       <div style={ {display: 'flex', alignItems: 'center', height: '85%' }}>
         <Container maxWidth='sm' style={{border: '1px solid #403D39', borderRadius: '5px', boxShadow: '5px 5px #888888', height: '120px'}}>
           <Grid container spacing={2} align="center" justify="center">
@@ -157,18 +112,7 @@ function MainContainer() {
             </Grid>
       
           </Grid> 
-        </Container>
-      </div>
-    
-      {/* <AppBar position="static" color="primary">
-        <Container maxWidth="md">
-          <Toolbar>
-            <Typography variant="body1" color="inherit" align="center" justifyContent="center">
-              {/* © 2021 ArtemisQL */}
-            {/* </Typography>
-          </Toolbar>
-        </Container>
-      </AppBar> */} 
+      </Container>
     </div>
     
   );
@@ -182,5 +126,4 @@ function MainContainer() {
 //     color: '#ff6d00',
 //   }
 // }
-
 export default MainContainer;

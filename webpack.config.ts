@@ -58,6 +58,8 @@ const config: webpack.Configuration = {
     proxy: {
       '/': 'http://localhost:3000',
     },
+    historyApiFallback: true,
+    // hot: true
   },
 
   plugins: [
