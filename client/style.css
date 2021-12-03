@@ -2,3 +2,18 @@ button:hover {
   color: "#EB5E28"
 }
 
+.avatar {
+    width: 150px !important;
+    height: 150px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 10px !important;
+}
+
+section {
+  min-height: 30vh !important;
+}
+
+.media {
+  height: 256px;
+}
