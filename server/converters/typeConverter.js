@@ -2,8 +2,8 @@ const { convertDataType, checkNullable, capitalizeAndSingularize } = require('..
 
 const typeConverter = {};
 
-const joinTables = {};
-const baseTables = {};
+// const joinTables = {};
+// const baseTables = {};
 
 // SEPARATE JOIN FROM "BASE" TABLES
 // count all keys in table, count all foreign keys
@@ -32,7 +32,7 @@ const checkIfJoinTable = (cache, tableName) => {
 
 // input: res.locals.cache
 // output: nothing (mutating 2 objects - baseTables and junctionTable in outer scope)
-typeConverter.sortTables = (cache) => {
+typeConverter.sortTables = (cache, baseTables, joinTables) => {
   for (const key in cache) {
     if (checkIfJoinTable(cache, key)) joinTables[key] = cache[key];
     else baseTables[key] = cache[key]; 
@@ -44,6 +44,7 @@ typeConverter.sortTables = (cache) => {
 // input: base table (object of array, where each element in the array is an field/column object)
 // output: array of objects, where each object is a join table field/column
 typeConverter.createBaseTableQuery = (baseTable) => {
+  console.log(baseTable)
   const array = [];
   for (const baseTableName in baseTable) {
     for (const column of baseTable[baseTableName]) {
@@ -55,7 +56,7 @@ typeConverter.createBaseTableQuery = (baseTable) => {
 
 // input: base table name
 // output: type def object (to add as properties in schema object)
-typeConverter.createInitialTypeDef = (baseTableName) => {
+typeConverter.createInitialTypeDef = (baseTableName, baseTables) => {
   const tableType = {};
 
   // iterate through array of objects/columns
@@ -93,7 +94,7 @@ typeConverter.createInitialTypeDef = (baseTableName) => {
 
 // input: join table name
 // output: nothing - mutate schema object
-typeConverter.addForeignKeysToTypeDef = (joinTableName, schema) => {
+typeConverter.addForeignKeysToTypeDef = (joinTableName, schema, joinTables) => {
   // iterate through array (ex. vessels_in_films)
   const foreignKeys = [];
   for (let i = 0; i < joinTables[joinTableName].length; i += 1) {

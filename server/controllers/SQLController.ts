@@ -6,10 +6,9 @@ const { Pool } = require('pg');
 const getAllMetadata = async (req: Request, res: Response, next: NextFunction) => {
   const PG_URI: string = (!req.query.dbLink) ? 'postgres://dsthvptf:Y8KtTaY290gb7KlcxkoTLHTnEECegH0r@fanny.db.elephantsql.com/dsthvptf' : req.query.dbLink.toString();
 
-  // do try catch here, for the catch return
+  console.log('PG_URI', PG_URI);
 
   const db = new Pool({
-    // Taras' Starwars DB
     connectionString: PG_URI,
     // connectionString: process.env.DEMO_DB_URI,
   });
