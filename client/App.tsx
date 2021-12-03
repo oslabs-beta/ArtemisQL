@@ -6,7 +6,6 @@ import FeatureComponent from './Components/FeatureComponent'
 import TeamBiosComponent from './Components/TeamBiosComponent'
 import DemoComponent from './Components/DemoComponent'
 
-
 function App() {
   return (
     <div>

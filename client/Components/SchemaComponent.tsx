@@ -1,29 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button } from '@mui/material';
+import { Container, Button, Grid } from '@mui/material';
 import Highlight from 'react-highlight';
 
 function SchemaComponent({schema, resolvers}) {
+  
   const [text, setText] = useState(schema);
+  
+  const copyCode = () => {
+    navigator.clipboard.writeText(text);
+    //console.log('code copied!')
+  }
+
   return (
-    <div>
+    <Grid item xs={12}>
       <Container>
-        <Button id="schemaButton" variant="outlined" style={buttonStyles} onClick={() => setText(schema)}>Schema</Button>
-        <Button id="resolverButton" variant="outlined" style={buttonStyles} onClick={() => setText(resolvers)}>Resolvers</Button>
-        <Button id="exportButton" variant="outlined" style={buttonStyles} onClick={() => console.log('button clicked!')}>Copy</Button>
-        <div  style={{height: '760px', overflow: 'scroll' }}>
+        <div  style={{height: '790px', overflow: 'scroll', borderRadius: '5px' }}>
           <Highlight  language="javascript">
             {text}
           </Highlight>
         </div>
+        <br/>
+
+        <Grid container spacing={2} align="center" justify="space-around">
+          <Grid item xs={4}>
+            <Button id="schemaButton" fullWidth variant="standard" style={buttonStyles} onClick={() => setText(schema)}>Schema</Button>
+          </Grid>
+          <Grid item xs={4}>
+            <Button id="resolverButton" fullWidth variant="standard" style={buttonStyles} onClick={() => setText(resolvers)}>Resolvers</Button>
+          </Grid>
+          <Grid item xs={4}>
+            <Button id="exportButton" fullWidth variant="standard" style={buttonStyles} onClick={() => copyCode()}>Copy</Button>
+          </Grid>
+        </Grid>
       </Container>
-    </div>
+    </Grid>
   );
 }
 
 const buttonStyles = {
-  marginRight: 10,
-  color: '#282b2e',
-  borderWidth: 2,
-  borderColor: '#93c763'
+  color: 'white',
+  backgroundColor: '#78909c',
+  borderColor: '#78909c',
+  borderWidth: 2
 }
+
 export default SchemaComponent;

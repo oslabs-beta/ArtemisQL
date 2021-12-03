@@ -14,6 +14,7 @@ import FlowComponent from '../Components/FlowComponent';
 import SchemaComponent from '../Components/SchemaComponent';
 import NavComponent from '../Components/NavComponent'
 import axios from 'axios';
+import logo from '/Users/johnbryan/codesmith/ArtemisQL/client/assets/ArtemisQL.png'
 
 
 
@@ -77,12 +78,14 @@ function MainContainer() {
 
   if (showSchema) {
     return (
+
       <div>
         <Grid container spacing={1} justifyContent="center">
           <Grid item xs={12} md={8}>
             <FlowComponent data={data} />
           </Grid>
           <Grid item xs={12} md={4}>
+
             <SchemaComponent schema={schemaType} resolvers={resolvers}/>
           </Grid>
         </Grid>
@@ -91,25 +94,36 @@ function MainContainer() {
   } 
 
   return (
-    <div style={{display: 'flex', alignItems: 'center', height: '100%' } }>
-      <Container maxWidth='sm'>
+      <div style={ {display: 'flex', alignItems: 'center', height: '85%' }}>
+        <Container maxWidth='sm' style={{border: '1px solid #403D39', borderRadius: '5px', boxShadow: '5px 5px #888888', height: '120px'}}>
           <Grid container spacing={2} align="center" justify="center">
+
             <Grid item xs={12}>
               <TextField name="urlInput" onChange={(event) => onChangeHandler(event)} fullWidth variant="standard" label="Database URL" />
               {message}
             </Grid>
-  
+    
             <Grid item xs={6}>
-              <Button fullWidth variant="contained" color="secondary" onClick={() => getDataFromDB(dataBaseUrl)} endIcon={<SendIcon/>}>Submit</Button>
+              <Button fullWidth variant="contained" color="primary" onClick={() => getDataFromDB(dataBaseUrl)} endIcon={<SendIcon/>}>Submit</Button>
             </Grid>
-  
+    
             <Grid item xs={6}>
-              <Button fullWidth variant="contained" color="secondary" onClick={() => getSampleDB()} endIcon={<StorageIcon/>}>Demo Database</Button>
+              <Button fullWidth variant="contained" color="primary" onClick={() => getSampleDB()} endIcon={<StorageIcon/>}>Demo Database</Button>
             </Grid>
+      
           </Grid> 
       </Container>
     </div>
+    
   );
 }
 
+// const buttonStyles = {
+//   backgroundColor: '#78909c',
+//   color: 'white',
+//   '&:hover': {
+//     backgroundColor: '#78909c',
+//     color: '#ff6d00',
+//   }
+// }
 export default MainContainer;

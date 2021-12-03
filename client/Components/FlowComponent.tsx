@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ReactFlow, { Background, MiniMap, Controls, Handle } from 'react-flow-renderer';
+import ReactFlow, { Background, Controls, Handle } from 'react-flow-renderer';
 
 const FlowComponent = ({ data }) => {
 
@@ -44,7 +44,9 @@ const FlowComponent = ({ data }) => {
           id: count++,
           source: tableName,
           target: column.foreign_table,
-          sourceHandle: column.column_name
+          sourceHandle: column.column_name,
+          style: { stroke: '#93c763'},
+          animated: true
         }
         // append edge object to elements array
         elements.push(edge);
@@ -92,23 +94,23 @@ const FlowComponent = ({ data }) => {
   }
 
   return (
-    <div style={{ height: 800, borderStyle: 'solid', borderWidth: 1, borderRadius: 2, borderColor: '#282b2e'}}>
+    <div style={{ height: '100%', borderStyle: 'solid', borderWidth: 1, borderRadius: 2, borderColor: '#93c763'}}>
       <ReactFlow elements={elements} nodeTypes={nodeTypes} defaultZoom={0.75}>
         <Background
+          style={{backgroundColor: '#fafafa'}}   
           variant="dots"
           gap={12}
           size={0.5}
         /> 
         <Controls />
       </ReactFlow>
-
     </div>
   );
 }
 
 // Custom Node
 const CustomNode = ({ data }) => {
-  let index = 75;
+  let index = 80;
   let key = 0;
   return (
     <div style={customNodeStyles}>
@@ -123,7 +125,7 @@ const CustomNode = ({ data }) => {
           position="right"
           id={`${data.id}`}
           key={key++}
-          style={{ top: `${index}px`, borderRadius: 5 }}
+          style={{ top: `${index}px`, borderRadius: 5, backgroundColor: '#ef6c00' }}
         />
       ) : (
         ''
@@ -131,17 +133,18 @@ const CustomNode = ({ data }) => {
 
       {/* foreign key handles */}
       {data.fk.map((el) => {
-        if (el[1] === true) {
+        if (el[0] === '_id') index = 80;
+        else if (el[1] === true) {
           return (
             <Handle
               type="source"
               position="left"
               id={`${el[0]}`}
               key={key++}
-              style={{ top: `${index += 20}px`, borderRadius: 5 }}
+              style={{ top: `${index += 34}px`, borderRadius: 5, backgroundColor: '#ef6c00' }}
             />
         )} else {
-          index += 30;
+          index += 34;
         } 
       })}
 
@@ -156,8 +159,9 @@ const nodeTypes = {
 
 // CSS styling for custom node
 const customNodeStyles = {
-  backgroundColor: 'lightgray',
-  color: '#282b2e',
+  backgroundColor: '#eeeeee',
+  fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
+  color: '#403D39',
   padding: 10,
   borderRadius: 5,
   borderStyle: 'solid',
