@@ -15,8 +15,13 @@ const { capitalizeAndSingularize } = require('../utils/helperFunc.ts');
 const createSchemaTypeDefs = (req: Request, res: Response, next: NextFunction) => {
   console.log('createSchemaTypeDefs Triggered');
   const schema = {};
+  const bTables = {};
+  const jTables = {};
   const { cache } = res.locals;
-  const { baseTables, joinTables } = typeConverter.sortTables(cache);
+  const { baseTables, joinTables } = typeConverter.sortTables(cache, bTables, jTables);
+
+  console.log("createBaseTableQuery")
+
   res.locals.baseTableQuery = typeConverter.createBaseTableQuery(baseTables);
   // console.log('baseTablesQuery', res.locals.baseTableQuery);
   // console.log('BASE TABLES', baseTables);
@@ -29,14 +34,19 @@ const createSchemaTypeDefs = (req: Request, res: Response, next: NextFunction) =
   res.locals.joinTableNames = joinTableNames;
   // console.log('baseTables', baseTables);
   // [people, films, species, vessels]
+
+  console.log("baseTableName")
+
   for (const key of baseTableNames) {
-    schema[key] = typeConverter.createInitialTypeDef(key);
+    schema[key] = typeConverter.createInitialTypeDef(key, baseTables);
   }
+
+  console.log("joinTableNames")
 
   for (const key of joinTableNames) {
     // schema from line 34 gets mutated every time we invoke typeConverter.finalizeTypeDef
     // because schema is being passed in by reference
-    typeConverter.addForeignKeysToTypeDef(key, schema);
+    typeConverter.addForeignKeysToTypeDef(key, schema, joinTables);
   }
 
   const typeString = typeConverter.finalizeTypeDef(schema);
@@ -48,6 +58,7 @@ const createSchemaTypeDefs = (req: Request, res: Response, next: NextFunction) =
 
 // create GraphQL Schema (queries)
 const createSchemaQuery = (req, res, next) => {
+  console.log('createSchemaQuery Triggered');
   const { schema, typeString } = res.locals;
 
   let queryString = `\ntype Query { \n`;
@@ -65,6 +76,7 @@ const createSchemaQuery = (req, res, next) => {
 
 // create GraphQL Schema (mutations)
 const createSchemaMutation = (req: Request, res: Response, next: NextFunction) => {
+  console.log('createSchemaMutation Triggered');
   const { baseTables } = res.locals;
 
   const mutationObj: MutationObjectType = {};
@@ -167,5 +179,12 @@ const GQLController: GQLControllerType = {
   createSchemaMutation,
   createResolver,
 };
+
+// const GQLController = { 
+//   createSchemaTypeDefs,
+//   createSchemaQuery,
+//   createSchemaMutation,
+//   createResolver,
+// };
 export default GQLController;
 // module.exports = GQLController;
