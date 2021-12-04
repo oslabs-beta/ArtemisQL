@@ -11,7 +11,7 @@ const DemoComponent = () => {
         <Box pt={8} textAlign="center">
           <Typography variant="h4" component="h2" gutterBottom={true}>How to use ArtemisQL</Typography>
           <Typography variant="subtitle1" color="textSecondary">
-            A tool to visualize your Database's ERD, help generate GraphQL Schema's queries, mutations, types, resolvers.
+            We've designed a simple process to help you migrate from REST API too GraphQL. Here's how it works.
           </Typography>
         </Box>
       </Container>
