@@ -2,8 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 // import App from './App';
 import Router from './Router';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider, createTheme, ThemeOptions } from '@mui/material/styles';
 import './style.css'; 
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 /* Our Color Palette
   Floral White: #FFFCF2
@@ -12,16 +16,23 @@ import './style.css';
   Eerie Black: #252422
   Flame: #EB5E28
   Dark Blue: #31394D
+
+  Blue Gray: #78909C
+  Light Gray: #EEEEEE
+  Black Olive: #403D39
+  Eerie Black: #252422
+  Orange: #FF6D00
+  Lime green: #93C763
 */
 
 const theme = createTheme({
   
   palette: {
     primary: {
-      main: '#252422',
+      main: '#78909C',
     },
     secondary: {
-      main: '#403D39',
+      main: '#93C763',
     },
   },
 
