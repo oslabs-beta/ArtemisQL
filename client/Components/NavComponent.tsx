@@ -20,6 +20,9 @@ const NavComponent = () => {
     window.open('https://github.com/oslabs-beta/ArtemisQL', '_blank');
   };
 
+  // static app bar
+  // DEMO button should lead to /schema
+  // make sandbox open to tab
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -41,8 +44,9 @@ const NavComponent = () => {
           </Link>
           {/* <Button className="button" color="inherit" startIcon={<ArticleIcon />}>Docs</Button> */}
           <Button href="https://github.com/oslabs-beta/ArtemisQL" target="_blank" className="button" color="inherit" startIcon={<GitHubIcon />}>Github</Button>
+          <Button href="/schema" target="_blank" className="button" color="inherit" startIcon={<GitHubIcon />}>Demo</Button>
           {/* <Button className="button" color="inherit" startIcon={<GroupsIcon />}>Team</Button> */}
-          <Button href="/sandbox" className="button" color="inherit" startIcon={<BugReportIcon />}>Sandbox</Button>
+          <Button href="/sandbox" target="_blank" className="button" color="inherit" startIcon={<BugReportIcon />}>Sandbox</Button>
         </Toolbar>
       </AppBar>
     </Box>
