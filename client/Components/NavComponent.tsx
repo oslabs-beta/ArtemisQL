@@ -16,6 +16,8 @@ import logo from '../assets/ArtemisQL.png';
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
 import { Link } from 'react-router-dom';
 import a_logo from '../assets/cropped-A-logo.png';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 
 const NavComponent = () => {
   return (
@@ -46,6 +48,12 @@ const NavComponent = () => {
           <Button href="/sandbox" target="_blank" className="button" color="inherit" startIcon={<BugReportIcon />}> Sandbox</Button>
           <IconButton style={{ marginLeft: 'auto' }} href="https://github.com/oslabs-beta/ArtemisQL" target="_blank" className="button" color="inherit">
             <GitHubIcon />
+          </IconButton>
+          <IconButton href="https://www.linkedin.com/" target="_blank" className="button" color="inherit">
+            <LinkedInIcon />
+          </IconButton>
+          <IconButton href="https://medium.com/" target="_blank" className="button" color="inherit">
+            <ArticleOutlinedIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
