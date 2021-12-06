@@ -11,6 +11,14 @@ const Router = () => (
       <Route path="/" element={<App />} />
       <Route path="/schema" element={<MainContainer />} />
     </Switch>
+    {/* <Switch>
+      <Route path="/">
+        <App /> 
+      </Route>
+      <Route path="/schema">
+        <MainContainer />
+      </Route>
+    </Switch> */}
   </BrowserRouter>
 
 );
