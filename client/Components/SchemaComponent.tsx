@@ -21,15 +21,15 @@ function SchemaComponent({schema, resolvers}) {
         </div>
         <br/>
 
-        <Grid container spacing={2} align="center" justify="space-around">
-          <Grid item xs={4}>
-            <Button id="schemaButton" fullWidth variant="standard" style={buttonStyles} onClick={() => setText(schema)}>Schema</Button>
+        <Grid container spacing={1} align="center" justify="space-around">
+          <Grid item xs={3.6}>
+            <Button id="schemaButton" fullWidth variant="contained" style={buttonStyles} onClick={() => setText(schema)}>Schema</Button>
           </Grid>
-          <Grid item xs={4}>
-            <Button id="resolverButton" fullWidth variant="standard" style={buttonStyles} onClick={() => setText(resolvers)}>Resolvers</Button>
+          <Grid item xs={4.8}>
+            <Button id="resolverButton" fullWidth variant="contained" style={buttonStyles} onClick={() => setText(resolvers)}>Resolvers</Button>
           </Grid>
-          <Grid item xs={4}>
-            <Button id="exportButton" fullWidth variant="standard" style={buttonStyles} onClick={() => copyCode()}>Copy</Button>
+          <Grid item xs={3.6}>
+            <Button id="exportButton" fullWidth variant="contained" style={buttonStyles} onClick={() => copyCode()}>Copy</Button>
           </Grid>
         </Grid>
       </Container>
