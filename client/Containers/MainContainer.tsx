@@ -78,18 +78,7 @@ function MainContainer() {
 
   if (showSchema) {
     return (
-
-      <div>
-        <Grid container spacing={1} justifyContent="center">
-          <Grid item xs={12} md={8}>
-            <FlowComponent data={data} />
-          </Grid>
-          <Grid item xs={12} md={4}>
-
-            <SchemaComponent schema={schemaType} resolvers={resolvers}/>
-          </Grid>
-        </Grid>
-      </div>
+      <FlowComponent data={data} schema={schemaType} resolvers={resolvers} />
     );
   } 
 
