@@ -17,13 +17,14 @@ const DemoComponent = () => {
       </Container>
 
        {/* Demo Body */}
-      <Container maxWidth="md">
+      <Container maxWidth="xl">
         <Box pt={8} pb={10}>
           <Grid container spacing={6} className="stepContainer">
             {/* // Demo Body - Two parts - Image and Text */}
-            <LeftImageStepComponent image="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" number={1} stepHeader="Enter in your PG URI" stepDetails="Get started by importing from an existing PG URI or use our sample database" />
-            <RightImageStepComponent image="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" number={2} stepHeader="Enter in your PG URI" stepDetails="Get started by importing from an existing PG URI or use our sample database" />
-            <LeftImageStepComponent image="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" number={3} stepHeader="Enter in your PG URI" stepDetails="Get started by importing from an existing PG URI or use our sample database" />
+            <LeftImageStepComponent image="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9" number="01" stepHeader="Connect to your SQL database" stepDetails="Enter your PostgresQL URI to connect to your database or use our sample Star Wars database" />
+            <RightImageStepComponent image="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" number="02" stepHeader="Visualize your data" stepDetails="Interact with your data in a new way to better understand table relationships" />
+            <LeftImageStepComponent image="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" number="03" stepHeader="Access accurate GraphQL prototypes" stepDetails="Copy newly generated GraphQL schema and resolvers to use in your application" />
+            <RightImageStepComponent image="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" number="04" stepHeader="Demo your GraphQL queries and mutations " stepDetails="Connect to our Graphiql sandbox to demo your queries and mutations" />
           </Grid>
         </Box>
       </Container>

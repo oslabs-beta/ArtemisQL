@@ -1,31 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Container, Box, Typography, Grid, Avatar } from '@mui/material';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import GitHubIcon from '@mui/icons-material/GitHub';
 import BioComponent from './BioComponent';
+import John_Lin from '../assets/john_lin_headshot.jpg';
+import Johnny_Bryan from '../assets/johnnybryan.png';
+import Taras from '../assets/Taras.jpg';
+import Jennifer_Chau from '../assets/jennifer_chau_headshot.jpg';
 
 const profile = {
   JB: {
     fullName: 'Johnny Bryan',
-    profilePic:'https://images.unsplash.com/photo-1560298803-1d998f6b5249?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&ah=256&q=80',
+    profilePic: Johnny_Bryan,
     gitHubLink:'https://github.com/johnnybryan',
     linkedInLink:'https://www.linkedin.com/in/john-bryan-10a3bbb9/'
   },
   JC: {
     fullName: 'Jennifer Chau',
-    profilePic:'https://images.unsplash.com/photo-1560298803-1d998f6b5249?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&ah=256&q=80',
+    profilePic: Jennifer_Chau,
     gitHubLink:'https://github.com/jenniferchau',
     linkedInLink:'https://www.linkedin.com/in/jenniferchau512/'
   },
   JL: {
     fullName: 'John Lin',
-    profilePic:'https://images.unsplash.com/photo-1560298803-1d998f6b5249?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&ah=256&q=80',
+    profilePic: John_Lin,
     gitHubLink:'https://github.com/itzJohn',
     linkedInLink:''
   },
   TS: {
     fullName: 'Taras Sukhoverskyi',
-    profilePic:'https://images.unsplash.com/photo-1560298803-1d998f6b5249?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&ah=256&q=80',
+    profilePic: Taras,
     gitHubLink:'https://github.com/Tarantino23',
     linkedInLink:'https://www.linkedin.com/in/taras-sukhoverskyi-628642145/'
   },

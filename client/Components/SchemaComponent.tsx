@@ -15,7 +15,7 @@ function SchemaComponent({schema, resolvers}) {
     <Grid item xs={12}>
       <Container>
         <div  style={{height: '790px', overflow: 'scroll', borderRadius: '5px' }}>
-          <Highlight  language="javascript">
+          <Highlight language="javascript">
             {text}
           </Highlight>
         </div>

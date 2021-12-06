@@ -52,19 +52,19 @@ const FeatureComponent = () => {
         <Box py={6}>
           <Grid container spacing={4}>
             <Grid item xs={12} md={4}>
-              <StorageIcon color="primary" fontSize="large" />
+              <StorageIcon color="textSecondary" fontSize="large" />
               <Typography variant="h6" component="h3" gutterBottom={true}>Visualize</Typography>
-              <Typography variant="body1" component="p">Easily visualize your PostgresQL database with all relationships between your tables in our interactive GUI.</Typography>
+              <Typography variant="body1" component="p">Connect to your SQL database to visualize your table and relationship data displayed in real-time, with our interactive graphical interface.</Typography>
             </Grid>
             <Grid item xs={12} md={4}>
-              <CreateIcon color="primary" fontSize="large" />
+              <CreateIcon color="textSecondary" fontSize="large" />
               <Typography variant="h6" component="h3" gutterBottom={true}>Generate</Typography>
-              <Typography variant="body1" component="p">ArtemisQL will automatically generate GraphQL schemas (types, mutations, queries) and resolvers based on your relational database.</Typography>
+              <Typography variant="body1" component="p">Generate accurate, usable GraphQL schema and resolvers that can be exported and utlized in your application.</Typography>
             </Grid>
             <Grid item xs={12} md={4}>
-              <SearchIcon color="primary" fontSize="large" />
-              <Typography variant="h6" component="h3" gutterBottom={true}>Export</Typography>
-              <Typography variant="body1" component="p">"Loading data" will soon be forgotten same way as floppy discs. With PiperNet algorithm, every data could travel faster than it was ever imaginable.</Typography>
+              <SearchIcon color="textSecondary" fontSize="large" />
+              <Typography variant="h6" component="h3" gutterBottom={true}>Experiment</Typography>
+              <Typography variant="body1" component="p">Connect to our Graphiql sandbox to demo your GraphQL queries and mutations, using your newly generated schemas as reference</Typography>
             </Grid>
           </Grid>
         </Box>
