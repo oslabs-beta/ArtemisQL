@@ -11,10 +11,10 @@ const BioComponent = ({ profilePic, fullName, gitHubLink, linkedInLink }) => {
         <Typography variant="h6" component="h4" gutterBottom={true}>{fullName}</Typography>
       </Box>
       <Link href={gitHubLink} target="_blank">
-        <GitHubIcon />
+        <GitHubIcon style={{fill: "black"}}/>
       </Link>
       <Link href={linkedInLink} target="_blank">
-        <LinkedInIcon />
+        <LinkedInIcon style={{fill: "black"}} />
       </Link>
     </Grid>
   );
