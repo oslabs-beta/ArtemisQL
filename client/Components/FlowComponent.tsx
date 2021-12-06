@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ReactFlow, { Background, Controls, Handle } from 'react-flow-renderer';
+import SchemaComponent from './SchemaComponent';
 
-const FlowComponent = ({ data }) => {
+const FlowComponent = ({ data ,schema , resolvers}) => {
 
   // check incoming data
   console.log(data);
@@ -94,7 +95,7 @@ const FlowComponent = ({ data }) => {
   }
 
   return (
-    <div style={{ height: '100%', borderStyle: 'solid', borderWidth: 1, borderRadius: 2, borderColor: '#93c763'}}>
+    <div style={{ height: '93%', overflow: 'hidden', borderStyle: 'solid', borderWidth: 1, borderRadius: 2, borderColor: '#93c763'}}>
       <ReactFlow elements={elements} nodeTypes={nodeTypes} defaultZoom={0.75}>
         <Background
           style={{backgroundColor: '#fafafa'}}   
@@ -104,6 +105,7 @@ const FlowComponent = ({ data }) => {
         /> 
         <Controls />
       </ReactFlow>
+      <SchemaComponent schema= {schema} resolvers={resolvers} />
     </div>
   );
 }

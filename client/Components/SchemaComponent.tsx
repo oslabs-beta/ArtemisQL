@@ -12,9 +12,8 @@ function SchemaComponent({schema, resolvers}) {
   }
 
   return (
-    <Grid item xs={12}>
-      <Container>
-        <div  style={{height: '790px', overflow: 'scroll', borderRadius: '5px' }}>
+      <Container maxWidth='sm' style={{position: 'absolute', top: '10vh', right: '0px', zIndex: '99' }}>
+        <div style={{height: '790px', overflow: 'scroll', borderRadius: '5px' }}>
           <Highlight  language="javascript">
             {text}
           </Highlight>
@@ -33,7 +32,6 @@ function SchemaComponent({schema, resolvers}) {
           </Grid>
         </Grid>
       </Container>
-    </Grid>
   );
 }
 
