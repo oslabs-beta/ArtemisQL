@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, TextField, Link } from '@mui/material';
+// import { Container, TextField, Link } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -13,16 +13,14 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import BugReportIcon from '@mui/icons-material/BugReport';
 import MenuIcon from '@mui/icons-material/Menu';
 import logo from '../assets/ArtemisQL.png';
-// import { Link } from 'react-router-dom';
+import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
+import { Link } from 'react-router-dom';
+import a_logo from '../assets/cropped-A-logo.png';
 
 const NavComponent = () => {
-  const NavToGithub = () => {
-    window.open('https://github.com/oslabs-beta/ArtemisQL', '_blank');
-  };
-
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           {/* <IconButton
             size="large"
@@ -36,13 +34,19 @@ const NavComponent = () => {
           {/* <Typography color="#EB5E28" variant="h4" component="div" sx={{ flexGrow: 2 }}>
             ArtemisQL
           </Typography> */}
-          <Link href="/" variant="h5" color="inherit" underline="none" sx={{ flexGrow: 2 }}>
+          {/* <Link href="/" variant="h5" color="inherit" underline="none" sx={{ flexGrow: 2 }}>
             <img src={logo} alt="logo" style={{width: '260px', height: '90px'}}/>
+          </Link> */}
+          <Link to={{ pathname: "/"}}>
+            <img src={a_logo} alt="logo" style={{width: '70px'}}/>
           </Link>
-          {/* <Button className="button" color="inherit" startIcon={<ArticleIcon />}>Docs</Button> */}
-          <Button href="https://github.com/oslabs-beta/ArtemisQL" target="_blank" className="button" color="inherit" startIcon={<GitHubIcon />}>Github</Button>
-          {/* <Button className="button" color="inherit" startIcon={<GroupsIcon />}>Team</Button> */}
-          <Button href="/sandbox" className="button" color="inherit" startIcon={<BugReportIcon />}>Sandbox</Button>
+          <Link style={{ textDecoration: 'none', color: 'white' }} to={{ pathname: "/schema"}}> 
+            <Button className="button" color="inherit" startIcon={<PlayCircleFilledIcon />}>Get Started</Button> 
+          </Link>
+          <Button href="/sandbox" target="_blank" className="button" color="inherit" startIcon={<BugReportIcon />}> Sandbox</Button>
+          <IconButton style={{ marginLeft: 'auto' }} href="https://github.com/oslabs-beta/ArtemisQL" target="_blank" className="button" color="inherit">
+            <GitHubIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
     </Box>

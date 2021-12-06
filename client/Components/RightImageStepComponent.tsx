@@ -11,9 +11,9 @@ const LeftImageStepComponent = ({image, text, number, stepHeader, stepDetails}) 
       <Grid item xs={12} md={6}>
         <Box display="flex" height="100%">
           <Box my="auto">
-            <Typography variant="h2" component="h3">{number}</Typography>
-            <Typography variant="h4" component="h2" gutterBottom={true}>{stepHeader}</Typography>
-            <Typography variant="body1" color="textSecondary" paragraph={true}>{stepDetails}</Typography>
+            <Typography style={{textAlign: 'right'}} variant="h2" component="h3">{number}</Typography>
+            <Typography style={{textAlign: 'right'}} variant="h4" component="h2" gutterBottom={true}>{stepHeader}</Typography>
+            <Typography style={{textAlign: 'right'}} variant="body1" color="textSecondary" paragraph={true}>{stepDetails}</Typography>
           </Box>
         </Box>
       </Grid>
