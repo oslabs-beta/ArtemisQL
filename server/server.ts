@@ -11,21 +11,20 @@ const app: Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// production build static serve
-if (process.env.NODE_ENV === 'production') {
-  // statically serve everything in the build folder on the route '/build'
-  app.use('/build', express.static(path.join(__dirname, '../build')));
-  // serve index.html on the route '/'
-  app.get('/', (req: Request, res: Response) => {
-    return res.status(200).sendFile(path.join(__dirname, '../index.html'));
-  });
-}
-
-// route to router file
 app.use('/', Router);
 
+app.use('/build', express.static(path.join(__dirname, '../build')));
+
+app.get('/', (req: Request, res: Response) => {
+  return res.status(200).sendFile(path.join(__dirname, '../index.html'));
+});
+
+app.get('/schema', (req: Request, res: Response) => {
+  return res.status(200).sendFile(path.join(__dirname, '../index.html'));
+});
+
 // catch-all route handler
-app.use('*', (req: Request, res: Response) => res.status(400).send('This is not the page you\'re looking for...'));
+app.use('*', (req: Request, res: Response) => res.status(400).send('This1 is not the page you\'re looking for...'));
 
 // global error handler
 app.use((err, req: Request, res: Response, next: NextFunction) => {
