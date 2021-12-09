@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactFlow, { Background, Controls, Handle } from 'react-flow-renderer';
 import SchemaComponent from './SchemaComponent';
 
-const FlowComponent = ({ data ,schema , resolvers}) => {
+const FlowComponent = ({ data, schema, resolvers }) => {
 
   // check incoming data
   console.log(data);
@@ -11,27 +11,25 @@ const FlowComponent = ({ data ,schema , resolvers}) => {
   const elements = [];
   
   // declare coordinate variables for table node positions/mapping
-  let positionX = 20;
-  let positionY = 20;
+  let positionX = 100;
+  let positionY = 120;
   let row = 0;
 
   // Iterate through each table...
   for (const key in data) {
-    
     // initialize tableName, tableName as key, table to value
     const tableName = key;
     const table = data[key];
 
     // declare primary / foreign key variables
     let primaryKey = false;
-    let foreignKeys = [];
+    const foreignKeys = [];
     
     //console.log('tableName', tableName)
     //console.log('table', table);
 
     // Iterate through each column of each table creating creating columnName and dataType rows
     const columns = table.map((column) => {
-      
       let count = 0;
       let hasForeignKey = false;
       
@@ -46,15 +44,15 @@ const FlowComponent = ({ data ,schema , resolvers}) => {
           source: tableName,
           target: column.foreign_table,
           sourceHandle: column.column_name,
-          style: { stroke: '#93c763'},
-          animated: true
-        }
+          style: { stroke: '#93c763' },
+          animated: true,
+        };
         // append edge object to elements array
         elements.push(edge);
       }
 
       // append columnName and hasForeignKey to foreignKeys array
-      foreignKeys.push([column.column_name, hasForeignKey])
+      foreignKeys.push([column.column_name, hasForeignKey]);
       
       // return new column and data type to render in newNode
       return (
@@ -63,7 +61,7 @@ const FlowComponent = ({ data ,schema , resolvers}) => {
             {column.data_type}
           </span>
         </p>
-      )
+      );
     });
 
     // create a new node object
@@ -72,12 +70,16 @@ const FlowComponent = ({ data ,schema , resolvers}) => {
       type: 'special',
       data: { 
         label:
-          <div>
-            <h3>{tableName}</h3>
-            {columns}
+          <div style={customNodeStyles}>
+            <div style={title}>
+              <h3>{tableName}</h3>
+            </div>
+            <div style={container}>
+              {columns}
+            </div>
           </div>,
         pk: primaryKey,
-        fk: foreignKeys
+        fk: foreignKeys,
       },
       position: { x: positionX, y: positionY }, 
     };
@@ -86,7 +88,7 @@ const FlowComponent = ({ data ,schema , resolvers}) => {
     row += 1;
     positionY += 500;
     if (row % 2 === 0) {
-      positionY = 20;
+      positionY = 120;
       positionX += 300;
     }
 
@@ -95,7 +97,7 @@ const FlowComponent = ({ data ,schema , resolvers}) => {
   }
 
   return (
-    <div style={{ height: '93%', overflow: 'hidden', borderStyle: 'solid', borderWidth: 1, borderRadius: 2, borderColor: '#93c763'}}>
+    <div>
       <ReactFlow elements={elements} nodeTypes={nodeTypes} defaultZoom={0.75}>
         <Background
           style={{backgroundColor: '#fafafa'}}   
@@ -105,20 +107,20 @@ const FlowComponent = ({ data ,schema , resolvers}) => {
         /> 
         <Controls />
       </ReactFlow>
-      <SchemaComponent schema= {schema} resolvers={resolvers} />
+      <SchemaComponent schema={schema} resolvers={resolvers} />
     </div>
   );
-}
-
+};
+// style={customNodeStyles}
 // Custom Node
 const CustomNode = ({ data }) => {
   let index = 80;
   let key = 0;
   return (
-    <div style={customNodeStyles}>
+    <div>
       
       {/* table data */}
-      <div>{data.label}</div>
+      {data.label}
 
       {/* primary key handle */}
       {data.pk ? (
@@ -164,11 +166,27 @@ const customNodeStyles = {
   backgroundColor: '#eeeeee',
   fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
   color: '#403D39',
-  padding: 10,
   borderRadius: 5,
-  borderStyle: 'solid',
-  borderWidth: 2,
-  borderColor: '#93c763'
+  // borderStyle: 'solid',
+  // borderWidth: 2,
+  // borderColor: '#93c763',
+  // transition: 'all 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+  boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
+
 };
 
+const title = {
+  // background: "#93c763",
+  // background: "#FFDEAD",
+  background: "#78909c",
+  color: "white",
+  textAlign: "center",
+  padding: "5px 10px",
+  borderTopLeftRadius: "5px",
+  borderTopRightRadius: "5px"
+};
+
+const container = {
+  padding: 10,
+};
 export default FlowComponent;

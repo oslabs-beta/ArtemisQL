@@ -45,14 +45,14 @@ const NavComponent = () => {
           <Link style={{ textDecoration: 'none', color: 'white' }} to={{ pathname: "/schema"}}> 
             <Button className="button" color="inherit" startIcon={<PlayCircleFilledIcon />}>Get Started</Button> 
           </Link>
-          <Button href="/sandbox" target="_blank" className="button" color="inherit" startIcon={<BugReportIcon />}> Sandbox</Button>
-          <IconButton style={{ marginLeft: 'auto' }} href="https://github.com/oslabs-beta/ArtemisQL" target="_blank" className="button" color="inherit">
+          <Button style={{ textDecoration: 'none', color: 'white' }} href="/sandbox" target="_blank" className="button" color="inherit" startIcon={<BugReportIcon />}> Sandbox</Button>
+          <IconButton style={{ marginLeft: 'auto', color: 'white' }} href="https://github.com/oslabs-beta/ArtemisQL" target="_blank" className="button" color="inherit">
             <GitHubIcon />
           </IconButton>
-          <IconButton href="https://www.linkedin.com/" target="_blank" className="button" color="inherit">
+          <IconButton style={{ color: 'white' }} href="https://www.linkedin.com/" target="_blank" className="button" color="inherit">
             <LinkedInIcon />
           </IconButton>
-          <IconButton href="https://medium.com/" target="_blank" className="button" color="inherit">
+          <IconButton style={{ color: 'white' }} href="https://medium.com/" target="_blank" className="button" color="inherit">
             <ArticleOutlinedIcon />
           </IconButton>
         </Toolbar>
