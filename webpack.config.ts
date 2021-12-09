@@ -50,13 +50,14 @@ const config: webpack.Configuration = {
   devServer: {
     static: {
       directory: path.resolve(__dirname, 'build'),
-      publicPath: '/build',
+      publicPath: '/',
     },
     // contentBase: path.join(__dirname, "build"),
     compress: true,
     port: 8080,
     proxy: {
       '/': 'http://localhost:3000',
+      '/schema': 'http://localhost:3000',
     },
     historyApiFallback: true,
     // hot: true

@@ -4,11 +4,11 @@
   "description": "A GraphQL migration tool and relational database visualizer",
   "main": "index.js",
   "scripts": {
-    "start": "node server/server.ts",
+    "start": "node --loader ts-node/esm server/server.ts",
     "build": "webpack",
     "dev": "nodemon server/server.ts & webpack serve --open --hot",
     "test": "jest --verbose"
-  },
+  }, 
   "repository": {
     "type": "git",
     "url": "git+https://github.com/oslabs-beta/ArtemisQL.git"
