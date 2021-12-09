@@ -37,7 +37,8 @@ function SchemaComponent({schema, resolvers}) {
 
 const buttonStyles = {
   color: 'white',
-  backgroundColor: '#78909c',
+  // backgroundColor: '#78909c',
+  backgroundColor: '#93C763',
   borderColor: '#78909c',
   borderWidth: 2
 }

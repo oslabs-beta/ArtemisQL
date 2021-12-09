@@ -176,7 +176,9 @@ const customNodeStyles = {
 };
 
 const title = {
-  background: "#93c763",
+  // background: "#93c763",
+  // background: "#FFDEAD",
+  background: "#78909c",
   color: "white",
   textAlign: "center",
   padding: "5px 10px",
