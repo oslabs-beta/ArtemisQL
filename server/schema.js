@@ -406,8 +406,6 @@ const resolvers = {
       const pKArg = `$${argsArray.length + 1}`;
       const query = `UPDATE people SET ${setString} WHERE _id = ${pKArg} RETURNING *`;
       const values = valList;
-      console.log('query', query);
-      console.log('values', valList);
       return db
         .query(query, values)
         .then((data) => data.rows[0])
