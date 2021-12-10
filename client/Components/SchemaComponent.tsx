@@ -29,7 +29,7 @@ function SchemaComponent({schema, resolvers}) {
 
   return (
     <Grid container justifyContent="flex-end" style={{position: 'absolute', top: '6vh', right: '0px', zIndex: '99' }}>
-      <div style={{display: 'flex', alignItems: 'center', paddingTop: '25px', paddingRight: '15px'}} >
+      <div style={{display: 'flex', alignItems: 'center', paddingTop: '30px', paddingRight: '15px'}} >
         <Typography>SHOW SCHEMA</Typography>
         <Switch defaultChecked onChange={onChangeHandle} />
       </div>

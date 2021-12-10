@@ -15,7 +15,7 @@ const DemoComponent = () => {
         <Box pt={8} textAlign="center">
           <Typography variant="h4" component="h2" gutterBottom={true}>How to use ArtemisQL</Typography>
           <Typography variant="body1" color="textSecondary">
-            We've designed a simple and intuitive process to help you migrate from a REST API to GraphQL. Here's how it works.
+            We've designed a simple and intuitive process to help you migrate from a REST API to <span style={{color: '#E10098'}}>GraphQL</span>. Here's how it works.
           </Typography>
         </Box>
       </Container>
