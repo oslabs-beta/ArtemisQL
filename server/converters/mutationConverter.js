@@ -19,7 +19,8 @@ mutationConverter.add = (tableName, arrOfColumns) => {
 
   const formattedTableName = capitalizeAndSingularize(tableName);
 
-  addObj.table_name_for_dev_use = formattedTableName;
+  addObj.formatted_table_name_for_dev_use = formattedTableName;
+  addObj.table_name_for_dev_use = tableName;
   
   const addKey = `add${formattedTableName}`;
   const outputArr = [addKey, addObj];
@@ -40,7 +41,8 @@ mutationConverter.update = (tableName, arrOfColumns) => {
   
   const formattedTableName = capitalizeAndSingularize(tableName);
   
-  updateObj.table_name_for_dev_use = formattedTableName;
+  updateObj.formatted_table_name_for_dev_use = formattedTableName;
+  updateObj.table_name_for_dev_use = tableName;
 
   const updateKey = `update${formattedTableName}`;
   const outputArr = [updateKey, updateObj];
@@ -60,7 +62,8 @@ mutationConverter.delete = (tableName, arrOfColumns) => {
   } 
   
   const formattedTableName = capitalizeAndSingularize(tableName);
-  deleteObj.table_name_for_dev_use = formattedTableName;
+  deleteObj.formatted_table_name_for_dev_use = formattedTableName;
+  deleteObj.table_name_for_dev_use = tableName;
   const deleteKey = `delete${formattedTableName}`;
   const outputArr = [deleteKey, deleteObj];
   return outputArr;  
@@ -76,7 +79,7 @@ mutationConverter.stringify = (mutationObj) => {
 
     // iterate through all the fields within each mutationType
     for (const column in mutationObj[mutationType]) {
-      if (column !== 'table_name_for_dev_use') {
+      if (column !== 'table_name_for_dev_use' && column !== 'formatted_table_name_for_dev_use') {
         mutationString += `    ${column}: ${mutationObj[mutationType][column]}, \n`;
       }
     }

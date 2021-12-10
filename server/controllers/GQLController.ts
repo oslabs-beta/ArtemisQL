@@ -13,7 +13,6 @@ const { capitalizeAndSingularize } = require('../utils/helperFunc.ts');
 
 // Create GraphQL Schema (Type Defs)
 const createSchemaTypeDefs = (req: Request, res: Response, next: NextFunction) => {
-
   const schema = {};
   const bTables = {};
   const jTables = {};
@@ -22,7 +21,7 @@ const createSchemaTypeDefs = (req: Request, res: Response, next: NextFunction) =
 
   res.locals.baseTableQuery = typeConverter.createBaseTableQuery(baseTables);
   // console.log('baseTablesQuery', res.locals.baseTableQuery);
-  // console.log('BASE TABLES', baseTables);
+  console.log('BASE TABLES', baseTables);
   const baseTableNames = Object.keys(baseTables);
   const joinTableNames = Object.keys(joinTables);
   res.locals.baseTables = baseTables;
@@ -70,7 +69,7 @@ const createSchemaQuery = (req, res, next) => {
 
 // create GraphQL Schema (mutations)
 const createSchemaMutation = (req: Request, res: Response, next: NextFunction) => {
-  console.log('createSchemaMutation Triggered');
+  // console.log('createSchemaMutation Triggered');
   const { baseTables } = res.locals;
 
   const mutationObj: MutationObjectType = {};
@@ -101,7 +100,7 @@ const createSchemaMutation = (req: Request, res: Response, next: NextFunction) =
   /* -------------------------------------------------------------------------- */
   /*                    format/stringify the mutation object                    */
   /* -------------------------------------------------------------------------- */
-  // console.log('MUTATION OBJ OUTSIDE FOR LOOP', mutationObj);
+  console.log('MUTATION OBJ OUTSIDE FOR LOOP', mutationObj);
   // append to mutation string
   const mutationString = mutationConverter.stringify(mutationObj);
   // console.log('MUTATION STRING', mutationString);
@@ -141,7 +140,7 @@ const createResolver = (req: Request, res: Response, next: NextFunction) => {
   const mutationTypes = Object.keys(mutationObj);
 
   for (const key of mutationTypes) {
-    resolverString += resolvers.createMutation(key);
+    resolverString += resolvers.createMutation(key, mutationObj);
   }
   resolverString += `\n  },\n\n`;
   // console.log('resolverString AFTER MUTATION LOOP', resolverString);
