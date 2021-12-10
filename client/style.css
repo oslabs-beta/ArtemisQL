@@ -27,3 +27,34 @@ section {
   height: 400px;
   width: 600px;
 }
+
+.slideIn {
+  animation-name: out;
+  animation-duration: 2s;
+}
+
+.slideOut {
+  animation-name: in;
+  animation-duration: 2s;
+}
+
+@keyframes out {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-500px);
+  }
+}
+
+@keyframes in {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-500px);
+  }
+}
+
