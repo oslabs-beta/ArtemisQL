@@ -44,7 +44,7 @@ typeConverter.sortTables = (cache, baseTables, joinTables) => {
 // input: base table (object of array, where each element in the array is an field/column object)
 // output: array of objects, where each object is a join table field/column
 typeConverter.createBaseTableQuery = (baseTable) => {
-  console.log(baseTable)
+  // console.log(baseTable)
   const array = [];
   for (const baseTableName in baseTable) {
     for (const column of baseTable[baseTableName]) {

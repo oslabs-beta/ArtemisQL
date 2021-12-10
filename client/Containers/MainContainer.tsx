@@ -30,9 +30,7 @@ function MainContainer() {
   
   function onChangeHandler(event) {
     const { name, value } = event.currentTarget;
-    console.log('name', name);
-    console.log('value', value);
-    
+
     if (name === 'urlInput') {
       setDataBaseUrl(value);
     }
