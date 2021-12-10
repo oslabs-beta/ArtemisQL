@@ -15,7 +15,8 @@ resolvers.createQuery = (baseTableName) => {
         const query = 'SELECT * FROM ${baseTableName}';
         const data = await db.query(query);
         console.log('sql query results data.rows', data.rows);
-      } catch(err) {
+        return data.rows;
+      } catch (err) {
         throw new Error(err);
       }
     },`;
@@ -28,7 +29,8 @@ resolvers.createQuery = (baseTableName) => {
         const values = [args._id];
         const data = await db.query(query, values);
         console.log('sql query result data.rows[0]', data.rows[0]);
-      } catch(err) {
+        return data.rows[0];
+      } catch (err) {
         throw new Error(err);
       }
     },`;
@@ -77,7 +79,8 @@ resolvers.createMutation = (mutationType, mutationObj) => {
         const values = [${finalArgsString}];
         const data = await db.query(query, values);
         console.log('insert sql result data.rows[0]', data.rows[0]);
-      } catch(err) {
+        return data.rows[0];
+      } catch (err) {
         throw new Error(err);
       }
     },`;
@@ -91,7 +94,8 @@ resolvers.createMutation = (mutationType, mutationObj) => {
         const values = [args._id];
         const data = await db.query(query, values);
         console.log('delete sql result data.rows[0]', data.rows[0]);
-      } catch(err) {
+        return data.rows[0];
+      } catch (err) {
         throw new Error(err);
       }
     },`;
@@ -126,7 +130,7 @@ resolvers.createMutation = (mutationType, mutationObj) => {
       ${mutationType}: (parent, args, context, info) => {
         try {
           // insert sql query here
-        } catch(err) {
+        } catch (err) {
           throw new Error(err);
         }
       },`;
@@ -146,7 +150,7 @@ resolvers.checkOwnTable = (baseTableName, baseTables) => {
     ${column.foreign_table}: (parent, args, context, info) => {
       try {
         // insert sql query here
-      } catch(err) {
+      } catch (err) {
         throw new Error(err);
       }
     },`;
@@ -167,7 +171,7 @@ resolvers.checkBaseTableCols = (baseTableName, baseTableQuery) => {
     ${column.table_name}: (parent, args, context, info) => {
       try {
         // insert sql query here
-      } catch(err) {
+      } catch (err) {
         throw new Error(err);
       }
     },`;
@@ -210,7 +214,7 @@ resolvers.checkJoinTableCols = (baseTableName, joinTables) => {
     ${foreignKeys[index]}: (parent, args, context, info) => {
       try {
         // insert sql query here
-      } catch(err) {
+      } catch (err) {
         throw new Error(err);
       }
     },`;

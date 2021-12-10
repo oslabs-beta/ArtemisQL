@@ -392,51 +392,26 @@ const resolvers = {
         .catch((err) => new Error(err));
     },
 
-    // updatePerson: (parent, args) => {
-    //   let valList = [];
-    //   console.log('updatePerson args obj', args);
-    //   for (const key of Object.keys(args)) {
-    //     if (key !== '_id') valList.push(args[key]);
-    //   }
-    //   valList.push(args._id);
-    //   const argsArray = Object.keys(args).filter((key) => key !== '_id');
-    //   let setString = argsArray
-    //     .map((key, i) => `${key} = $${i + 1}`)
-    //     .join(', ');
-    //   const pKArg = `$${argsArray.length + 1}`;
-    //   const query = `UPDATE people SET ${setString} WHERE _id = ${pKArg} RETURNING *`;
-    //   const values = valList;
-    //   console.log('query', query);
-    //   console.log('values', valList);
-    //   return db
-    //     .query(query, values)
-    //     .then((data) => data.rows[0])
-    //     .catch((err) => new Error(err));
-    // },
-    updatePerson: async (parent, args, context, info) => {
-      try {
-        // sanitizing data for sql insert
-        console.log('args', args);
-        const argsArr = Object.keys(args).filter((el) => (el !== '_id'));
-        console.log('argsArr', argsArr);
-        const setStr = argsArr
-          .map((el, i) => el + ' = $' + (i + 1))
-          .join(', ');
-        argsArr.push('_id');
-        console.log('argsArr after push', argsArr);
-        const pKey = '$' + argsArr.length;
-        const valuesArr = argsArr.map((el) => args[el]);
-
-        // insert query
-        const query = 'UPDATE people SET ' + setStr + ' WHERE _id = ' + pKey + ' RETURNING *';
-        const values = valuesArr;
-        console.log('values', values);
-        const data = await db.query(query, values);
-        console.log('insert sql result data.rows[0]', data.rows[0]);
-        return data.rows[0];
-      } catch (err) {
-        throw new Error(err);
+    updatePerson: (parent, args) => {
+      let valList = [];
+      console.log('updatePerson args obj', args);
+      for (const key of Object.keys(args)) {
+        if (key !== '_id') valList.push(args[key]);
       }
+      valList.push(args._id);
+      const argsArray = Object.keys(args).filter((key) => key !== '_id');
+      let setString = argsArray
+        .map((key, i) => `${key} = $${i + 1}`)
+        .join(', ');
+      const pKArg = `$${argsArray.length + 1}`;
+      const query = `UPDATE people SET ${setString} WHERE _id = ${pKArg} RETURNING *`;
+      const values = valList;
+      console.log('query', query);
+      console.log('values', valList);
+      return db
+        .query(query, values)
+        .then((data) => data.rows[0])
+        .catch((err) => new Error(err));
     },
 
     addFilm: (parent, args) => {
