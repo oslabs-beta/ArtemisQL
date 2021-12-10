@@ -7,7 +7,6 @@ const { Pool } = require('pg');
 // get all database metadata (tables and columns) from user's selected DB
 const getAllMetadata = async (req: Request, res: Response, next: NextFunction) => {
   const PG_URI = (!req.query.dbLink) ? process.env.PG_URI : req.query.dbLink;
-  console.log('hello')
   const db = new Pool({
     connectionString: PG_URI,
   });

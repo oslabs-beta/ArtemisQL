@@ -5,7 +5,7 @@ import SchemaComponent from './SchemaComponent';
 const FlowComponent = ({ data, schema, resolvers }) => {
 
   // check incoming data
-  console.log(data);
+  // console.log(data);
 
   // declare elements array to store table nodes and edges
   const elements = [];

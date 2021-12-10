@@ -134,17 +134,17 @@ resolvers.checkBaseTableCols = (baseTableName, baseTableQuery) => {
 resolvers.checkJoinTableCols = (baseTableName, joinTables) => {
   let currString = '';
   const relationships = [];
-  console.log('hello');
+
   for (const currJoinTable in joinTables) {
-    console.log('currJoinTable', currJoinTable);
+
     for (const column of joinTables[currJoinTable]) {
-      console.log('joinTables[currJoinTable]', joinTables[currJoinTable]);
+
       if (column.foreign_table === baseTableName) {
         relationships.push(currJoinTable);
       }
     }
   }
-  console.log('relationships', relationships);
+  // console.log('relationships', relationships);
   // [people_in_films, pilot]
   for (const table of relationships) {
     const foreignKeys = [];

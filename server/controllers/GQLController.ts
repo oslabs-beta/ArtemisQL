@@ -13,7 +13,7 @@ const { capitalizeAndSingularize } = require('../utils/helperFunc.ts');
 
 // Create GraphQL Schema (Type Defs)
 const createSchemaTypeDefs = (req: Request, res: Response, next: NextFunction) => {
-  console.log('createSchemaTypeDefs Triggered');
+
   const schema = {};
   const bTables = {};
   const jTables = {};
@@ -164,7 +164,7 @@ const createResolver = (req: Request, res: Response, next: NextFunction) => {
   resolverString += `}\n`;
   
   res.locals.resolverString = resolverString;
-  console.log('resolverString', resolverString);
+  // console.log('resolverString', resolverString);
   return next();
 };
 

@@ -30,9 +30,7 @@ function MainContainer() {
   
   function onChangeHandler(event) {
     const { name, value } = event.currentTarget;
-    console.log('name', name);
-    console.log('value', value);
-    
+
     if (name === 'urlInput') {
       setDataBaseUrl(value);
     }
@@ -57,6 +55,11 @@ function MainContainer() {
   }
 
   function getDataFromDB(dbLink) {
+    if (!dbLink) {
+      setMessage('Invalid URI, please try again');
+      return;
+    }
+    
     const request = {
       method: 'GET',
       url: '/submit',
