@@ -10,9 +10,11 @@ resolvers.createQuery = (baseTableName) => {
   // first, append strings for baseTableName
   // 4 spaces
   currString += `
-    ${makeCamelCase(baseTableName)}: () => {
+    ${makeCamelCase(baseTableName)}: async () => {
       try {
-        // insert sql query here
+        const query = 'SELECT * FROM ${baseTableName}';
+        const data = await db.query(query);
+        console.log('sql query results data.rows', data.rows);
       } catch(err) {
         throw new Error(err);
       }
@@ -20,9 +22,12 @@ resolvers.createQuery = (baseTableName) => {
 
   // second, append strings for singularized baseTableName
   currString += `
-    ${makeCamelCaseAndSingularize(baseTableName)}: (parent, args, context, info) => {
+    ${makeCamelCaseAndSingularize(baseTableName)}: async (parent, args, context, info) => {
       try {
-        // insert sql query here
+        const query = 'SELECT * FROM ${baseTableName} WHERE _id = $1';
+        const values = [args._id];
+        const data = await db.query(query, values);
+        console.log('sql query result data.rows[0]', data.rows[0])
       } catch(err) {
         throw new Error(err);
       }

@@ -20,8 +20,6 @@ const createSchemaTypeDefs = (req: Request, res: Response, next: NextFunction) =
   const { cache } = res.locals;
   const { baseTables, joinTables } = typeConverter.sortTables(cache, bTables, jTables);
 
-  console.log("createBaseTableQuery")
-
   res.locals.baseTableQuery = typeConverter.createBaseTableQuery(baseTables);
   // console.log('baseTablesQuery', res.locals.baseTableQuery);
   // console.log('BASE TABLES', baseTables);
@@ -35,13 +33,9 @@ const createSchemaTypeDefs = (req: Request, res: Response, next: NextFunction) =
   // console.log('baseTables', baseTables);
   // [people, films, species, vessels]
 
-  console.log("baseTableName")
-
   for (const key of baseTableNames) {
     schema[key] = typeConverter.createInitialTypeDef(key, baseTables);
   }
-
-  console.log("joinTableNames")
 
   for (const key of joinTableNames) {
     // schema from line 34 gets mutated every time we invoke typeConverter.finalizeTypeDef
