@@ -7,7 +7,7 @@ const LeftImageStepComponent = ({image, text, number, stepHeader, stepDetails}) 
   return (
     // image
     <>
-      <Grid item xs={6} md={6}>
+      <Grid item >
         <Card style={{borderColor: '#93c763', borderWidth: 1, borderStyle: "solid", boxShadow: "0px 0px 0.25px 0.25px #93c763"}}>
           <CardMedia className="media" image={image} />
         </Card>

@@ -15,7 +15,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import logo from '../assets/ArtemisQL.png';
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
 import { Link } from 'react-router-dom';
-import a_logo from '../assets/cropped-A-logo.png';
+import a_logo from '../assets/logo.png';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 
@@ -33,17 +33,17 @@ const NavComponent = () => {
           >
             <MenuIcon />
           </IconButton> */}
-          <Link style={{textDecoration:'none', paddingRight: '10px'}} to={{ pathname: "/"}}>
+          {/* <Link style={{textDecoration:'none', paddingRight: '10px'}} to={{ pathname: "/"}}>
             <Typography color="secondary" variant="h2" component="div" sx={{ flexGrow: 2 }}>
               A
             </Typography>
-          </Link>
+          </Link> */}
           {/* <Link href="/" variant="h5" color="inherit" underline="none" sx={{ flexGrow: 2 }}>
             <img src={logo} alt="logo" style={{width: '260px', height: '90px'}}/>
           </Link> */}
-          {/* <Link to={{ pathname: "/"}}>
+          <Link to={{ pathname: "/"}}>
             <img src={a_logo} alt="logo" style={{width: '70px'}}/>
-          </Link> */}
+          </Link>
           <Link style={{ textDecoration: 'none', color: 'white' }} to={{ pathname: "/schema"}}> 
             <Button className="button" style={{fontWeight:"normal"}} color="inherit" startIcon={<PlayCircleFilledIcon />}>Get Started</Button> 
           </Link>

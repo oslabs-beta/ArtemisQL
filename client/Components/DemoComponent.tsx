@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link, Box, Typography, Grid, Avatar, Container } from '@mui/material';
 import LeftImageStepComponent from './LeftImageStepComponent';
 import RightImageStepComponent from './RightImageStepComponent';
-import demo1 from '../assets/demo.png'
-import demo2 from '../assets/demo2.png'
-import demo3 from '../assets/demo3.png'
-import demo4 from '../assets/demo4.png'
+import demo1 from '../assets/demo1.gif'
+import demo2 from '../assets/demo2.gif'
+import demo3 from '../assets/demo3.gif'
+import demo4 from '../assets/demo4.gif'
 
 const DemoComponent = () => {
   return (

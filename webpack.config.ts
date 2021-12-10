@@ -58,6 +58,7 @@ const config: webpack.Configuration = {
     proxy: {
       '/': 'http://localhost:3000',
       '/schema': 'http://localhost:3000',
+      '/client': 'http://localhost:3000',
     },
     historyApiFallback: true,
     // hot: true
