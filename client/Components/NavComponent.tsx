@@ -12,10 +12,9 @@ import ArticleIcon from '@mui/icons-material/Article';
 import GroupsIcon from '@mui/icons-material/Groups';
 import BugReportIcon from '@mui/icons-material/BugReport';
 import MenuIcon from '@mui/icons-material/Menu';
-import logo from '../assets/ArtemisQL.png';
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
 import { Link } from 'react-router-dom';
-import a_logo from '../assets/logo.png';
+import logo from '../assets/logo.png';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 
@@ -42,7 +41,7 @@ const NavComponent = () => {
             <img src={logo} alt="logo" style={{width: '260px', height: '90px'}}/>
           </Link> */}
           <Link to={{ pathname: "/"}}>
-            <img src={a_logo} alt="logo" style={{width: '70px'}}/>
+            <img src={logo} alt="logo" style={{width: '80px'}}/>
           </Link>
           <Link style={{ textDecoration: 'none', color: 'white' }} to={{ pathname: "/schema"}}> 
             <Button className="button" style={{fontWeight:"normal"}} color="inherit" startIcon={<PlayCircleFilledIcon />}>Get Started</Button> 

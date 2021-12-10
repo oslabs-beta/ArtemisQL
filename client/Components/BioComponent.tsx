@@ -8,7 +8,7 @@ const BioComponent = ({ profilePic, fullName, gitHubLink, linkedInLink }) => {
     <Grid item xs={12} md={3}>
       <Avatar alt="" src={profilePic} className='avatar' />
       <Box mb={2}>
-        <Typography variant="h6" component="h4" gutterBottom={true}>{fullName}</Typography>
+        <Typography variant="h6" component="h4" gutterBottom={true} style={{fontWeight: 'normal', fontSize: '2.5em'}}>{fullName}</Typography>
       </Box>
       <Link href={gitHubLink} target="_blank">
         <GitHubIcon style={{fill: "black"}}/>

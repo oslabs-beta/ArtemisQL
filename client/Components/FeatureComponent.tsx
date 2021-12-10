@@ -13,17 +13,17 @@ const FeatureComponent = () => {
   return (
     <section>
       <Container maxWidth="lg">
-        <Box py={4}>
+        <Box pt={10}>
           <Grid container spacing={4}>
             <Grid item xs={12} md={4}>
-              <div style={{display: 'flex'}}>
+              <div style={{display: 'flex', paddingBottom: '4px'}}>
                 <StorageIcon color="warning" fontSize="large" />
                 <Typography pl={1} variant="h6" component="h3" color="#00009f" gutterBottom={true}>VISUALIZE</Typography>
               </div>
               <Typography variant="body1" component="p">Connect to your SQL database to our interactive dashboard to visualize your table and relationship data displayed in real-time.</Typography>
             </Grid>
             <Grid item xs={12} md={4} >
-              <div style={{display: 'flex'}}>
+              <div style={{display: 'flex', paddingBottom: '3px'}}>
                 <AutoGraphIcon color="warning" fontSize="large" />
                 <Typography pl={1} variant="h6" component="h3" color='#00009f' gutterBottom={true}>GENERATE</Typography>
               </div>
