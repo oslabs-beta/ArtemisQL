@@ -55,6 +55,11 @@ function MainContainer() {
   }
 
   function getDataFromDB(dbLink) {
+    if (!dbLink) {
+      setMessage('Invalid URI, please try again');
+      return;
+    }
+    
     const request = {
       method: 'GET',
       url: '/submit',
