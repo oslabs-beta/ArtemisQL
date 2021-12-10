@@ -8,7 +8,7 @@
     "build": "webpack",
     "dev": "nodemon server/server.ts & webpack serve --open --hot",
     "test": "jest --verbose"
-  }, 
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/oslabs-beta/ArtemisQL.git"
@@ -69,6 +69,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "jest": "^27.4.3",
     "nodemon": "^2.0.15",
     "typescript": "^4.5.2",
     "webpack": "^5.64.2",

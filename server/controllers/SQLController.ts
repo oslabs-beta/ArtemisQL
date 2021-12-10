@@ -1,16 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 import { SQLControllerType } from './controllerTypes';
+
+require('dotenv').config();
 const { Pool } = require('pg');
 
 // get all database metadata (tables and columns) from user's selected DB
 const getAllMetadata = async (req: Request, res: Response, next: NextFunction) => {
-  const PG_URI: string = (!req.query.dbLink) ? 'postgres://dsthvptf:Y8KtTaY290gb7KlcxkoTLHTnEECegH0r@fanny.db.elephantsql.com/dsthvptf' : req.query.dbLink.toString();
-
-  console.log('PG_URI', PG_URI);
+  const PG_URI = (!req.query.dbLink) ? process.env.PG_URI : req.query.dbLink;
 
   const db = new Pool({
     connectionString: PG_URI,
-    // connectionString: process.env.DEMO_DB_URI,
   });
 
   const queryString = `
@@ -44,7 +43,7 @@ const getAllMetadata = async (req: Request, res: Response, next: NextFunction) =
   try {
     const data = await db.query(queryString);
     if (!data) {
-      throw (new Error('Error querying from sql database'))
+      throw (new Error('Error querying from sql database'));
     }
     res.locals.queryTables = data.rows; // data.rows is an array of objects
     // console.log('queryTables', res.locals.queryTables);

@@ -38,6 +38,7 @@
         "arrow-body-style": "off",
         "no-trailing-spaces": "off",
         "guard-for-in" : "off",
-        "no-restricted-syntax": "off"
+        "no-restricted-syntax": "off",
+        "no-undef": "off"
     }
 }
