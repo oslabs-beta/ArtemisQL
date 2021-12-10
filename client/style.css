@@ -29,32 +29,51 @@ section {
 }
 
 .slideIn {
-  animation-name: out;
+  animation-name: in;
   animation-duration: 2s;
 }
 
 .slideOut {
-  animation-name: in;
+  animation-name: out;
   animation-duration: 2s;
 }
 
 @keyframes out {
   0% {
-    transform: translateX(0);
+    transform: translateX(-750px);
+  }
+  
+  /* 25% {
+    transform: translateX(-650px);
   }
 
-  100% {
+  50% {
     transform: translateX(-500px);
+  } */
+
+  100% {
+    transform: translateX(0);
   }
 }
 
 @keyframes in {
   0% {
-    transform: translateX(0);
+    transform: translateX(750px);
   }
+
+  /* 25% {
+    transform: translateX(500px);
+  }
+
+  50% {
+    transform: translateX(250px);
+  }
+  
+  75% {
+    transform: translateX(100px);
+  } */
 
   100% {
-    transform: translateX(-500px);
+    transform: translateX(0);
   }
 }
-
