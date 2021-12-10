@@ -315,13 +315,14 @@
 // }
 
 // GQL Mutation
-// updatePerson args obj { _id: '5', name: 'Jennifer' }
-// executed query: UPDATE people SET name = $1 WHERE _id = $2 RETURNING *
+// updatePerson args obj { gender: 'male', _id: '5', name: 'JenniferXXX' }
+// query UPDATE people SET gender = $1, name = $2 WHERE _id = $3 RETURNING *
+// values [ 'male', 'JenniferXXX', '5' ]
+// executed query: UPDATE people SET gender = $1, name = $2 WHERE _id = $3 RETURNING *
 // executed query: SELECT species.* FROM species LEFT OUTER JOIN people ON species._id = people.species_id WHERE people._id = $1
-// updatePerson args obj { gender: 'male', _id: '5', name: 'Jennifer' }
 // 
 // mutation {
-//   updatePerson(_id: 5, name: "Jennifer", gender: "male"){
+//   updatePerson(_id: 5, name: "JenniferXXX", gender: "male"){
 //      name
 //      gender
 //      species {
