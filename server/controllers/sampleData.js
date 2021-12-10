@@ -128,3 +128,188 @@
 //     foreign_column: '_id'
 //   }
 // ],
+
+// Mutation Obj
+// addFilm: {
+//   director: 'String!',
+//   episode_id: 'Int!',
+//   opening_crawl: 'String!',
+//   producer: 'String!',
+//   release_date: 'String!',
+//   title: 'String!',
+//   formatted_table_name_for_dev_use: 'Film',
+//   table_name_for_dev_use: 'films'
+// },
+// updateFilm: {
+//   _id: 'ID',
+//   director: 'String',
+//   episode_id: 'Int',
+//   opening_crawl: 'String',
+//   producer: 'String',
+//   release_date: 'String',
+//   title: 'String',
+//   formatted_table_name_for_dev_use: 'Film',
+//   table_name_for_dev_use: 'films'
+// },
+// deleteFilm: {
+//   _id: 'ID!',
+//   formatted_table_name_for_dev_use: 'Film',
+//   table_name_for_dev_use: 'films'
+// },
+// addPerson: {
+//   birth_year: 'String',
+//   eye_color: 'String',
+//   gender: 'String',
+//   hair_color: 'String',
+//   height: 'Int',
+//   homeworld_id: 'Int',
+//   mass: 'String',
+//   name: 'String!',
+//   skin_color: 'String',
+//   species_id: 'Int',
+//   formatted_table_name_for_dev_use: 'Person',
+//   table_name_for_dev_use: 'people'
+// },
+// updatePerson: {
+//   _id: 'ID',
+//   birth_year: 'String',
+//   eye_color: 'String',
+//   gender: 'String',
+//   hair_color: 'String',
+//   height: 'Int',
+//   homeworld_id: 'Int',
+//   mass: 'String',
+//   name: 'String',
+//   skin_color: 'String',
+//   species_id: 'Int',
+//   formatted_table_name_for_dev_use: 'Person',
+//   table_name_for_dev_use: 'people'
+// },
+// deletePerson: {
+//   _id: 'ID!',
+//   formatted_table_name_for_dev_use: 'Person',
+//   table_name_for_dev_use: 'people'
+// },
+// addPlanet: {
+//   climate: 'String',
+//   diameter: 'Int',
+//   gravity: 'String',
+//   name: 'String',
+//   orbital_period: 'Int',
+//   population: 'Float',
+//   rotation_period: 'Int',
+//   surface_water: 'String',
+//   terrain: 'String',
+//   formatted_table_name_for_dev_use: 'Planet',
+//   table_name_for_dev_use: 'planets'
+// },
+// updatePlanet: {
+//   _id: 'ID',
+//   climate: 'String',
+//   diameter: 'Int',
+//   gravity: 'String',
+//   name: 'String',
+//   orbital_period: 'Int',
+//   population: 'Float',
+//   rotation_period: 'Int',
+//   surface_water: 'String',
+//   terrain: 'String',
+//   formatted_table_name_for_dev_use: 'Planet',
+//   table_name_for_dev_use: 'planets'
+// },
+// deletePlanet: {
+//   _id: 'ID!',
+//   formatted_table_name_for_dev_use: 'Planet',
+//   table_name_for_dev_use: 'planets'
+// },
+// addSpecies: {
+//   average_height: 'String',
+//   average_lifespan: 'String',
+//   classification: 'String',
+//   eye_colors: 'String',
+//   hair_colors: 'String',
+//   homeworld_id: 'Int',
+//   language: 'String',
+//   name: 'String!',
+//   skin_colors: 'String',
+//   formatted_table_name_for_dev_use: 'Species',
+//   table_name_for_dev_use: 'species'
+// },
+// updateSpecies: {
+//   _id: 'ID',
+//   average_height: 'String',
+//   average_lifespan: 'String',
+//   classification: 'String',
+//   eye_colors: 'String',
+//   hair_colors: 'String',
+//   homeworld_id: 'Int',
+//   language: 'String',
+//   name: 'String',
+//   skin_colors: 'String',
+//   formatted_table_name_for_dev_use: 'Species',
+//   table_name_for_dev_use: 'species'
+// },
+// deleteSpecies: {
+//   _id: 'ID!',
+//   formatted_table_name_for_dev_use: 'Species',
+//   table_name_for_dev_use: 'species'
+// },
+// addStarshipSpec: {
+//   MGLT: 'String',
+//   hyperdrive_rating: 'String',
+//   vessel_id: 'Int!',
+//   formatted_table_name_for_dev_use: 'StarshipSpec',
+//   table_name_for_dev_use: 'starship_specs'
+// },
+// updateStarshipSpec: {
+//   MGLT: 'String',
+//   _id: 'ID',
+//   hyperdrive_rating: 'String',
+//   vessel_id: 'Int',
+//   formatted_table_name_for_dev_use: 'StarshipSpec',
+//   table_name_for_dev_use: 'starship_specs'
+// },
+// deleteStarshipSpec: {
+//   _id: 'ID!',
+//   formatted_table_name_for_dev_use: 'StarshipSpec',
+//   table_name_for_dev_use: 'starship_specs'
+// },
+// addVessel: {
+//   cargo_capacity: 'String',
+//   consumables: 'String',
+//   cost_in_credits: 'Float',
+//   crew: 'Int',
+//   length: 'String',
+//   manufacturer: 'String',
+//   max_atmosphering_speed: 'String',
+//   model: 'String',
+//   name: 'String!',
+//   passengers: 'Int',
+//   vessel_class: 'String!',
+//   vessel_type: 'String!',
+//   formatted_table_name_for_dev_use: 'Vessel',
+//   table_name_for_dev_use: 'vessels'
+// },
+// updateVessel: {
+//   _id: 'ID',
+//   cargo_capacity: 'String',
+//   consumables: 'String',
+//   cost_in_credits: 'Float',
+//   crew: 'Int',
+//   length: 'String',
+//   manufacturer: 'String',
+//   max_atmosphering_speed: 'String',
+//   model: 'String',
+//   name: 'String',
+//   passengers: 'Int',
+//   vessel_class: 'String',
+//   vessel_type: 'String',
+//   formatted_table_name_for_dev_use: 'Vessel',
+//   table_name_for_dev_use: 'vessels'
+// },
+// deleteVessel: {
+//   _id: 'ID!',
+//   formatted_table_name_for_dev_use: 'Vessel',
+//   table_name_for_dev_use: 'vessels'
+// }
+// }

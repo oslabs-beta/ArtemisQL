@@ -36,22 +36,58 @@ resolvers.createQuery = (baseTableName) => {
   return currString;
 };
 
-// input: base table name
+// input: mutation obj type name
 // output: string
-resolvers.createMutation = (mutationType) => {
+resolvers.createMutation = (mutationType, mutationObj) => {
   let currString = '';
-  // append function strings for mutationType
-  // 4 spaces
-  currString += `
-    ${mutationType}: (parent, args, context, info) => {
+  // baseTable object reference based on key (people)
+  /******************* ADD *****************/
+  if (mutationType.includes('add')) {
+    let queryString = '';
+    let valuesString = '';
+    let argsString = '';
+    let counter = 1;
+    for (const key in mutationObj[mutationType]) {
+      if (key !== 'formatted_table_name_for_dev_use' && key !== 'table_name_for_dev_use') {
+        // create query string
+        queryString += `${key}, `;
+        // create values string
+        valuesString += `$${counter}, `;
+        counter += 1;
+        // create args string
+        argsString += `args.${key}, `;
+      }
+    }
+    // remove last comma and trailing space
+    const finalQueryString = queryString.slice(0, -2);
+    const finalValuesString = valuesString.slice(0, -2);
+    const finalArgsString = argsString.slice(0, -2);
+
+    currString += `
+    ${mutationType}: async (parent, args, context, info) => {
       try {
-        // insert sql query here
+        const query = 'INSERT INTO ${mutationObj[mutationType].table_name_for_dev_use} (${finalQueryString}) 
+          VALUES (${finalValuesString})
+          RETURNING *';
+        const values = [${finalArgsString}];
+        const data = await db.query(query, values);
+        console.log('insert sql result data.rows[0]', data.rows[0]);
       } catch(err) {
         throw new Error(err);
       }
     },`;
-  // baseTable object reference based on key (people)
-  /******************* ADD *****************/
+  } else {
+    // append function strings for mutationType
+    // 4 spaces
+    currString += `
+      ${mutationType}: (parent, args, context, info) => {
+        try {
+          // insert sql query here
+        } catch(err) {
+          throw new Error(err);
+        }
+      },`;
+  }
   // loop through all columns/fields and print in string (gender, species_id, homeworld_id, height, mass, hair_color, skin_color, eye_color, name, birth_year)
   // loop through all columns/fields and for each item, keep count and print in string ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
   // loop through all columns/fields, and print in args string 'args.gender, args.species_id, args.homeworld_id, args.height, args.mass, args.hair_color, args.skin_color, args.eye_color, args.name, args.birth_year'
