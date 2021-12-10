@@ -36,7 +36,7 @@ resolvers.createQuery = (baseTableName) => {
   return currString;
 };
 
-// input: mutation obj type name
+// input: mutation type name, mutationObj
 // output: string
 resolvers.createMutation = (mutationType, mutationObj) => {
   let currString = '';
@@ -76,6 +76,20 @@ resolvers.createMutation = (mutationType, mutationObj) => {
         throw new Error(err);
       }
     },`;
+  } else if (mutationType.includes('delete')) {
+  /******************* DELETE *****************/
+    currString += `
+    ${mutationType}: async (parent, args, context, info) => {
+      try {
+        const query = 'DELETE FROM ${mutationObj[mutationType].table_name_for_dev_use} 
+          WHERE _id = $1 RETURNING *';
+        const values = [args._id];
+        const data = await db.query(query, values);
+        console.log('delete sql result data.rows[0]', data.rows[0]);
+      } catch(err) {
+        throw new Error(err);
+      }
+    },`;
   } else {
     // append function strings for mutationType
     // 4 spaces
@@ -106,19 +120,7 @@ resolvers.createMutation = (mutationType, mutationObj) => {
   // },`;
 
   /******************* UPDATE *****************/
-  /******************* DELETE *****************/
-  // currString += `
-  // ${mutationType}: async (parent, args, context, info) => {
-  //   try {
-  //     const query = 'DELETE FROM ${baseTableName} 
-  //       WHERE _id = $1 RETURNING *;
-  //     const values = [args._id];
-  //     const data = await db.query(query, values);
-  //     console.log('delete sql result data.rows[0]', data.rows[0]);
-  //   } catch(err) {
-  //     throw new Error(err);
-  //   }
-  // },`;
+
   return currString;
 };
 
