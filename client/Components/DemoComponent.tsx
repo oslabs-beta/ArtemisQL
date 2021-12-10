@@ -6,12 +6,12 @@ import RightImageStepComponent from './RightImageStepComponent';
 const DemoComponent = () => {
   return (
     // Demo Header
-    <section>
+    <section style={{backgroundColor: "#eeeeee", boxShadow: "0px 0px 5px 3px #282b2e"}} >
       <Container maxWidth="sm">
         <Box pt={8} textAlign="center">
           <Typography variant="h4" component="h2" gutterBottom={true}>How to use ArtemisQL</Typography>
-          <Typography variant="subtitle1" color="textSecondary">
-            We've designed a simple process to help you migrate from REST API to GraphQL. Here's how it works.
+          <Typography variant="body1" color="textSecondary">
+            We've designed a simple and intuitive process to help you migrate from a REST API to GraphQL. Here's how it works.
           </Typography>
         </Box>
       </Container>

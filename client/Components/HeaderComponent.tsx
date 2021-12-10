@@ -7,13 +7,17 @@ const HeaderComponent = () => {
   return (
     <section className='bgImage'>
       <Container maxWidth="md">
-        <Box py={8} pt={18} textAlign="center">
-          <img src={logo} alt="logo" style={{width: '700px'}}/>
-          <Typography variant="h5" color="textSecondary" paragraph={true}> Visualize your data, generate new prototypes, and discover the power of GraphQL</Typography>
+        <Box py={4} pt={18} textAlign="center">
+          {/* <img src={logo} alt="logo" style={{width: '500px'}}/> */}
+          <Typography color="primary" variant="h1">Artemis<span style={{color: '#E10098'}}>QL</span></Typography>
+          <Typography variant="h6" color="textSecondary" style={{fontWeight: 'normal'}}> Visualize your data, generate new prototypes, and explore the possibilities of GraphQL</Typography>
           <Box mt={4}>
-            <Button variant="contained" color="primary">
-              <Link style={{ textDecoration: 'none', color: 'white' }} to={{ pathname: "/schema"}}> Get Started </Link>
+            <Button className='button' variant='contained'>
+              <Link style={{ textDecoration: 'none', color: 'inherit' }} to={{ pathname: "/schema"}}> Get Started </Link>
             </Button>
+            {/* <Link style={{ textDecoration: 'none', color: 'white'}} to={{ pathname: "/schema"}}> 
+              <Button className="button" style={{fontWeight:"normal"}} color="inherit">Get Started</Button> 
+            </Link> */}
           </Box>
         </Box>
       </Container>

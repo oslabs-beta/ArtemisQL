@@ -4,6 +4,7 @@ import MainContainer from './Containers/MainContainer';
 import HeaderComponent from './Components/HeaderComponent'
 import FeatureComponent from './Components/FeatureComponent'
 import TeamBiosComponent from './Components/TeamBiosComponent'
+import FooterComponent from './Components/FooterComponent'
 import DemoComponent from './Components/DemoComponent'
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <FeatureComponent />
       <DemoComponent />
       <TeamBiosComponent />
+      <FooterComponent />
     </div>
   );
 }

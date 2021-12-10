@@ -84,7 +84,7 @@ function MainContainer() {
 
   return (
       <div style={ {display: 'flex', alignItems: 'center', height: '85%' }}>
-        <Container maxWidth='sm' style={{border: '1px solid #403D39', borderRadius: '5px', boxShadow: '5px 5px #888888', height: '120px'}}>
+        <Container maxWidth='sm' style={{border: '1px solid #403D39', borderRadius: '5px', boxShadow: '3px 3px #888888', height: '160px', paddingTop: '20px'}}>
           <Grid container spacing={2} align="center" justify="center">
 
             <Grid item xs={12}>
@@ -93,11 +93,11 @@ function MainContainer() {
             </Grid>
     
             <Grid item xs={6}>
-              <Button fullWidth variant="contained" color="primary" onClick={() => getDataFromDB(dataBaseUrl)} endIcon={<SendIcon/>}>Submit</Button>
+              <Button fullWidth variant="contained" color="primary" style={buttonStyles} onClick={() => getDataFromDB(dataBaseUrl)} endIcon={<SendIcon/>}>Submit</Button>
             </Grid>
     
             <Grid item xs={6}>
-              <Button fullWidth variant="contained" color="primary" onClick={() => getSampleDB()} endIcon={<StorageIcon/>}>Demo Database</Button>
+              <Button fullWidth variant="contained" color="primary" style={buttonStyles} onClick={() => getSampleDB()} endIcon={<StorageIcon/>}>Demo Database</Button>
             </Grid>
       
           </Grid> 
@@ -107,12 +107,7 @@ function MainContainer() {
   );
 }
 
-// const buttonStyles = {
-//   backgroundColor: '#78909c',
-//   color: 'white',
-//   '&:hover': {
-//     backgroundColor: '#78909c',
-//     color: '#ff6d00',
-//   }
-// }
+const buttonStyles = {
+  fontWeight: 'normal'
+}
 export default MainContainer;

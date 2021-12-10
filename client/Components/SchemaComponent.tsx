@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Grid } from '@mui/material';
 import Highlight from 'react-highlight';
+import { NoEncryptionTwoTone } from '@mui/icons-material';
 
 function SchemaComponent({schema, resolvers}) {
   
@@ -12,7 +13,7 @@ function SchemaComponent({schema, resolvers}) {
   }
 
   return (
-      <Container maxWidth='sm' style={{position: 'absolute', top: '10vh', right: '0px', zIndex: '99' }}>
+      <Container maxWidth='xs' style={{position: 'absolute', top: '10vh', right: '0px', zIndex: '99' }}>
         <div style={{height: '790px', overflow: 'scroll', borderRadius: '5px' }}>
           <Highlight  language="javascript">
             {text}
@@ -36,10 +37,11 @@ function SchemaComponent({schema, resolvers}) {
 }
 
 const buttonStyles = {
-  color: 'white',
+  // color: 'rgb(54, 172, 170)',
   // backgroundColor: '#78909c',
-  backgroundColor: '#93C763',
-  borderColor: '#78909c',
+  fontWeight: 'normal',
+  // backgroundColor: 'primary',
+  // borderColor: '#282b2e',
   borderWidth: 2
 }
 

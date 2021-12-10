@@ -8,6 +8,7 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import style from './style.css'
 
 /* Our Color Palette
   Floral White: #FFFCF2
@@ -23,17 +24,29 @@ import '@fontsource/roboto/700.css';
   Eerie Black: #252422
   Orange: #FF6D00
   Lime green: #93C763
+
+  johnny palette:
+  dark gray: '#282b2e'
+  aquablue: 'rgb(54, 172, 170)'
+  lime green: '#93C763'
+  light gray: '#eeeeee'
+  reactpink: '#FF0072'
+  graphqlpink: '#E10098'
+  cobalt blue: '#00009f'
 */
 
 const theme = createTheme({
   
   palette: {
     primary: {
-      main: '#93C763',
+      main: '#282b2e',
     },
     secondary: {
-      main: '#93C763',
+      main: 'rgb(54, 172, 170)',
     },
+    warning: {
+      main: '#E10098'
+    }
   },
 
   components: {
@@ -41,17 +54,27 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '&:hover': {
-            backgroundColor: '#EB5E28',
+            color: 'rgb(54, 172, 170)',
           },
         },
       },
     },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            color: 'rgb(54, 172, 170)',
+          },
+        },
+      },
+    }
   },
-
 });
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}><Router /></ThemeProvider>
+  <ThemeProvider theme={theme}>
+    <Router />
+  </ThemeProvider>
   ,
   document.getElementById('root'),
 );
