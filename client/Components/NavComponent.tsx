@@ -33,26 +33,28 @@ const NavComponent = () => {
           >
             <MenuIcon />
           </IconButton> */}
-          {/* <Typography color="#EB5E28" variant="h4" component="div" sx={{ flexGrow: 2 }}>
-            ArtemisQL
-          </Typography> */}
+          <Link style={{textDecoration:'none', paddingRight: '10px'}} to={{ pathname: "/"}}>
+            <Typography color="secondary" variant="h2" component="div" sx={{ flexGrow: 2 }}>
+              A
+            </Typography>
+          </Link>
           {/* <Link href="/" variant="h5" color="inherit" underline="none" sx={{ flexGrow: 2 }}>
             <img src={logo} alt="logo" style={{width: '260px', height: '90px'}}/>
           </Link> */}
-          <Link to={{ pathname: "/"}}>
+          {/* <Link to={{ pathname: "/"}}>
             <img src={a_logo} alt="logo" style={{width: '70px'}}/>
-          </Link>
+          </Link> */}
           <Link style={{ textDecoration: 'none', color: 'white' }} to={{ pathname: "/schema"}}> 
-            <Button className="button" color="inherit" startIcon={<PlayCircleFilledIcon />}>Get Started</Button> 
+            <Button className="button" style={{fontWeight:"normal"}} color="inherit" startIcon={<PlayCircleFilledIcon />}>Get Started</Button> 
           </Link>
-          <Button style={{ textDecoration: 'none', color: 'white' }} href="/sandbox" target="_blank" className="button" color="inherit" startIcon={<BugReportIcon />}> Sandbox</Button>
-          <IconButton style={{ marginLeft: 'auto', color: 'white' }} href="https://github.com/oslabs-beta/ArtemisQL" target="_blank" className="button" color="inherit">
+          <Button className="button" href="/sandbox" target="_blank" style={{fontWeight:"normal"}} color="inherit" startIcon={<BugReportIcon />}> Sandbox</Button>
+          <IconButton className="button" style={{ marginLeft: 'auto'}} href="https://github.com/oslabs-beta/ArtemisQL" target="_blank" color="inherit">
             <GitHubIcon />
           </IconButton>
-          <IconButton style={{ color: 'white' }} href="https://www.linkedin.com/" target="_blank" className="button" color="inherit">
+          <IconButton className="button" href="https://www.linkedin.com/" target="_blank" color="inherit">
             <LinkedInIcon />
           </IconButton>
-          <IconButton style={{ color: 'white' }} href="https://medium.com/" target="_blank" className="button" color="inherit">
+          <IconButton className="button" href="https://medium.com/" target="_blank" color="inherit">
             <ArticleOutlinedIcon />
           </IconButton>
         </Toolbar>

@@ -12,13 +12,14 @@ const FlowComponent = ({ data, schema, resolvers }) => {
   
   // declare coordinate variables for table node positions/mapping
   let positionX = 100;
-  let positionY = 120;
+  let positionY = 200;
   let row = 0;
 
   // Iterate through each table...
   for (const key in data) {
     // initialize tableName, tableName as key, table to value
     const tableName = key;
+    const title = tableName.toUpperCase();
     const table = data[key];
 
     // declare primary / foreign key variables
@@ -71,8 +72,8 @@ const FlowComponent = ({ data, schema, resolvers }) => {
       data: { 
         label:
           <div style={customNodeStyles}>
-            <div style={title}>
-              <h3>{tableName}</h3>
+            <div style={titleStyles}>
+              <h3>{title}</h3>
             </div>
             <div style={container}>
               {columns}
@@ -86,10 +87,10 @@ const FlowComponent = ({ data, schema, resolvers }) => {
 
     // assign table position
     row += 1;
-    positionY += 500;
+    positionY += 600;
     if (row % 2 === 0) {
-      positionY = 120;
-      positionX += 300;
+      positionY = 200;
+      positionX += 400;
     }
 
     // push newNode and edge into elements array
@@ -98,7 +99,7 @@ const FlowComponent = ({ data, schema, resolvers }) => {
 
   return (
     <div>
-      <ReactFlow elements={elements} nodeTypes={nodeTypes} defaultZoom={0.75}>
+      <ReactFlow elements={elements} nodeTypes={nodeTypes} defaultZoom={0.66}>
         <Background
           style={{backgroundColor: '#fafafa'}}   
           variant="dots"
@@ -114,7 +115,7 @@ const FlowComponent = ({ data, schema, resolvers }) => {
 // style={customNodeStyles}
 // Custom Node
 const CustomNode = ({ data }) => {
-  let index = 80;
+  let index = 111;
   let key = 0;
   return (
     <div>
@@ -129,7 +130,7 @@ const CustomNode = ({ data }) => {
           position="right"
           id={`${data.id}`}
           key={key++}
-          style={{ top: `${index}px`, borderRadius: 5, backgroundColor: '#ef6c00' }}
+          style={{ top: `${index}px`, borderRadius: 5, backgroundColor: '#E10098' }}
         />
       ) : (
         ''
@@ -137,7 +138,7 @@ const CustomNode = ({ data }) => {
 
       {/* foreign key handles */}
       {data.fk.map((el) => {
-        if (el[0] === '_id') index = 80;
+        if (el[0] === '_id') index = 111;
         else if (el[1] === true) {
           return (
             <Handle
@@ -145,10 +146,10 @@ const CustomNode = ({ data }) => {
               position="left"
               id={`${el[0]}`}
               key={key++}
-              style={{ top: `${index += 34}px`, borderRadius: 5, backgroundColor: '#ef6c00' }}
+              style={{ top: `${index += 37}px`, borderRadius: 5, backgroundColor: '#E10098' }}
             />
         )} else {
-          index += 34;
+          index += 37;
         } 
       })}
 
@@ -164,24 +165,30 @@ const nodeTypes = {
 // CSS styling for custom node
 const customNodeStyles = {
   backgroundColor: '#eeeeee',
-  fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
-  color: '#403D39',
+  fontFamily: "JetBrains Mono",
+  //fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
+  color: "#403D39",
   borderRadius: 5,
-  // borderStyle: 'solid',
-  // borderWidth: 2,
-  // borderColor: '#93c763',
+  borderStyle: "solid",
+  borderWidth: 2,
+  borderColor: "#8cbbad",
   // transition: 'all 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-  boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
+  boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
 
 };
 
-const title = {
-  // background: "#93c763",
-  // background: "#FFDEAD",
-  background: "#78909c",
-  color: "white",
+const titleStyles = {
+  // background: "#eeeeee",
+  // background: "#8cbbad",
+  // background: "#78909c",
+  fontSize: '16px',
+  background: '#282b2e',
+  color: "rgb(54, 172, 170)",
   textAlign: "center",
-  padding: "5px 10px",
+  padding: "5px 20px",
+  //borderColor: "#8cbbad",
+  //borderStyle: 'solid',
+  //borderWidth: 2,
   borderTopLeftRadius: "5px",
   borderTopRightRadius: "5px"
 };
