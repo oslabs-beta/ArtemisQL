@@ -164,6 +164,7 @@ const createResolver = (req: Request, res: Response, next: NextFunction) => {
   resolverString += `}\n`;
   
   res.locals.resolverString = resolverString;
+  console.log('resolverString', resolverString);
   return next();
 };
 
