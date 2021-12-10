@@ -41,7 +41,7 @@ const TeamBiosComponent = () => {
           <Box mb={10}>
             <Typography variant="h5" component="h2" gutterBottom={true}>ArtemisQL Team</Typography>
           </Box>
-          <Grid container spacing={6}>
+          <Grid style={{fontSize:"6px", color:'#282b2e'}}  container spacing={6}>
             <BioComponent fullName={profile.JB.fullName} profilePic={profile.JB.profilePic} gitHubLink={profile.JB.gitHubLink} linkedInLink={profile.JB.linkedInLink} />
             <BioComponent fullName={profile.JC.fullName} profilePic={profile.JC.profilePic} gitHubLink={profile.JC.gitHubLink} linkedInLink={profile.JC.linkedInLink} />
             <BioComponent fullName={profile.JL.fullName} profilePic={profile.JL.profilePic} gitHubLink={profile.JL.gitHubLink} linkedInLink={profile.JL.linkedInLink} />
