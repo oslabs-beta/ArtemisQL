@@ -394,6 +394,7 @@ const resolvers = {
 
     updatePerson: (parent, args) => {
       let valList = [];
+      console.log('updatePerson args obj', args);
       for (const key of Object.keys(args)) {
         if (key !== '_id') valList.push(args[key]);
       }
