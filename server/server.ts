@@ -7,9 +7,13 @@ const path = require('path');
 const PORT = 3000;
 const app: Application = express();
 
+
 // handle parsing request body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// handle requests for static files
+app.use('/client', express.static(path.join(__dirname, '../client/assets')));
 
 app.use('/', Router);
 
@@ -22,6 +26,8 @@ app.get('/', (req: Request, res: Response) => {
 app.get('/schema', (req: Request, res: Response) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
+
+
 
 // catch-all route handler
 app.use('*', (req: Request, res: Response) => res.status(400).send('This1 is not the page you\'re looking for...'));

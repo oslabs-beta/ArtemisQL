@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Box, Typography, Grid, Avatar, Container, CardActionArea, CardMedia, Card } from '@mui/material';
-import demo from '../assets/demo2.png'
 // left or right either containers an image or some text
 const LeftImageStepComponent = ({image, text, number, stepHeader, stepDetails}) => {
   // modulize the text ???
@@ -19,7 +18,7 @@ const LeftImageStepComponent = ({image, text, number, stepHeader, stepDetails}) 
       </Grid>
 
       {/* image */}
-      <Grid item xs={12} md={6}>
+      <Grid item >
         <Card style={{borderColor: '#93c763', borderWidth: 1, borderStyle: "solid", boxShadow: "0px 0px 0.25px 0.25px #93c763"}}>
           <CardMedia className="media" image={image} />
         </Card>

@@ -20,11 +20,11 @@ body {
 }
 
 section {
-  min-height: 30vh !important;
+  min-height: 50vh !important;
 }
 
 .media {
-  height: 400px;
+  height: 415px;
   width: 600px;
 }
 
