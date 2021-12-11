@@ -1,19 +1,17 @@
 import React from 'react';
-import NavComponent from './Components/NavComponent'
-import MainContainer from './Containers/MainContainer';
 import HeaderComponent from './Components/HeaderComponent'
 import FeatureComponent from './Components/FeatureComponent'
-import TeamBiosComponent from './Components/TeamBiosComponent'
+import BioContainer from './Containers/BioContainer'
 import FooterComponent from './Components/FooterComponent'
-import DemoComponent from './Components/DemoComponent'
+import DemoContainer from './Containers/DemoContainer'
 
 function App() {
   return (
     <div>
       <HeaderComponent />
       <FeatureComponent />
-      <DemoComponent />
-      <TeamBiosComponent />
+      <DemoContainer />
+      <BioContainer />
       <FooterComponent />
     </div>
   );

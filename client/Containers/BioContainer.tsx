@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Container, Box, Typography, Grid, Avatar } from '@mui/material';
-import BioComponent from './BioComponent';
+import BioComponent from '../Components/BioComponent';
 import John_Lin from '../assets/john_lin_headshot.jpg';
 import Johnny_Bryan from '../assets/johnnybryan.png';
 import Taras from '../assets/Taras.jpg';

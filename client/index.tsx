@@ -10,7 +10,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 /* 
-  COLOR PALETTE:
+  APP COLOR PALETTE:
   dark gray: '#282b2e'
   aquablue: 'rgb(54, 172, 170)'
   lime green: '#93C763'

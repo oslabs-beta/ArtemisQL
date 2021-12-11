@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import ReactFlow, { Background, Controls, Handle } from 'react-flow-renderer';
-import SchemaComponent from './SchemaComponent';
+import SchemaComponent from '../Components/SchemaComponent';
 
-const FlowComponent = ({ data, schema, resolvers }) => {
+type Elements = object[];
 
-  // check incoming data
-  // console.log(data);
+type Edge = {
+  id: number;
+  source: string;
+  target: string;
+  sourceHandle: string;
+  style: object;
+  animated: boolean;
+};
 
+const FlowContainer = ({ data, schema, resolvers }) => {
+  
   // declare elements array to store table nodes and edges
-  const elements = [];
+  const elements: Elements = [];
   
   // declare coordinate variables for table node positions/mapping
   let positionX = 100;
@@ -24,7 +32,7 @@ const FlowComponent = ({ data, schema, resolvers }) => {
 
     // declare primary / foreign key variables
     let primaryKey = false;
-    const foreignKeys = [];
+    const foreignKeys: [any] = [''];
     
     //console.log('tableName', tableName)
     //console.log('table', table);
@@ -40,7 +48,7 @@ const FlowComponent = ({ data, schema, resolvers }) => {
       else if (column.constraint_type === 'FOREIGN KEY') {
         hasForeignKey = true;
         // declare an object to store edges
-        const edge = {
+        const edge: Edge = {
           id: count++,
           source: tableName,
           target: column.foreign_table,
@@ -75,7 +83,7 @@ const FlowComponent = ({ data, schema, resolvers }) => {
             <div style={titleStyles}>
               <h3>{title}</h3>
             </div>
-            <div style={container}>
+            <div style={containerStyles}>
               {columns}
             </div>
           </div>,
@@ -112,11 +120,11 @@ const FlowComponent = ({ data, schema, resolvers }) => {
     </div>
   );
 };
-// style={customNodeStyles}
-// Custom Node
+
+// Custom Node Component
 const CustomNode = ({ data }) => {
   let index = 111;
-  let key = 0;
+  
   return (
     <div>
       
@@ -127,9 +135,9 @@ const CustomNode = ({ data }) => {
       {data.pk ? (
         <Handle
           type="target"
-          position="right"
           id={`${data.id}`}
-          key={key++}
+          position="right"
+          
           style={{ top: `${index}px`, borderRadius: 5, backgroundColor: '#E10098' }}
         />
       ) : (
@@ -143,16 +151,14 @@ const CustomNode = ({ data }) => {
           return (
             <Handle
               type="source"
-              position="left"
               id={`${el[0]}`}
-              key={key++}
+              position="left"
               style={{ top: `${index += 37}px`, borderRadius: 5, backgroundColor: '#E10098' }}
             />
         )} else {
           index += 37;
         } 
       })}
-
     </div>
   );
 };
@@ -164,36 +170,29 @@ const nodeTypes = {
 
 // CSS styling for custom node
 const customNodeStyles = {
+  color: "#403D39",
   backgroundColor: '#eeeeee',
   fontFamily: "JetBrains Mono",
-  //fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
-  color: "#403D39",
   borderRadius: 5,
   borderStyle: "solid",
   borderWidth: 2,
   borderColor: "#8cbbad",
-  // transition: 'all 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+  transition: 'all 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
   boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
-
 };
 
 const titleStyles = {
-  // background: "#eeeeee",
-  // background: "#8cbbad",
-  // background: "#78909c",
-  fontSize: '16px',
   background: '#282b2e',
+  fontSize: '16px',
   color: "rgb(54, 172, 170)",
   textAlign: "center",
   padding: "5px 20px",
-  //borderColor: "#8cbbad",
-  //borderStyle: 'solid',
-  //borderWidth: 2,
   borderTopLeftRadius: "5px",
   borderTopRightRadius: "5px"
 };
 
-const container = {
+const containerStyles = {
   padding: 10,
 };
-export default FlowComponent;
+
+export default FlowContainer;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes as Switch } from 'react-router-dom';
 import App from './App';
-import MainContainer from './Containers/MainContainer';
+import Dashboard from './Dashboard';
 import NavComponent from './Components/NavComponent';
 
 const Router = () => (
@@ -9,18 +9,9 @@ const Router = () => (
     <NavComponent />
     <Switch>
       <Route path="/" element={<App />} />
-      <Route path="/schema" element={<MainContainer />} />
+      <Route path="/schema" element={<Dashboard />} />
     </Switch>
-    {/* <Switch>
-      <Route path="/">
-        <App /> 
-      </Route>
-      <Route path="/schema">
-        <MainContainer />
-      </Route>
-    </Switch> */}
   </BrowserRouter>
-
 );
 
 export default Router; 
