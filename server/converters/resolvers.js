@@ -73,9 +73,9 @@ resolvers.createMutation = (mutationType, mutationObj) => {
     currString += `
     ${mutationType}: async (parent, args, context, info) => {
       try {
-        const query = 'INSERT INTO ${mutationObj[mutationType].table_name_for_dev_use} (${finalQueryString}) 
+        const query = \`INSERT INTO ${mutationObj[mutationType].table_name_for_dev_use} (${finalQueryString}) 
           VALUES (${finalValuesString})
-          RETURNING *';
+          RETURNING *\`;
         const values = [${finalArgsString}];
         const data = await db.query(query, values);
         console.log('insert sql result data.rows[0]', data.rows[0]);
@@ -89,8 +89,8 @@ resolvers.createMutation = (mutationType, mutationObj) => {
     currString += `
     ${mutationType}: async (parent, args, context, info) => {
       try {
-        const query = 'DELETE FROM ${mutationObj[mutationType].table_name_for_dev_use} 
-          WHERE _id = $1 RETURNING *';
+        const query = \`DELETE FROM ${mutationObj[mutationType].table_name_for_dev_use} 
+          WHERE _id = $1 RETURNING *\`;
         const values = [args._id];
         const data = await db.query(query, values);
         console.log('delete sql result data.rows[0]', data.rows[0]);
@@ -147,9 +147,15 @@ resolvers.checkOwnTable = (baseTableName, baseTables) => {
   for (const column of baseTables[baseTableName]) {
     if (column.constraint_type === 'FOREIGN KEY') {
       currString += `
-    ${column.foreign_table}: (parent, args, context, info) => {
+    ${column.foreign_table}: async (${baseTableName}) => {
       try {
-        // insert sql query here
+        const query = \`SELECT ${column.foreign_table}.* FROM ${column.foreign_table}
+          LEFT OUTER JOIN ${baseTableName} 
+          ON ${column.foreign_table}._id = ${baseTableName}.${column.column_name}
+          WHERE ${baseTableName}._id = $1\`;
+        const values = [${baseTableName}._id];
+        const data = await db.query(query, values);
+        return data.rows;
       } catch (err) {
         throw new Error(err);
       }
