@@ -5,10 +5,9 @@ const resolvers = {};
 // input: base table name
 // output: string
 resolvers.createQuery = (baseTableName) => {
-  // baseTableName = 'planets'
+  // baseTableName is pluralized version, ex. 'planets'
   let currString = '';
-  // first, append strings for baseTableName
-  // 4 spaces
+  // first, append query strings for baseTableName
   currString += `
     ${makeCamelCase(baseTableName)}: async () => {
       try {
@@ -22,8 +21,14 @@ resolvers.createQuery = (baseTableName) => {
     },`;
 
   // second, append strings for singularized baseTableName
+  // check if singuliarzed table is the same as baseTableName
+  // if so, then append 'ById' to differentiate
+  let singularAndCamelTableName = makeCamelCaseAndSingularize(baseTableName);
+  if (singularAndCamelTableName === baseTableName) {
+    singularAndCamelTableName += 'ById';
+  }
   currString += `
-    ${makeCamelCaseAndSingularize(baseTableName)}: async (parent, args, context, info) => {
+    ${singularAndCamelTableName}: async (parent, args, context, info) => {
       try {
         const query = 'SELECT * FROM ${baseTableName} WHERE _id = $1';
         const values = [args._id];
@@ -49,7 +54,7 @@ resolvers.createMutation = (mutationType, mutationObj) => {
     let valuesString = '';
     let argsString = '';
     let counter = 1;
-    for (const key in mutationObj[mutationType]) { // value is indice
+    for (const key in mutationObj[mutationType]) {
       if (key !== 'formatted_table_name_for_dev_use' && key !== 'table_name_for_dev_use') {
         // add line breaks and spaces for client formatting
         if (counter % 3 === 0) {
@@ -124,8 +129,6 @@ resolvers.createMutation = (mutationType, mutationObj) => {
       }
     },`;
   } else {
-    // append function strings for mutationType
-    // 4 spaces
     currString += `
       ${mutationType}: (parent, args, context, info) => {
         try {
@@ -147,7 +150,7 @@ resolvers.checkOwnTable = (baseTableName, baseTables) => {
   for (const column of baseTables[baseTableName]) {
     if (column.constraint_type === 'FOREIGN KEY') {
       currString += `
-    ${column.foreign_table}: async (${baseTableName}) => {
+    ${makeCamelCase(column.foreign_table)}: async (${baseTableName}) => {
       try {
         const query = \`SELECT ${column.foreign_table}.* FROM ${column.foreign_table}
           LEFT OUTER JOIN ${baseTableName} 
@@ -174,7 +177,7 @@ resolvers.checkBaseTableCols = (baseTableName, baseTableQuery) => {
   for (const column of baseTableQuery) {
     if (column.foreign_table === baseTableName) {
       currString += `
-    ${column.table_name}: async (${baseTableName}) => {
+    ${makeCamelCase(column.table_name)}: async (${baseTableName}) => {
       try {
         const query = \`SELECT * FROM ${column.table_name}
           WHERE ${column.column_name} = $1\`;
@@ -206,7 +209,7 @@ resolvers.checkJoinTableCols = (baseTableName, joinTables) => {
     }
   }
   // [people_in_films, pilot]
-  console.log('relationships', relationships);
+  // console.log('relationships', relationships);
   for (const table of relationships) {
     // const foreignKeys = [];
     const foreignKeysObj = {};
@@ -223,7 +226,7 @@ resolvers.checkJoinTableCols = (baseTableName, joinTables) => {
       if (foreignKeys[i] === baseTableName) {
         const index = i === 1 ? 0 : 1;
         currString += `
-    ${foreignKeys[index]}: (${baseTableName}) => {
+    ${makeCamelCase(foreignKeys[index])}: async (${baseTableName}) => {
       try {
         const query = \`SELECT * FROM ${foreignKeys[index]}
           LEFT OUTER JOIN ${table}

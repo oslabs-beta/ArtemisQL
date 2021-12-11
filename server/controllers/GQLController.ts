@@ -148,7 +148,7 @@ const createResolver = (req: Request, res: Response, next: NextFunction) => {
   // loop through all base table names
   for (const key of baseTableNames) {
     // at each base table name
-    resolverString += `  ${capitalizeAndSingularize(key)} {`;
+    resolverString += `  ${capitalizeAndSingularize(key)}: {`;
     // 1. check own table columns - append to string
     resolverString += resolvers.checkOwnTable(key, baseTables);
     // 2. check all base table cols - append to string
@@ -156,7 +156,7 @@ const createResolver = (req: Request, res: Response, next: NextFunction) => {
     // 3. check join tables and cols - append to string
     resolverString += resolvers.checkJoinTableCols(key, joinTables);
     // close current table bracket
-    resolverString += `\n  }\n`;
+    resolverString += `\n  },\n`;
   }
   // close resolver bracket
   resolverString += `}\n`;
