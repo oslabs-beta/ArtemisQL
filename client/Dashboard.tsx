@@ -1,24 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Container, TextField } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import StorageIcon from '@mui/icons-material/Storage';
 import SendIcon from '@mui/icons-material/Send';
-import FlowComponent from '../Components/FlowComponent';
-import SchemaComponent from '../Components/SchemaComponent';
-import NavComponent from '../Components/NavComponent'
+import FlowContainer from './Containers/FlowContainer';
 import axios from 'axios';
-import logo from '/Users/johnbryan/codesmith/ArtemisQL/client/assets/ArtemisQL.png'
 
-
-
-function MainContainer() {
+const Dashboard = () => {
   const [data, setData] = useState({});
   const [schemaType, setSchemaType] = useState();
   const [resolvers, setResolvers] = useState();
@@ -82,26 +71,26 @@ function MainContainer() {
 
   if (showSchema) {
     return (
-      <FlowComponent data={data} schema={schemaType} resolvers={resolvers} />
+      <FlowContainer data={data} schema={schemaType} resolvers={resolvers} />
     );
   } 
 
   return (
-      <div style={ {display: 'flex', alignItems: 'center', height: '85%' }}>
-        <Container maxWidth='sm' style={{border: '1px solid #403D39', borderRadius: '5px', boxShadow: '3px 3px #888888', height: '160px', paddingTop: '20px'}}>
+      <div style={divStyle}>
+        <Container maxWidth='sm' style={containerStyle}>
           <Grid container spacing={2} align="center" justify="center">
-
+            
             <Grid item xs={12}>
               <TextField name="urlInput" onChange={(event) => onChangeHandler(event)} fullWidth variant="standard" label="Database URL" />
               {message}
             </Grid>
     
             <Grid item xs={6}>
-              <Button fullWidth variant="contained" color="primary" style={buttonStyles} onClick={() => getDataFromDB(dataBaseUrl)} endIcon={<SendIcon/>}>Submit</Button>
+              <Button fullWidth variant="contained" color="primary" style={buttonStyle} onClick={() => getDataFromDB(dataBaseUrl)} endIcon={<SendIcon/>}>Submit</Button>
             </Grid>
     
             <Grid item xs={6}>
-              <Button fullWidth variant="contained" color="primary" style={buttonStyles} onClick={() => getSampleDB()} endIcon={<StorageIcon/>}>Demo Database</Button>
+              <Button fullWidth variant="contained" color="primary" style={buttonStyle} onClick={() => getSampleDB()} endIcon={<StorageIcon/>}>Demo Database</Button>
             </Grid>
       
           </Grid> 
@@ -111,7 +100,24 @@ function MainContainer() {
   );
 }
 
-const buttonStyles = {
+// COMPONENT STYLING
+
+const divStyle = {
+  display: 'flex', 
+  alignItems: 'center', 
+  height: '85%' 
+}
+
+const containerStyle = {
+  border: '1px solid #403D39', 
+  borderRadius: '5px', 
+  boxShadow: '3px 3px #888888', 
+  height: '160px', 
+  paddingTop: '20px'
+}
+
+const buttonStyle = {
   fontWeight: 'normal'
 }
-export default MainContainer;
+
+export default Dashboard;

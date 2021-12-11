@@ -1,8 +1,7 @@
 import React from 'react';
-import { Button, AppBar, Typography, Container, Toolbar, IconButton } from '@mui/material';
+import { Button, AppBar, Typography, Toolbar, IconButton } from '@mui/material';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import FeedIcon from '@mui/icons-material/Feed';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 
@@ -14,15 +13,15 @@ const FooterComponent = () => {
           © 2021 ArtemisQL
         </Typography>
         <Button href="/" target="_blank" className="button" color="inherit" style={{marginLeft: "auto"}} startIcon={<MonetizationOnIcon/>}>Buy Us A Coffee</Button>
-          <IconButton className="button" href="https://github.com/oslabs-beta/ArtemisQL" target="_blank" color="inherit">
-            <GitHubIcon />
-          </IconButton>
-          <IconButton className="button" href="https://www.linkedin.com/" target="_blank" color="inherit">
-            <LinkedInIcon />
-          </IconButton>
-          <IconButton className="button" href="https://medium.com/" target="_blank" color="inherit">
-            <ArticleOutlinedIcon />
-          </IconButton>
+        <IconButton className="button" href="https://github.com/oslabs-beta/ArtemisQL" target="_blank" color="inherit">
+          <GitHubIcon />
+        </IconButton>
+        <IconButton className="button" href="https://www.linkedin.com/" target="_blank" color="inherit">
+          <LinkedInIcon />
+        </IconButton>
+        <IconButton className="button" href="https://medium.com/" target="_blank" color="inherit">
+          <ArticleOutlinedIcon />
+        </IconButton>
       </Toolbar>
     </AppBar>
   );

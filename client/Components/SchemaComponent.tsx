@@ -8,7 +8,8 @@ function SchemaComponent({schema, resolvers}) {
   const [position, setPosition] = useState('0px');
   const [showContainer, setShowContainer] = useState(true);
 
-  const onChangeHandle = () => {
+  // modifies schema tab position state on switch change
+  const onSwitch = () => {
     const tab = document.getElementById('tab');
     if (showContainer) {
       setPosition('-1000px')
@@ -21,16 +22,17 @@ function SchemaComponent({schema, resolvers}) {
     }
   };
   
+  // copies current text to clipboard to be exported
   const copyCode = () => {
     navigator.clipboard.writeText(text);
-    //console.log('code copied!')
   };
 
+  // renders switch, code container, and buttons
   return (
-    <Grid container justifyContent="flex-end" style={{ position: 'absolute', top: '6vh', right: '0px', zIndex: '99' }}>
-      <div style={{ display: 'flex', alignItems: 'center', marginTop: '30px', marginBottom: '10px', marginRight: '25px', paddingLeft: '10px', borderStyle: 'solid', borderWidth: '1px', borderColor: '#403D39', borderRadius: '5px', backgroundColor:'#eeeeee'}} >
+    <Grid container justifyContent="flex-end" style={containerStyle}>
+      <div style={switchStyle}>
         <Typography>SHOW SCHEMA</Typography>
-        <Switch defaultChecked onChange={onChangeHandle} />
+        <Switch defaultChecked onChange={onSwitch} />
       </div>
       <Grid item xs={12}>
         <Container maxWidth="xs" id="tab" style={{ position: 'absolute', right: `${position}`, zIndex: '99' }}>
@@ -42,23 +44,44 @@ function SchemaComponent({schema, resolvers}) {
           <br />
           <Grid container spacing={1} align="center" justify="space-around">
             <Grid item xs={3.6}>
-              <Button id="schemaButton" fullWidth variant="contained" style={buttonStyles} onClick={() => setText(schema)}>Schema</Button>
+              <Button id="schemaButton" fullWidth variant="contained" style={buttonStyle} onClick={() => setText(schema)}>Schema</Button>
             </Grid>
             <Grid item xs={4.8}>
-              <Button id="resolverButton" fullWidth variant="contained" style={buttonStyles} onClick={() => setText(resolvers)}>Resolvers</Button>
+              <Button id="resolverButton" fullWidth variant="contained" style={buttonStyle} onClick={() => setText(resolvers)}>Resolvers</Button>
             </Grid>
             <Grid item xs={3.6}>
-              <Button id="exportButton" fullWidth variant="contained" style={buttonStyles} onClick={() => copyCode()}>Copy</Button>
+              <Button id="exportButton" fullWidth variant="contained" style={buttonStyle} onClick={() => copyCode()}>Copy</Button>
             </Grid>
           </Grid>
         </Container>
       </Grid>
     </Grid>
-    
   );
 }
 
-const buttonStyles = {
+// COMPONENT STYLING
+const containerStyle = {
+  position: 'absolute', 
+  top: '6vh', 
+  right: '0px', 
+  zIndex: '99'
+}
+
+const switchStyle = {
+  display: 'flex', 
+  alignItems: 'center', 
+  marginTop: '30px', 
+  marginBottom: '10px', 
+  marginRight: '25px', 
+  paddingLeft: '10px', 
+  borderStyle: 'solid', 
+  borderWidth: '1px', 
+  borderColor: '#403D39', 
+  borderRadius: '5px', 
+  backgroundColor:'#eeeeee'
+}
+
+const buttonStyle = {
   fontWeight: 'normal',
   borderWidth: 2,
 }
