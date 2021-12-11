@@ -1,4 +1,5 @@
 const { convertDataType, checkNullable, capitalizeAndSingularize } = require('../utils/helperFunc.ts');
+const { makeCamelCase } = require('../utils/helper');
 
 const typeConverter = {};
 
@@ -80,7 +81,7 @@ typeConverter.createInitialTypeDef = (baseTableName, baseTables, baseTableQuery)
   // check all base table cols for relationships to baseTable
   for (const column of baseTableQuery) {
     if (column.foreign_table === baseTableName) {
-      tableType[column.table_name] = `[${capitalizeAndSingularize(column.table_name)}]`;
+      tableType[makeCamelCase(column.table_name)] = `[${capitalizeAndSingularize(column.table_name)}]`;
     }
   }
 

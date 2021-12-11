@@ -765,6 +765,7 @@ db.query = (text, params, callback) => {
 
 const typeDefs = `
 
+
 type Film {
   _id: ID!
   director: String!
@@ -806,9 +807,9 @@ type Planet {
   rotation_period: Int
   surface_water: String
   terrain: String
-  films: [Film]
-  species: [Species]
   people: [Person]
+  species: [Species]
+  films: [Film]
 } 
 
 type Species {
@@ -822,8 +823,8 @@ type Species {
   language: String
   name: String!
   skin_colors: String
-  films: [Film]
   people: [Person]
+  films: [Film]
 } 
 
 type StarshipSpec {
@@ -847,9 +848,9 @@ type Vessel {
   passengers: Int
   vessel_class: String!
   vessel_type: String!
+  starshipSpecs: [StarshipSpec]
   people: [Person]
   films: [Film]
-  starshipSpecs: [StarshipSpec]
 } 
 
 type Query { 
@@ -1032,7 +1033,8 @@ type Mutation {
     _id: ID!, 
   ): Vessel! 
 
-}`;
+} 
+ `;
 
 const resolvers = { 
   Query: {
