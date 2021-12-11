@@ -83,7 +83,7 @@ mutationConverter.stringify = (mutationObj) => {
         mutationString += `    ${column}: ${mutationObj[mutationType][column]}, \n`;
       }
     }
-    mutationString += `  ): ${mutationObj[mutationType].table_name_for_dev_use}! \n\n`;
+    mutationString += `  ): ${mutationObj[mutationType].formatted_table_name_for_dev_use}! \n\n`;
   }
   mutationString += `} \n`;
   return mutationString;

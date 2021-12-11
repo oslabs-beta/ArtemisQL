@@ -76,32 +76,23 @@ const createSchemaMutation = (req: Request, res: Response, next: NextFunction) =
   // loop through base tables object
 
   for (const key in baseTables) {
-    /* -------------------------------------------------------------------------- */
-    /*                                 invoke add                                 */
-    /* -------------------------------------------------------------------------- */
+    /// invoke add
     const [add, addMutations] = mutationConverter.add(key, baseTables[key]) as [string, object];
     mutationObj[add] = addMutations;
     
-    /* -------------------------------------------------------------------------- */
-    /*                                invoke update                               */
-    /* -------------------------------------------------------------------------- */
+    // invoke update
     // stopgap: 'as', guarantees that mutationConverter will return an array with first el as string and second el as object
     // ideally, need to create a type of function update that returns an array
     const [update, updateMutations] = mutationConverter.update(key, baseTables[key]) as [string, object];
     mutationObj[update] = updateMutations;
 
-    /* -------------------------------------------------------------------------- */
-    /*                                invoke delete                               */
-    /* -------------------------------------------------------------------------- */
+    // invoke delete
     const [del, deleteMutations] = mutationConverter.delete(key, baseTables[key]) as [string, object];
     mutationObj[del] = deleteMutations;
   }
 
-  /* -------------------------------------------------------------------------- */
-  /*                    format/stringify the mutation object                    */
-  /* -------------------------------------------------------------------------- */
+  // format/stringify mutationObj
   // console.log('MUTATION OBJ OUTSIDE FOR LOOP', mutationObj);
-  // append to mutation string
   const mutationString = mutationConverter.stringify(mutationObj);
   // console.log('MUTATION STRING', mutationString);
   res.locals.mutationObj = mutationObj;
