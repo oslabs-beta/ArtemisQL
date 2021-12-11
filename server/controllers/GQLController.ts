@@ -21,7 +21,7 @@ const createSchemaTypeDefs = (req: Request, res: Response, next: NextFunction) =
 
   res.locals.baseTableQuery = typeConverter.createBaseTableQuery(baseTables);
   // console.log('baseTablesQuery', res.locals.baseTableQuery);
-  console.log('BASE TABLES', baseTables);
+  // console.log('BASE TABLES', baseTables);
   const baseTableNames = Object.keys(baseTables);
   const joinTableNames = Object.keys(joinTables);
   res.locals.baseTables = baseTables;
@@ -51,7 +51,7 @@ const createSchemaTypeDefs = (req: Request, res: Response, next: NextFunction) =
 
 // create GraphQL Schema (queries)
 const createSchemaQuery = (req, res, next) => {
-  console.log('createSchemaQuery Triggered');
+  // console.log('createSchemaQuery Triggered');
   const { schema, typeString } = res.locals;
 
   let queryString = `\ntype Query { \n`;
@@ -100,7 +100,7 @@ const createSchemaMutation = (req: Request, res: Response, next: NextFunction) =
   /* -------------------------------------------------------------------------- */
   /*                    format/stringify the mutation object                    */
   /* -------------------------------------------------------------------------- */
-  console.log('MUTATION OBJ OUTSIDE FOR LOOP', mutationObj);
+  // console.log('MUTATION OBJ OUTSIDE FOR LOOP', mutationObj);
   // append to mutation string
   const mutationString = mutationConverter.stringify(mutationObj);
   // console.log('MUTATION STRING', mutationString);
@@ -114,7 +114,6 @@ const createResolver = (req: Request, res: Response, next: NextFunction) => {
   console.log('createResolver triggered');
   const { 
     baseTableNames,
-    finalString,
     mutationObj,
     baseTableQuery,
     baseTables,

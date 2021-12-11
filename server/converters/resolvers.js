@@ -174,9 +174,13 @@ resolvers.checkBaseTableCols = (baseTableName, baseTableQuery) => {
   for (const column of baseTableQuery) {
     if (column.foreign_table === baseTableName) {
       currString += `
-    ${column.table_name}: (parent, args, context, info) => {
+    ${column.table_name}: async (${baseTableName}) => {
       try {
-        // insert sql query here
+        const query = \`SELECT * FROM ${column.table_name}
+          WHERE ${column.column_name} = $1\`;
+        const values = [${baseTableName}._id];
+        const data = await db.query(query, values);
+        return data.rows;
       } catch (err) {
         throw new Error(err);
       }
@@ -195,31 +199,39 @@ resolvers.checkJoinTableCols = (baseTableName, joinTables) => {
   const relationships = [];
 
   for (const currJoinTable in joinTables) {
-
     for (const column of joinTables[currJoinTable]) {
-
       if (column.foreign_table === baseTableName) {
         relationships.push(currJoinTable);
       }
     }
   }
-  // console.log('relationships', relationships);
   // [people_in_films, pilot]
+  console.log('relationships', relationships);
   for (const table of relationships) {
-    const foreignKeys = [];
+    // const foreignKeys = [];
+    const foreignKeysObj = {};
     for (const column of joinTables[table]) {
       if (column.constraint_type === 'FOREIGN KEY') {
-        foreignKeys.push(column.foreign_table);
+        // foreignKeys.push(column.foreign_table);
+        foreignKeysObj[column.foreign_table] = column.column_name;
       }
     }
-
+    // const foreignKeys = {films: 'film_id', species: 'species_id'}
+    // for (let i = 0; i < foreignKeys.length; i += 1) {
+    const foreignKeys = Object.keys(foreignKeysObj);
     for (let i = 0; i < foreignKeys.length; i += 1) {
       if (foreignKeys[i] === baseTableName) {
         const index = i === 1 ? 0 : 1;
         currString += `
-    ${foreignKeys[index]}: (parent, args, context, info) => {
+    ${foreignKeys[index]}: (${baseTableName}) => {
       try {
-        // insert sql query here
+        const query = \`SELECT * FROM ${foreignKeys[index]}
+          LEFT OUTER JOIN ${table}
+          ON ${foreignKeys[index]}._id = ${table}.${foreignKeysObj[foreignKeys[index]]}
+          WHERE ${table}.${foreignKeysObj[baseTableName]} = $1\`;
+        const values = [${baseTableName}._id];
+        const data = await db.query(query, values);
+        return data.rows;
       } catch (err) {
         throw new Error(err);
       }
