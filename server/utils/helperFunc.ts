@@ -16,7 +16,8 @@ module.exports.convertDataType = (type: string, columnName: string): string => {
     case 'smallint': return 'Int';
     case 'bigint': return 'Float';
     // case 'date': return 'Int';
-    default: return 'switch case error';
+    case 'timestamp with time zone': return 'timestamptz';
+    default: return type;
   }
 };
 
