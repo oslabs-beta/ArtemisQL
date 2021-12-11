@@ -71,6 +71,7 @@ function MainContainer() {
         if (res.status = 200) {
           setData(res.data.cache);
           setSchemaType(res.data.finalString);
+          setResolvers(res.data.resolverString);
           setSchema(true);
         }
       })
