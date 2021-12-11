@@ -6,7 +6,7 @@ import Switch from '@mui/material/Switch';
 function SchemaComponent({schema, resolvers}) {
   
   const [text, setText] = useState(schema);
-  const [right, setRight ] = useState('25px');
+  const [right, setRight ] = useState('0px');
   const [showContainer, setShowContainer] = useState(true);
 
   const onChangeHandle = () => {
