@@ -45,7 +45,7 @@ const FlowComponent = ({ data, schema, resolvers }) => {
           source: tableName,
           target: column.foreign_table,
           sourceHandle: column.column_name,
-          style: { stroke: '#93c763' },
+          style: { stroke: '#00009f' },
           animated: true,
         };
         // append edge object to elements array
