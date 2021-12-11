@@ -111,7 +111,8 @@ const createResolver = (req: Request, res: Response, next: NextFunction) => {
     joinTables,
   } = res.locals;
 
-  let resolverString = `const resolvers = { \n`;
+  // let resolverString = `const resolvers = { \n`;
+  let resolverString = `{ \n`;
 
   /* QUERY */ 
   resolverString += `  Query: {`;

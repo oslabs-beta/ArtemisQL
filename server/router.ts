@@ -1,10 +1,13 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import SQLController from './controllers/SQLController';
 import GQLController from './controllers/GQLController';
+const { makeExecutableSchema } = require('graphql-tools');
+
 
 const router = express.Router();
 const { graphqlHTTP } = require('express-graphql');
-const schema = require('./schema.js');
+// const schema = require('./schema.js');
+let schema = '';
 
 router.get(
   '/submit',
@@ -23,8 +26,13 @@ router.get(
 );
 // format finalString to code
 
+
+// console.log('schemaObj in routerjs', schemaObj);
+// const typeDefs = schemaObj.
+
 // const schema = makeExecutableSchema({
-//   res.locals.finalString
+//   typeDefs,
+//   resolvers,
 //   // allowUndefinedInResolve: false,
 //   // resolverValidationOptions: {
 //   //   // requireResolversForArgs: 'error',
@@ -71,6 +79,43 @@ const defaultQueryString = `
 
 router.use(
   '/sandbox',
+  SQLController.getAllMetadata,
+  SQLController.formatQueryResult,
+  GQLController.createSchemaTypeDefs,
+  GQLController.createSchemaQuery,
+  GQLController.createSchemaMutation,
+  GQLController.createResolver,
+  (req: Request, res: Response, next: NextFunction) => {
+    // cache (for SQL visualizer)
+    // finalString (GraphQL Schema)
+    // resolverString (GraphQL Resolver)
+    // schemaObj.finalSres.locals;
+    console.log('before typedefs, resolvers');
+
+    const typeDefs = res.locals.finalString;
+    const resolvers = eval(res.locals.resolverString);
+
+    console.log('before parse');    
+    // const test = JSON.parse(resolvers);
+    console.log('typeDefs', typeDefs);
+
+    // console.log('resolvers', eval(resolvers));
+    console.log('resolvers typeof', typeof resolvers); // returns string
+
+    schema = makeExecutableSchema({
+      typeDefs,
+      resolvers
+    });
+
+    console.log('afterwards')
+    console.log('schema', schema);
+
+    // res.locals.schema = schema;
+   
+    // return res.status(200).json(res.locals);
+    // console.log('schemaObj inside sandbox route', schemaObj);
+    return next();
+  },
   graphqlHTTP({
     // schema (types of queries, mutations, types) + resolvers
     schema,
@@ -79,6 +124,7 @@ router.use(
       defaultQuery: defaultQueryString,
     },
   }),
+  
 );
 
 export default router;
