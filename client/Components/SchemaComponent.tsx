@@ -4,20 +4,19 @@ import Highlight from 'react-highlight';
 import Switch from '@mui/material/Switch';
 
 function SchemaComponent({schema, resolvers}) {
-  
   const [text, setText] = useState(schema);
-  const [right, setRight ] = useState('0px');
+  const [position, setPosition] = useState('0px');
   const [showContainer, setShowContainer] = useState(true);
 
   const onChangeHandle = () => {
-    const test = document.getElementById('test');
+    const tab = document.getElementById('tab');
     if (showContainer) {
-      setRight('-750px')
-      test.className = 'slideOut';
+      setPosition('-1000px')
+      tab.className = 'slideOut';
       setShowContainer(false);
     } else {
-      setRight('25px')
-      test.className = 'slideIn';
+      setPosition('25px')
+      tab.className = 'slideIn';
       setShowContainer(true);
     }
   };
@@ -28,14 +27,14 @@ function SchemaComponent({schema, resolvers}) {
   };
 
   return (
-    <Grid container justifyContent="flex-end" style={{position: 'absolute', top: '6vh', right: '0px', zIndex: '99' }}>
-      <div style={{display: 'flex', alignItems: 'center', marginTop: '30px', marginBottom: '10px', marginRight: '25px', paddingLeft: '10px', borderStyle: 'solid', borderWidth: '1px', borderColor: '#403D39', borderRadius: '5px', backgroundColor:'#eeeeee'}} >
-        <Typography >SHOW SCHEMA</Typography>
+    <Grid container justifyContent="flex-end" style={{ position: 'absolute', top: '6vh', right: '0px', zIndex: '99' }}>
+      <div style={{ display: 'flex', alignItems: 'center', marginTop: '30px', marginBottom: '10px', marginRight: '25px', paddingLeft: '10px', borderStyle: 'solid', borderWidth: '1px', borderColor: '#403D39', borderRadius: '5px', backgroundColor:'#eeeeee'}} >
+        <Typography>SHOW SCHEMA</Typography>
         <Switch defaultChecked onChange={onChangeHandle} />
       </div>
       <Grid item xs={12}>
-        <Container maxWidth="xs"  id="test" style={{position: 'absolute', right: `${right}`, zIndex: '99' }}>
-          <div style={{height: '790px', overflow: 'scroll', borderRadius: '5px' }}>
+        <Container maxWidth="xs" id="tab" style={{ position: 'absolute', right: `${position}`, zIndex: '99' }}>
+          <div style={{ height: '790px', overflow: 'scroll', borderRadius: '5px' }}>
             <Highlight language="javascript" style={{borderRadius: '5px'}}>
               {text}
             </Highlight>
