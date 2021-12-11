@@ -29,8 +29,8 @@ function SchemaComponent({schema, resolvers}) {
 
   return (
     <Grid container justifyContent="flex-end" style={{position: 'absolute', top: '6vh', right: '0px', zIndex: '99' }}>
-      <div style={{display: 'flex', alignItems: 'center', paddingTop: '30px', paddingRight: '15px'}} >
-        <Typography>SHOW SCHEMA</Typography>
+      <div style={{display: 'flex', alignItems: 'center', marginTop: '30px', marginBottom: '10px', marginRight: '25px', paddingLeft: '10px', borderStyle: 'solid', borderWidth: '1px', borderColor: '#403D39', borderRadius: '5px', backgroundColor:'#eeeeee'}} >
+        <Typography >SHOW SCHEMA</Typography>
         <Switch defaultChecked onChange={onChangeHandle} />
       </div>
       <Grid item xs={12}>
