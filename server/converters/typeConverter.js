@@ -56,9 +56,8 @@ typeConverter.createBaseTableQuery = (baseTable) => {
 
 // input: base table name
 // output: type def object (to add as properties in schema object)
-typeConverter.createInitialTypeDef = (baseTableName, baseTables) => {
+typeConverter.createInitialTypeDef = (baseTableName, baseTables, baseTableQuery) => {
   const tableType = {};
-
   // iterate through array of objects/columns
   for (let i = 0; i < baseTables[baseTableName].length; i += 1) {
     const column = baseTables[baseTableName][i];
@@ -78,8 +77,40 @@ typeConverter.createInitialTypeDef = (baseTableName, baseTables) => {
       tableType[column.column_name] = type;
     }
   }
+  // check all base table cols for relationships to baseTable
+  for (const column of baseTableQuery) {
+    if (column.foreign_table === baseTableName) {
+      tableType[column.table_name] = `[${capitalizeAndSingularize(column.table_name)}]`;
+    }
+  }
+
   return tableType; 
 };
+
+// // 2. check all base table cols
+// // input: base table name, base table query array
+// // output: resolver function as string
+// typeConverter.checkBaseTableCols = (baseTableName, baseTableQuery) => {
+//   let currString = '';
+//   for (const column of baseTableQuery) {
+//     if (column.foreign_table === baseTableName) {
+//       currString += `
+//     ${makeCamelCase(column.table_name)}: async (${baseTableName}) => {
+//       try {
+//         const query = \`SELECT * FROM ${column.table_name}
+//           WHERE ${column.column_name} = $1\`;
+//         const values = [${baseTableName}._id];
+//         const data = await db.query(query, values);
+//         return data.rows;
+//       } catch (err) {
+//         throw new Error(err);
+//       }
+//     },`;
+//     }
+//   }
+
+//   return currString;
+// };
 
 // ITERATE THROUGH JOIN TABLES AND APPEND FOREIGN_TABLES TO TYPE OBJECT
 

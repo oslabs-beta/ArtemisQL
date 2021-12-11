@@ -18,8 +18,8 @@ const createSchemaTypeDefs = (req: Request, res: Response, next: NextFunction) =
   const jTables = {};
   const { cache } = res.locals;
   const { baseTables, joinTables } = typeConverter.sortTables(cache, bTables, jTables);
-
-  res.locals.baseTableQuery = typeConverter.createBaseTableQuery(baseTables);
+  const baseTableQuery = typeConverter.createBaseTableQuery(baseTables);
+  res.locals.baseTableQuery = baseTableQuery;
   // console.log('baseTablesQuery', res.locals.baseTableQuery);
   // console.log('BASE TABLES', baseTables);
   const baseTableNames = Object.keys(baseTables);
@@ -33,7 +33,7 @@ const createSchemaTypeDefs = (req: Request, res: Response, next: NextFunction) =
   // [people, films, species, vessels]
 
   for (const key of baseTableNames) {
-    schema[key] = typeConverter.createInitialTypeDef(key, baseTables);
+    schema[key] = typeConverter.createInitialTypeDef(key, baseTables, baseTableQuery);
   }
 
   for (const key of joinTableNames) {
