@@ -314,6 +314,326 @@
 // }
 // }
 
+// baseTableQuery
+// {
+//   column_name: 'opening_crawl',
+//   table_name: 'films',
+//   data_type: 'character varying',
+//   character_maximum_length: null,
+//   is_nullable: 'NO',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'producer',
+//   table_name: 'films',
+//   data_type: 'character varying',
+//   character_maximum_length: null,
+//   is_nullable: 'NO',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'release_date',
+//   table_name: 'films',
+//   data_type: 'date',
+//   character_maximum_length: null,
+//   is_nullable: 'NO',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'title',
+//   table_name: 'films',
+//   data_type: 'character varying',
+//   character_maximum_length: null,
+//   is_nullable: 'NO',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: '_id',
+//   table_name: 'people',
+//   data_type: 'integer',
+//   character_maximum_length: null,
+//   is_nullable: 'NO',
+//   constraint_name: 'people_pk',
+//   constraint_type: 'PRIMARY KEY',
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'birth_year',
+//   table_name: 'people',
+//   data_type: 'character varying',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'eye_color',
+//   table_name: 'people',
+//   data_type: 'character varying',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'gender',
+//   table_name: 'people',
+//   data_type: 'character varying',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'hair_color',
+//   table_name: 'people',
+//   data_type: 'character varying',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'height',
+//   table_name: 'people',
+//   data_type: 'integer',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'homeworld_id',
+//   table_name: 'people',
+//   data_type: 'bigint',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: 'people_fk1',
+//   constraint_type: 'FOREIGN KEY',
+//   foreign_table: 'planets',
+//   foreign_column: '_id'
+// },
+// {
+//   column_name: 'mass',
+//   table_name: 'people',
+//   data_type: 'character varying',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'name',
+//   table_name: 'people',
+//   data_type: 'character varying',
+//   character_maximum_length: null,
+//   is_nullable: 'NO',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'skin_color',
+//   table_name: 'people',
+//   data_type: 'character varying',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'species_id',
+//   table_name: 'people',
+//   data_type: 'bigint',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: 'people_fk0',
+//   constraint_type: 'FOREIGN KEY',
+//   foreign_table: 'species',
+//   foreign_column: '_id'
+// },
+// {
+//   column_name: '_id',
+//   table_name: 'planets',
+//   data_type: 'integer',
+//   character_maximum_length: null,
+//   is_nullable: 'NO',
+//   constraint_name: 'planets_pk',
+//   constraint_type: 'PRIMARY KEY',
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'climate',
+//   table_name: 'planets',
+//   data_type: 'character varying',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'diameter',
+//   table_name: 'planets',
+//   data_type: 'integer',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'gravity',
+//   table_name: 'planets',
+//   data_type: 'character varying',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'name',
+//   table_name: 'planets',
+//   data_type: 'character varying',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'orbital_period',
+//   table_name: 'planets',
+//   data_type: 'integer',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'population',
+//   table_name: 'planets',
+//   data_type: 'bigint',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'rotation_period',
+//   table_name: 'planets',
+//   data_type: 'integer',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'surface_water',
+//   table_name: 'planets',
+//   data_type: 'character varying',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'terrain',
+//   table_name: 'planets',
+//   data_type: 'character varying',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: '_id',
+//   table_name: 'species',
+//   data_type: 'integer',
+//   character_maximum_length: null,
+//   is_nullable: 'NO',
+//   constraint_name: 'species_pk',
+//   constraint_type: 'PRIMARY KEY',
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'average_height',
+//   table_name: 'species',
+//   data_type: 'character varying',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'average_lifespan',
+//   table_name: 'species',
+//   data_type: 'character varying',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
+// {
+//   column_name: 'classification',
+//   table_name: 'species',
+//   data_type: 'character varying',
+//   character_maximum_length: null,
+//   is_nullable: 'YES',
+//   constraint_name: null,
+//   constraint_type: null,
+//   foreign_table: null,
+//   foreign_column: null
+// },
 // GQL Mutation
 // updatePerson args obj { gender: 'male', _id: '5', name: 'JenniferXXX' }
 // query UPDATE people SET gender = $1, name = $2 WHERE _id = $3 RETURNING *

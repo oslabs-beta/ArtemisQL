@@ -70,7 +70,7 @@ mutationConverter.delete = (tableName, arrOfColumns) => {
 };
 
 // input: mutation Object
-// output: big string
+// output: final mutation string for client
 mutationConverter.stringify = (mutationObj) => {
   let mutationString = '\n\ntype Mutation { \n';
   // iterate through mutation object
@@ -83,52 +83,12 @@ mutationConverter.stringify = (mutationObj) => {
         mutationString += `    ${column}: ${mutationObj[mutationType][column]}, \n`;
       }
     }
-    mutationString += `  ): ${mutationObj[mutationType].table_name_for_dev_use}! \n\n`;
+    mutationString += `  ): ${mutationObj[mutationType].formatted_table_name_for_dev_use}! \n\n`;
   }
   mutationString += `} \n`;
   return mutationString;
 };
 
-/* IDEAL OUTPUT FORMAT
-type Mutation {
-  addPerson(
-    gender: String,
-    species_id: ID,
-    homeworld_id: ID,
-    height: Int,
-    mass: String,
-    hair_color: String,
-    skin_color: String,
-    eye_color: String,
-    name: String!,
-    birth_year: String,
-  ): Person!
-
-  updatePerson(
-    gender: String,
-    species_id: ID,
-    homeworld_id: ID,
-    height: Int,
-    _id: ID!,
-    mass: String,
-    hair_color: String,
-    skin_color: String,
-    eye_color: String,
-    name: String,
-    birth_year: String,
-  ): Person!
-
-  deletePerson(_id: ID!): Person!
-
-  addFilm(
-    director: String!,
-    opening_crawl: String!,
-    episode_id: Int!,
-    title: String!,
-    release_date: String!,
-    producer: String!,
-  ): Film!
-  */
 /*
 MUTATION OBJ OUTSIDE FOR LOOP {
   addFilm: {

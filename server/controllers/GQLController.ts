@@ -18,8 +18,8 @@ const createSchemaTypeDefs = (req: Request, res: Response, next: NextFunction) =
   const jTables = {};
   const { cache } = res.locals;
   const { baseTables, joinTables } = typeConverter.sortTables(cache, bTables, jTables);
-
-  res.locals.baseTableQuery = typeConverter.createBaseTableQuery(baseTables);
+  const baseTableQuery = typeConverter.createBaseTableQuery(baseTables);
+  res.locals.baseTableQuery = baseTableQuery;
   // console.log('baseTablesQuery', res.locals.baseTableQuery);
   // console.log('BASE TABLES', baseTables);
   const baseTableNames = Object.keys(baseTables);
@@ -33,7 +33,7 @@ const createSchemaTypeDefs = (req: Request, res: Response, next: NextFunction) =
   // [people, films, species, vessels]
 
   for (const key of baseTableNames) {
-    schema[key] = typeConverter.createInitialTypeDef(key, baseTables);
+    schema[key] = typeConverter.createInitialTypeDef(key, baseTables, baseTableQuery);
   }
 
   for (const key of joinTableNames) {
@@ -76,32 +76,23 @@ const createSchemaMutation = (req: Request, res: Response, next: NextFunction) =
   // loop through base tables object
 
   for (const key in baseTables) {
-    /* -------------------------------------------------------------------------- */
-    /*                                 invoke add                                 */
-    /* -------------------------------------------------------------------------- */
+    /// invoke add
     const [add, addMutations] = mutationConverter.add(key, baseTables[key]) as [string, object];
     mutationObj[add] = addMutations;
     
-    /* -------------------------------------------------------------------------- */
-    /*                                invoke update                               */
-    /* -------------------------------------------------------------------------- */
+    // invoke update
     // stopgap: 'as', guarantees that mutationConverter will return an array with first el as string and second el as object
     // ideally, need to create a type of function update that returns an array
     const [update, updateMutations] = mutationConverter.update(key, baseTables[key]) as [string, object];
     mutationObj[update] = updateMutations;
 
-    /* -------------------------------------------------------------------------- */
-    /*                                invoke delete                               */
-    /* -------------------------------------------------------------------------- */
+    // invoke delete
     const [del, deleteMutations] = mutationConverter.delete(key, baseTables[key]) as [string, object];
     mutationObj[del] = deleteMutations;
   }
 
-  /* -------------------------------------------------------------------------- */
-  /*                    format/stringify the mutation object                    */
-  /* -------------------------------------------------------------------------- */
+  // format/stringify mutationObj
   // console.log('MUTATION OBJ OUTSIDE FOR LOOP', mutationObj);
-  // append to mutation string
   const mutationString = mutationConverter.stringify(mutationObj);
   // console.log('MUTATION STRING', mutationString);
   res.locals.mutationObj = mutationObj;
@@ -148,7 +139,7 @@ const createResolver = (req: Request, res: Response, next: NextFunction) => {
   // loop through all base table names
   for (const key of baseTableNames) {
     // at each base table name
-    resolverString += `  ${capitalizeAndSingularize(key)} {`;
+    resolverString += `  ${capitalizeAndSingularize(key)}: {`;
     // 1. check own table columns - append to string
     resolverString += resolvers.checkOwnTable(key, baseTables);
     // 2. check all base table cols - append to string
@@ -156,7 +147,7 @@ const createResolver = (req: Request, res: Response, next: NextFunction) => {
     // 3. check join tables and cols - append to string
     resolverString += resolvers.checkJoinTableCols(key, joinTables);
     // close current table bracket
-    resolverString += `\n  }\n`;
+    resolverString += `\n  },\n`;
   }
   // close resolver bracket
   resolverString += `}\n`;
