@@ -32,7 +32,7 @@ router.get(
 //   // },
 // });
 
-const defaultQueryString = `
+const queryString = `
 # Welcome to GraphiQL
 #
 # GraphiQL is an in-browser tool for writing, validating, and
@@ -76,7 +76,7 @@ router.use(
     schema,
     graphiql: {
       editorTheme: 'solarized light',
-      defaultQuery: defaultQueryString,
+      defaultQuery: queryString,
     },
   }),
 );

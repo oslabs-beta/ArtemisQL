@@ -3,14 +3,19 @@ import { Container, Button, Grid, Typography } from '@mui/material';
 import Highlight from 'react-highlight';
 import Switch from '@mui/material/Switch';
 
-function SchemaComponent({schema, resolvers}) {
+type Props = {
+  schema: string;
+  resolvers: string;
+}
+
+function SchemaComponent({schema, resolvers}: Props) {
   const [text, setText] = useState(schema);
   const [position, setPosition] = useState('0px');
   const [showContainer, setShowContainer] = useState(true);
 
   // modifies schema tab position state on switch change
   const onSwitch = () => {
-    const tab = document.getElementById('tab');
+    const tab:any = document.getElementById('tab');
     if (showContainer) {
       setPosition('-1000px')
       tab.className = 'slideOut';
