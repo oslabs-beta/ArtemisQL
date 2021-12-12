@@ -58,18 +58,19 @@ const getAllMetadata = async (req: Request, res: Response, next: NextFunction) =
 
 // format sql results to client
 const formatQueryResult = (req: Request, res: Response, next: NextFunction) => {
-  // iterate through the array of object columns info.
-  const cache = {};
+  // iterate through the array of object columns info
+  const allTables = {};
   for (let i = 0; i < res.locals.queryTables.length; i += 1) {
-    // if object doesn't have table name add it to the object.
+    // if object doesn't have table name add it to the object
     const key = res.locals.queryTables[i].table_name;
-    if (!cache[key]) {
-      cache[key] = [res.locals.queryTables[i]];
+    if (!allTables[key]) {
+      allTables[key] = [res.locals.queryTables[i]];
     } else {
-      cache[key].push(res.locals.queryTables[i]);
+      allTables[key].push(res.locals.queryTables[i]);
     }
   }
-  res.locals.cache = cache;
+  res.locals.allTables = allTables;
+  console.log('allTables', allTables);
   return next();
 };
 

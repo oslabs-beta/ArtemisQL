@@ -11,9 +11,9 @@ const createSchemaTypeDefs = (req: Request, res: Response, next: NextFunction) =
   const schema = {};
   const bTables = {};
   const jTables = {};
-  const { cache } = res.locals;
+  const { allTables } = res.locals;
   // sort the tables
-  const { baseTables, joinTables } = typeConverter.sortTables(cache, bTables, jTables);
+  const { baseTables, joinTables } = typeConverter.sortTables(allTables, bTables, jTables);
   // exclude join table column information
   const baseTableQuery = typeConverter.createBaseTableQuery(baseTables);
   // store table names in separate arrays
@@ -145,7 +145,7 @@ const createResolver = (req: Request, res: Response, next: NextFunction) => {
     // close current table bracket
     resolverString += `\n  },\n`;
   }
-  
+
   // close resolver bracket
   resolverString += `}\n`;
   

@@ -2,49 +2,60 @@ const { convertDataType, checkNullable, capitalizeAndSingularize, makeCamelCase 
 
 const typeConverter = {};
 
-// const joinTables = {};
-// const baseTables = {};
-
-// SEPARATE JOIN FROM "BASE" TABLES
-// count all keys in table, count all foreign keys
-
-// input: table name
-// output: boolean (TRUE if table is join table)
-const checkIfJoinTable = (cache, tableName) => {
+/**
+ * Checks if the current table is a join table or not
+ * @param {object} allTables 
+ * @param {string} tableName 
+ * @returns {boolean} returns true if the table is a join table
+ * 
+ * Based on fact that junction tables in SQL contain the primary key columns of 
+ * TWO tables you want to relate
+ * https://docs.microsoft.com/en-us/sql/ssms/visual-db-tools/map-many-to-many-relationships-visual-database-tools?view=sql-server-ver15
+ */
+const checkIfJoinTable = (allTables, tableName) => {
   // initialize counter of foreign keys
   let fKCounter = 0;
   // loop through array
-  for (let i = 0; i < cache[tableName].length; i += 1) {
+  for (let i = 0; i < allTables[tableName].length; i += 1) {
     // at each element, check if current element's constraint_type is FOREIGN KEY
-    if (cache[tableName][i].constraint_type === 'FOREIGN KEY') {
+    if (allTables[tableName][i].constraint_type === 'FOREIGN KEY') {
       // if so, increment counter by 1
       fKCounter += 1;
     }
   }
   // compare number of foreign keys (counter) with length of array
   // if number of foreign keys is one less than the length of the array
-  if (cache[tableName].length - 1 === fKCounter) {
+  if (allTables[tableName].length - 1 === fKCounter) {
     // then return true
     return true;
   }
   return false;
 };
 
-// input: res.locals.cache
-// output: nothing (mutating 2 objects - baseTables and junctionTable in outer scope)
-typeConverter.sortTables = (cache, baseTables, joinTables) => {
-  for (const key in cache) {
-    if (checkIfJoinTable(cache, key)) joinTables[key] = cache[key];
-    else baseTables[key] = cache[key]; 
+/**
+ * Sorts allTables into baseTables (non-join tables) and joinTables (join tables)
+ * @param {object} allTables 
+ * @param {object} baseTables 
+ * @param {object} joinTables 
+ * @returns {object} returns an object with two properties: baseTables and joinTables that 
+ *    were mutated during this function invocation
+ */
+typeConverter.sortTables = (allTables, baseTables, joinTables) => {
+  for (const key in allTables) {
+    if (checkIfJoinTable(allTables, key)) joinTables[key] = allTables[key];
+    else baseTables[key] = allTables[key]; 
   }
 
   return { baseTables, joinTables };
 };
 
-// input: base table (object of array, where each element in the array is an field/column object)
-// output: array of objects, where each object is a join table field/column
+/**
+ * Converts baseTables (object of array, where each element in the array is a column/field object)
+ *    to an array
+ * @param {object} baseTables 
+ * @returns {array} returns an array of objects, where each object is a non-join table column/field
+ */
 typeConverter.createBaseTableQuery = (baseTable) => {
-  // console.log(baseTable)
   const array = [];
   for (const baseTableName in baseTable) {
     for (const column of baseTable[baseTableName]) {
@@ -54,8 +65,14 @@ typeConverter.createBaseTableQuery = (baseTable) => {
   return array;
 };
 
-// input: base table name
-// output: type def object (to add as properties in schema object)
+/**
+ * Sorts allTables into baseTables (non-join tables) and joinTables (join tables)
+ * @param {string} baseTableName 
+ * @param {object} baseTables 
+ * @param {array} baseTableQuery 
+ * @returns {object} returns an object where each property is a column from one table and 
+ *   its GraphQL data type. This object represents ONE table's columns.
+ */
 typeConverter.createInitialTypeDef = (baseTableName, baseTables, baseTableQuery) => {
   const tableType = {};
   // iterate through array of objects/columns
@@ -87,44 +104,13 @@ typeConverter.createInitialTypeDef = (baseTableName, baseTables, baseTableQuery)
   return tableType; 
 };
 
-// // 2. check all base table cols
-// // input: base table name, base table query array
-// // output: resolver function as string
-// typeConverter.checkBaseTableCols = (baseTableName, baseTableQuery) => {
-//   let currString = '';
-//   for (const column of baseTableQuery) {
-//     if (column.foreign_table === baseTableName) {
-//       currString += `
-//     ${makeCamelCase(column.table_name)}: async (${baseTableName}) => {
-//       try {
-//         const query = \`SELECT * FROM ${column.table_name}
-//           WHERE ${column.column_name} = $1\`;
-//         const values = [${baseTableName}._id];
-//         const data = await db.query(query, values);
-//         return data.rows;
-//       } catch (err) {
-//         throw new Error(err);
-//       }
-//     },`;
-//     }
-//   }
-
-//   return currString;
-// };
-
-// ITERATE THROUGH JOIN TABLES AND APPEND FOREIGN_TABLES TO TYPE OBJECT
-
-//   loop through JoinTableObject
-//   for each table, get the foreign keys (constraight_type = "FOREIGN KEY")
-//   get 2 foreign_tables [a, b]
-//   get first foreign_table (a)'s typdef and append 'b: [b]' to typedef
-//   get second foreign_table  (b)'s typedef and append 'a: [a]' to typedef
-
-// junction tables in SQL contains the primary key columns of TWO tables you want to relate
-// https://docs.microsoft.com/en-us/sql/ssms/visual-db-tools/map-many-to-many-relationships-visual-database-tools?view=sql-server-ver15
-
-// input: join table name
-// output: nothing - mutate schema object
+/**
+ * Adds foreign keys to the type definitions
+ * @param {string} joinTableName 
+ * @param {object} schema 
+ * @param {object} joinTables 
+ * @returns {void} returns nothing, mutates schema object in argument
+ */
 typeConverter.addForeignKeysToTypeDef = (joinTableName, schema, joinTables) => {
   // iterate through array (ex. vessels_in_films)
   const foreignKeys = [];
@@ -148,14 +134,17 @@ typeConverter.addForeignKeysToTypeDef = (joinTableName, schema, joinTables) => {
   }  
 
   if (schema[foreignKeys[1]]) { // vessels  
-    // // vessels -> { films: [Film] }
+    // vessels -> { films: [Film] }
     const formattedTableName2 = capitalizeAndSingularize(foreignKeys[0]);
     schema[foreignKeys[1]][foreignKeys[0]] = `[${formattedTableName2}]`;
   }
 };
 
-// input: schema object
-// output: string -> formatted type def for client
+/**
+ * Adds foreign keys to the type definitions
+ * @param {object} schema 
+ * @returns {string} formats the type def as a string for client
+ */
 typeConverter.finalizeTypeDef = (schema) => {
   let typeString = '';
 
