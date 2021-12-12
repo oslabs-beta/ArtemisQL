@@ -11,6 +11,10 @@ body {
   background-color: '#00009f'
 }
 
+pre {
+  margin: 0;
+}
+
 .avatar {
     width: 150px !important;
     height: 150px !important;
@@ -20,17 +24,17 @@ body {
 }
 
 section {
-  min-height: 30vh !important;
+  min-height: 50vh !important;
 }
 
 .media {
-  height: 400px;
+  height: 415px;
   width: 600px;
 }
 
 .slideIn {
   animation-name: in;
-  animation-duration: 2s;
+  animation-duration: 1s;
 }
 
 .slideOut {
@@ -40,16 +44,8 @@ section {
 
 @keyframes out {
   0% {
-    transform: translateX(-750px);
+    transform: translateX(-1000px);
   }
-  
-  /* 25% {
-    transform: translateX(-650px);
-  }
-
-  50% {
-    transform: translateX(-500px);
-  } */
 
   100% {
     transform: translateX(0);
@@ -58,20 +54,8 @@ section {
 
 @keyframes in {
   0% {
-    transform: translateX(750px);
+    transform: translateX(1000px);
   }
-
-  /* 25% {
-    transform: translateX(500px);
-  }
-
-  50% {
-    transform: translateX(250px);
-  }
-  
-  75% {
-    transform: translateX(100px);
-  } */
 
   100% {
     transform: translateX(0);

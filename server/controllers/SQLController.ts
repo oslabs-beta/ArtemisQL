@@ -44,8 +44,8 @@ const getAllMetadata = async (req: Request, res: Response, next: NextFunction) =
     if (!data) {
       throw (new Error('Error querying from sql database'));
     }
-    res.locals.queryTables = data.rows; // data.rows is an array of objects
-    // console.log('queryTables', res.locals.queryTables);
+    // data.rows is an array of objects
+    res.locals.queryTables = data.rows; 
     return next();
   } catch (err) {
     console.log(err);
@@ -58,35 +58,21 @@ const getAllMetadata = async (req: Request, res: Response, next: NextFunction) =
 
 // format sql results to client
 const formatQueryResult = (req: Request, res: Response, next: NextFunction) => {
-  /* desired format for client:
-  
-  Key(Table_Name)
-  Value(Array of OBJECTS which contains column information such as col name, pk, fk, data type)
-  { 
-    People:         [{each column info},{each column info},{each column info}],
-    Species:        [{each column info},{each column info},{each column info}],
-    Films:          [{each column info},{each column info},{each column info}],
-    People_in_Film: [{each column info},{each column info},{each column info}],
-  }
-
-*/
-  // iterate through the array of object columns info.
-  const cache = {};
+  // iterate through the array of object columns info
+  const allTables = {};
   for (let i = 0; i < res.locals.queryTables.length; i += 1) {
-    // if object doesn't have table name add it to the object.
+    // if object doesn't have table name add it to the object
     const key = res.locals.queryTables[i].table_name;
-    if (!cache[key]) {
-      cache[key] = [res.locals.queryTables[i]];
+    if (!allTables[key]) {
+      allTables[key] = [res.locals.queryTables[i]];
     } else {
-      cache[key].push(res.locals.queryTables[i]);
+      allTables[key].push(res.locals.queryTables[i]);
     }
   }
-  res.locals.cache = cache;
-  // console.log('cache: ', cache);
+  res.locals.allTables = allTables;
+  console.log('allTables', allTables);
   return next();
 };
 
-// module.exports = SQLController;
-// declare SQLController object that will later be exported
 const SQLController: SQLControllerType = { getAllMetadata, formatQueryResult };
 export default SQLController;

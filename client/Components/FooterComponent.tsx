@@ -1,23 +1,27 @@
 import React from 'react';
-import { Button, AppBar, Typography, Container, Toolbar } from '@mui/material';
+import { Button, AppBar, Typography, Toolbar, IconButton } from '@mui/material';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import FeedIcon from '@mui/icons-material/Feed';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 
 const FooterComponent = () => {
   return (
     <AppBar position="static" color="primary">
-      <Toolbar>
-        <Typography variant="body2" color="inherit" justifytext="left">
+      <Toolbar >
+        <Typography py={4} variant="body2" color="inherit" justifytext="left">
           © 2021 ArtemisQL
         </Typography>
-        <Button href="/" target="_blank" className="button" color="inherit" style={{marginLeft: "auto"}} startIcon={<MonetizationOnIcon />} style={{ marginLeft: 'auto' }}>Donation</Button>
-        <Button className="button" href="https://github.com/oslabs-beta/ArtemisQL" target="_blank" color="inherit">
-            <GitHubIcon />
-        </Button>
-        <Button href="/sandbox" target="_blank" className="button" color="inherit" startIcon={<LinkedInIcon />}></Button>
-        <Button href="/" target="_blank" className="button" color="inherit" startIcon={<FeedIcon />}></Button>
+        <Button href="/" target="_blank" className="button" color="inherit" style={{marginLeft: "auto"}} startIcon={<MonetizationOnIcon/>}>Buy Us A Coffee</Button>
+        <IconButton className="button" href="https://github.com/oslabs-beta/ArtemisQL" target="_blank" color="inherit">
+          <GitHubIcon />
+        </IconButton>
+        <IconButton className="button" href="https://www.linkedin.com/" target="_blank" color="inherit">
+          <LinkedInIcon />
+        </IconButton>
+        <IconButton className="button" href="https://medium.com/" target="_blank" color="inherit">
+          <ArticleOutlinedIcon />
+        </IconButton>
       </Toolbar>
     </AppBar>
   );

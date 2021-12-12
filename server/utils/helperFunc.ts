@@ -1,7 +1,11 @@
 import { singular } from 'pluralize';
 
-// input: column's data_type
-// output: string (GraphQL Data type)
+/**
+ * Converts the SQL column's data_type from to GraphQL data types
+ * @param {string} type (column/field data type)
+ * @param {string} columnName (column/field name)
+ * @returns {string} GraphQL data type of column/field
+ */
 module.exports.convertDataType = (type: string, columnName: string): string => {
   if (columnName === '_id') return 'ID';
   if (columnName.includes('_id')) return 'Int';
@@ -15,13 +19,16 @@ module.exports.convertDataType = (type: string, columnName: string): string => {
     case 'ARRAY': return '[String]';
     case 'smallint': return 'Int';
     case 'bigint': return 'Float';
-    // case 'date': return 'Int';
-    default: return 'switch case error';
+    case 'timestamp with time zone': return 'timestamptz';
+    default: return type;
   }
 };
 
-// input: column's is_nullable
-// output: string (! or empty string)
+/**
+ * Converts the SQL column's is_nullable from to GraphQL is_nullable
+ * @param {string} isNullable (column's is_nullable)
+ * @returns {string} ! or ''
+ */
 module.exports.checkNullable = (isNullable: string): string => {
   if (isNullable === 'NO') {
     return '!';
@@ -29,8 +36,11 @@ module.exports.checkNullable = (isNullable: string): string => {
   return '';
 };
 
-// input: table name string
-// output: pascalized and singularlized table name string
+/**
+ * Pascalizes and singularlizes a table name
+ * @param {string} tableName 
+ * @returns {string} pascalized and singularlized table name
+ */
 module.exports.capitalizeAndSingularize = (tableName: string): string => {
   const split = tableName.split('_');
   const pascalize = split.map((ele) => ele[0].toUpperCase() + ele.slice(1)).join(''); 
@@ -38,11 +48,41 @@ module.exports.capitalizeAndSingularize = (tableName: string): string => {
   return singularize;
 };
 
-// input: table name string
-// output: pascalized and singularlized table name string
-module.exports.capitalizeAndSingularize = (tableName: string): string => {
+/**
+ * Camelcase and singularlizes a table name
+ * @param {string} tableName 
+ * @returns {string} Camelcase and singularlized table name
+ */
+module.exports.makeCamelCaseAndSingularize = (tableName: string): string => {
   const split = tableName.split('_');
-  const pascalize = split.map((ele) => ele[0].toUpperCase() + ele.slice(1)).join(''); 
-  const singularize: string = singular(pascalize);
+  const camelCaseArray: string[] = [];
+  for (let i = 0; i < split.length; i += 1) {
+    if (i === 0) {
+      camelCaseArray.push(split[i]);
+    } else {
+      camelCaseArray.push(split[i][0].toUpperCase() + split[i].slice(1));
+    }
+  }
+  const camelCase = camelCaseArray.join(''); 
+  const singularize = singular(camelCase);
   return singularize;
+};
+
+/**
+ * Camelcase a table name
+ * @param {string} tableName 
+ * @returns {string} Camelcase table name
+ */
+module.exports.makeCamelCase = (tableName: string): string => {
+  const split = tableName.split('_');
+  const camelCaseArray: string[] = [];
+  for (let i = 0; i < split.length; i += 1) {
+    if (i === 0) {
+      camelCaseArray.push(split[i]);
+    } else {
+      camelCaseArray.push(split[i][0].toUpperCase() + split[i].slice(1));
+    }
+  }
+  const camelCase = camelCaseArray.join(''); 
+  return camelCase;
 };

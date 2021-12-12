@@ -1,34 +1,40 @@
-const { convertDataType, checkNullable } = require('../utils/helperFunc.ts');
-const { makeCamelCase, makeCamelCaseAndSingularize } = require('../utils/helper');
+const { makeCamelCase, makeCamelCaseAndSingularize } = require('../utils/helperFunc.ts');
 
 const resolvers = {};
 // input: base table name
 // output: string
 resolvers.createQuery = (baseTableName) => {
-  // baseTableName = 'planets'
+  // baseTableName is pluralized version, ex. 'planets'
   let currString = '';
-  // first, append strings for baseTableName
-  // 4 spaces
+  // first, append query strings for baseTableName
   currString += `
     ${makeCamelCase(baseTableName)}: async () => {
       try {
         const query = 'SELECT * FROM ${baseTableName}';
         const data = await db.query(query);
         console.log('sql query results data.rows', data.rows);
-      } catch(err) {
+        return data.rows;
+      } catch (err) {
         throw new Error(err);
       }
     },`;
 
   // second, append strings for singularized baseTableName
+  // check if singuliarzed table is the same as baseTableName
+  // if so, then append 'ById' to differentiate
+  let singularAndCamelTableName = makeCamelCaseAndSingularize(baseTableName);
+  if (singularAndCamelTableName === baseTableName) {
+    singularAndCamelTableName += 'ById';
+  }
   currString += `
-    ${makeCamelCaseAndSingularize(baseTableName)}: async (parent, args, context, info) => {
+    ${singularAndCamelTableName}: async (parent, args, context, info) => {
       try {
         const query = 'SELECT * FROM ${baseTableName} WHERE _id = $1';
         const values = [args._id];
         const data = await db.query(query, values);
         console.log('sql query result data.rows[0]', data.rows[0]);
-      } catch(err) {
+        return data.rows[0];
+      } catch (err) {
         throw new Error(err);
       }
     },`;
@@ -47,15 +53,14 @@ resolvers.createMutation = (mutationType, mutationObj) => {
     let valuesString = '';
     let argsString = '';
     let counter = 1;
-    for (const key in mutationObj[mutationType]) { // value is indice
-    // for (let i = 0; i < Object.keys(mutationObj[mutationType]).length; i += 1) {
-    // }
+    for (const key in mutationObj[mutationType]) {
       if (key !== 'formatted_table_name_for_dev_use' && key !== 'table_name_for_dev_use') {
-        // create query string
+        // add line breaks and spaces for client formatting
         if (counter % 3 === 0) {
           queryString += `\n          `;
           argsString += `\n          `;
         }
+        // create query string
         queryString += `${key}, `;
         // create values string
         valuesString += `$${counter}, `;
@@ -72,13 +77,14 @@ resolvers.createMutation = (mutationType, mutationObj) => {
     currString += `
     ${mutationType}: async (parent, args, context, info) => {
       try {
-        const query = 'INSERT INTO ${mutationObj[mutationType].table_name_for_dev_use} (${finalQueryString}) 
+        const query = \`INSERT INTO ${mutationObj[mutationType].table_name_for_dev_use} (${finalQueryString}) 
           VALUES (${finalValuesString})
-          RETURNING *';
+          RETURNING *\`;
         const values = [${finalArgsString}];
         const data = await db.query(query, values);
         console.log('insert sql result data.rows[0]', data.rows[0]);
-      } catch(err) {
+        return data.rows[0];
+      } catch (err) {
         throw new Error(err);
       }
     },`;
@@ -87,25 +93,46 @@ resolvers.createMutation = (mutationType, mutationObj) => {
     currString += `
     ${mutationType}: async (parent, args, context, info) => {
       try {
-        const query = 'DELETE FROM ${mutationObj[mutationType].table_name_for_dev_use} 
-          WHERE _id = $1 RETURNING *';
+        const query = \`DELETE FROM ${mutationObj[mutationType].table_name_for_dev_use} 
+          WHERE _id = $1 RETURNING *\`;
         const values = [args._id];
         const data = await db.query(query, values);
         console.log('delete sql result data.rows[0]', data.rows[0]);
-      } catch(err) {
+        return data.rows[0];
+      } catch (err) {
         throw new Error(err);
       }
     },`;
-  // } else if (mutationType.includes('update')) {
-  //   /******************* UPDATE *****************/
+  } else if (mutationType.includes('update')) {
+    /******************* UPDATE *****************/
+    currString += `
+    ${mutationType}: async (parent, args, context, info) => {
+      try {
+        // sanitizing data for sql insert
+        const argsArr = Object.keys(args).filter((el) => (el !== '_id'));
+        const setStr = argsArr
+          .map((el, i) => el + ' = $' + (i + 1))
+          .join(', ');
+        argsArr.push('_id');
+        const pKey = '$' + argsArr.length;
+        const valuesArr = argsArr.map((el) => args[el]);
+
+        // insert query
+        const query = 'UPDATE ${mutationObj[mutationType].table_name_for_dev_use} SET ' + setStr + ' WHERE _id = ' + pKey + ' RETURNING *';
+        const values = valuesArr;
+        const data = await db.query(query, values);
+        console.log('insert sql result data.rows[0]', data.rows[0]);
+        return data.rows[0];
+      } catch (err) {
+        throw new Error(err);
+      }
+    },`;
   } else {
-    // append function strings for mutationType
-    // 4 spaces
     currString += `
       ${mutationType}: (parent, args, context, info) => {
         try {
           // insert sql query here
-        } catch(err) {
+        } catch (err) {
           throw new Error(err);
         }
       },`;
@@ -122,10 +149,16 @@ resolvers.checkOwnTable = (baseTableName, baseTables) => {
   for (const column of baseTables[baseTableName]) {
     if (column.constraint_type === 'FOREIGN KEY') {
       currString += `
-    ${column.foreign_table}: (parent, args, context, info) => {
+    ${makeCamelCase(column.foreign_table)}: async (${baseTableName}) => {
       try {
-        // insert sql query here
-      } catch(err) {
+        const query = \`SELECT ${column.foreign_table}.* FROM ${column.foreign_table}
+          LEFT OUTER JOIN ${baseTableName} 
+          ON ${column.foreign_table}._id = ${baseTableName}.${column.column_name}
+          WHERE ${baseTableName}._id = $1\`;
+        const values = [${baseTableName}._id];
+        const data = await db.query(query, values);
+        return data.rows;
+      } catch (err) {
         throw new Error(err);
       }
     },`;
@@ -143,10 +176,14 @@ resolvers.checkBaseTableCols = (baseTableName, baseTableQuery) => {
   for (const column of baseTableQuery) {
     if (column.foreign_table === baseTableName) {
       currString += `
-    ${column.table_name}: (parent, args, context, info) => {
+    ${makeCamelCase(column.table_name)}: async (${baseTableName}) => {
       try {
-        // insert sql query here
-      } catch(err) {
+        const query = \`SELECT * FROM ${column.table_name}
+          WHERE ${column.column_name} = $1\`;
+        const values = [${baseTableName}._id];
+        const data = await db.query(query, values);
+        return data.rows;
+      } catch (err) {
         throw new Error(err);
       }
     },`;
@@ -164,32 +201,40 @@ resolvers.checkJoinTableCols = (baseTableName, joinTables) => {
   const relationships = [];
 
   for (const currJoinTable in joinTables) {
-
     for (const column of joinTables[currJoinTable]) {
-
       if (column.foreign_table === baseTableName) {
         relationships.push(currJoinTable);
       }
     }
   }
-  // console.log('relationships', relationships);
   // [people_in_films, pilot]
+  // console.log('relationships', relationships);
   for (const table of relationships) {
-    const foreignKeys = [];
+    // const foreignKeys = [];
+    const foreignKeysObj = {};
     for (const column of joinTables[table]) {
       if (column.constraint_type === 'FOREIGN KEY') {
-        foreignKeys.push(column.foreign_table);
+        // foreignKeys.push(column.foreign_table);
+        foreignKeysObj[column.foreign_table] = column.column_name;
       }
     }
-
+    // const foreignKeys = {films: 'film_id', species: 'species_id'}
+    // for (let i = 0; i < foreignKeys.length; i += 1) {
+    const foreignKeys = Object.keys(foreignKeysObj);
     for (let i = 0; i < foreignKeys.length; i += 1) {
       if (foreignKeys[i] === baseTableName) {
         const index = i === 1 ? 0 : 1;
         currString += `
-    ${foreignKeys[index]}: (parent, args, context, info) => {
+    ${makeCamelCase(foreignKeys[index])}: async (${baseTableName}) => {
       try {
-        // insert sql query here
-      } catch(err) {
+        const query = \`SELECT * FROM ${foreignKeys[index]}
+          LEFT OUTER JOIN ${table}
+          ON ${foreignKeys[index]}._id = ${table}.${foreignKeysObj[foreignKeys[index]]}
+          WHERE ${table}.${foreignKeysObj[baseTableName]} = $1\`;
+        const values = [${baseTableName}._id];
+        const data = await db.query(query, values);
+        return data.rows;
+      } catch (err) {
         throw new Error(err);
       }
     },`;

@@ -1,8 +1,9 @@
-import express, { Application, Request, Response, NextFunction } from 'express';
+import express, {
+  Application, Request, Response, NextFunction, 
+} from 'express';
 import Router from './router';
 
 const path = require('path');
-
 
 const PORT = 3000;
 const app: Application = express();
@@ -10,6 +11,9 @@ const app: Application = express();
 // handle parsing request body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// handle requests for static files
+app.use('/client', express.static(path.join(__dirname, '../client/assets')));
 
 app.use('/', Router);
 
