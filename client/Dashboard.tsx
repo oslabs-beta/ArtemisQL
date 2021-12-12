@@ -34,7 +34,7 @@ const Dashboard = () => {
     axios.request(request)
       .then((res) => {
         if (res.status = 200) {
-          setData(res.data.cache);
+          setData(res.data.allTables);
           setSchemaType(res.data.finalString);
           setResolvers(res.data.resolverString);
           setSchema(true);
@@ -58,7 +58,7 @@ const Dashboard = () => {
     axios.request(request)
       .then((res) => {
         if (res.status = 200) {
-          setData(res.data.cache);
+          setData(res.data.allTables);
           setSchemaType(res.data.finalString);
           setResolvers(res.data.resolverString);
           setSchema(true);

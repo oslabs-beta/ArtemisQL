@@ -1,12 +1,12 @@
-import express, { Application, Request, Response, NextFunction } from 'express';
+import express, {
+  Application, Request, Response, NextFunction, 
+} from 'express';
 import Router from './router';
 
 const path = require('path');
 
-
 const PORT = 3000;
 const app: Application = express();
-
 
 // handle parsing request body
 app.use(express.json());
@@ -26,8 +26,6 @@ app.get('/', (req: Request, res: Response) => {
 app.get('/schema', (req: Request, res: Response) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
-
-
 
 // catch-all route handler
 app.use('*', (req: Request, res: Response) => res.status(400).send('This1 is not the page you\'re looking for...'));
