@@ -1,6 +1,5 @@
 
-  
-/* SELECT * FROM pg_catalog.pg_tables
+ /* SELECT * FROM pg_catalog.pg_tables
     WHERE schemaname ='public' */
 ***** pg_catalog.pg_tables *****
 - tablename (planets / people_in_films)

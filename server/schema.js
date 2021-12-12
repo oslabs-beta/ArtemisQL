@@ -1,7 +1,7 @@
 const { makeExecutableSchema } = require('graphql-tools');
 const { Pool } = require('pg');
-const PG_URI =
-  'postgres://lnwquuno:VOvvgZhDGdLOa4t8Dsbo-6MsLQptU3lc@fanny.db.elephantsql.com/lnwquuno';
+
+const PG_URI = 'postgres://lnwquuno:VOvvgZhDGdLOa4t8Dsbo-6MsLQptU3lc@fanny.db.elephantsql.com/lnwquuno';
 
 const pool = new Pool({
   connectionString: PG_URI,
@@ -76,7 +76,6 @@ db.query = (text, params, callback) => {
 //       producer: String,
 //     ): Film!
 
-
 //     addPlanet(
 //       orbital_period: Int,
 //       climate: String,
@@ -128,7 +127,6 @@ db.query = (text, params, callback) => {
 //       _id: ID!,
 //     ): Species!
 
-
 //     addVessel(
 //       cost_in_credits: String,
 //       length: String,
@@ -159,7 +157,6 @@ db.query = (text, params, callback) => {
 //       consumables: String,
 //       _id: ID!,
 //     ): Vessel!
-
 
 //     addStarshipSpec(
 //       vessel_id: ID!,

@@ -1,5 +1,5 @@
-const { capitalizeAndSingularize } = require('../utils/helperFunc.ts');
-const { makeCamelCase, makeCamelCaseAndSingularize } = require('../utils/helper');
+const { capitalizeAndSingularize, makeCamelCase, makeCamelCaseAndSingularize } = require('../utils/helperFunc.ts');
+// const { makeCamelCase, makeCamelCaseAndSingularize } = require('../utils/helper');
 
 const queryConverter = {};
 

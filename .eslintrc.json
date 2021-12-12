@@ -39,6 +39,8 @@
         "no-trailing-spaces": "off",
         "guard-for-in" : "off",
         "no-restricted-syntax": "off",
-        "no-undef": "off"
+        "no-undef": "off",
+        "import/no-import-module-exports": "off",
+        "no-underscore-dangle": "off"
     }
 }
