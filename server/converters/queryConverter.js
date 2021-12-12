@@ -2,8 +2,11 @@ const { capitalizeAndSingularize, makeCamelCase, makeCamelCaseAndSingularize } =
 
 const queryConverter = {};
 
-// input: baseTablesName
-// output: nothing, mutate queryString 
+/**
+ * Adds foreign keys to the type definitions
+ * @param {string} tableName 
+ * @returns {void} returns nothing, mutates queryString in outer function scope
+ */
 queryConverter.createQuerySchema = (tableName) => {
   // tableName = 'starship_specs'
   // starshipSpecs: [StarshipSpec]
