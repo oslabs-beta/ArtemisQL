@@ -1,5 +1,4 @@
 const { makeCamelCase, makeCamelCaseAndSingularize } = require('../utils/helperFunc.ts');
-// const { makeCamelCase, makeCamelCaseAndSingularize } = require('../utils/helper');
 
 const resolvers = {};
 // input: base table name

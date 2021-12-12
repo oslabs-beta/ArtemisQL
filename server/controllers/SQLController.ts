@@ -44,8 +44,8 @@ const getAllMetadata = async (req: Request, res: Response, next: NextFunction) =
     if (!data) {
       throw (new Error('Error querying from sql database'));
     }
-    res.locals.queryTables = data.rows; // data.rows is an array of objects
-    // console.log('queryTables', res.locals.queryTables);
+    // data.rows is an array of objects
+    res.locals.queryTables = data.rows; 
     return next();
   } catch (err) {
     console.log(err);
@@ -58,18 +58,6 @@ const getAllMetadata = async (req: Request, res: Response, next: NextFunction) =
 
 // format sql results to client
 const formatQueryResult = (req: Request, res: Response, next: NextFunction) => {
-  /* desired format for client:
-  
-  Key(Table_Name)
-  Value(Array of OBJECTS which contains column information such as col name, pk, fk, data type)
-  { 
-    People:         [{each column info},{each column info},{each column info}],
-    Species:        [{each column info},{each column info},{each column info}],
-    Films:          [{each column info},{each column info},{each column info}],
-    People_in_Film: [{each column info},{each column info},{each column info}],
-  }
-
-*/
   // iterate through the array of object columns info.
   const cache = {};
   for (let i = 0; i < res.locals.queryTables.length; i += 1) {
@@ -82,11 +70,8 @@ const formatQueryResult = (req: Request, res: Response, next: NextFunction) => {
     }
   }
   res.locals.cache = cache;
-  // console.log('cache: ', cache);
   return next();
 };
 
-// module.exports = SQLController;
-// declare SQLController object that will later be exported
 const SQLController: SQLControllerType = { getAllMetadata, formatQueryResult };
 export default SQLController;

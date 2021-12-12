@@ -1,3 +1,4 @@
+/* eslint-disable prefer-template */
 const { makeExecutableSchema } = require('graphql-tools');
 const { Pool } = require('pg');
 

@@ -1,5 +1,4 @@
-const { convertDataType, checkNullable, capitalizeAndSingularize } = require('../utils/helperFunc.ts');
-const { makeCamelCase } = require('../utils/helper');
+const { convertDataType, checkNullable, capitalizeAndSingularize, makeCamelCase } = require('../utils/helperFunc.ts');
 
 const typeConverter = {};
 
