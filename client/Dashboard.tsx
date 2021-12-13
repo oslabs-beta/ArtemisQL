@@ -7,26 +7,30 @@ import SendIcon from '@mui/icons-material/Send';
 import FlowContainer from './Containers/FlowContainer';
 import axios from 'axios';
 
+type Request = {
+  method: string;
+  url: string;
+  params?: object | null;
+}
+
+// CONDITIONALLY RENDERS: input page / dashboard container
 const Dashboard = () => {
   const [data, setData] = useState({});
-  const [schemaType, setSchemaType] = useState();
-  const [resolvers, setResolvers] = useState();
-  const [dataBaseUrl, setDataBaseUrl] = useState('');
+  const [schemaType, setSchemaType] = useState('');
+  const [resolvers, setResolvers] = useState('');
+  const [databaseURL, setDatabaseURL] = useState('');
   const [message, setMessage] = useState('');
-  // conditional rendering
-  // create state called showSchema and set it to false;
   const [showSchema, setSchema] = useState(false);
   
-  function onChangeHandler(event) {
-    const { name, value } = event.currentTarget;
-
+  function onChangeHandler(input: any) {
+    const { name, value } = input.currentTarget;
     if (name === 'urlInput') {
-      setDataBaseUrl(value);
+      setDatabaseURL(value);
     }
   }
 
   function getSampleDB() {
-    const request = {
+    const request: Request = {
       method: 'GET',
       url: '/submit',
     };
@@ -43,13 +47,13 @@ const Dashboard = () => {
       .catch(console.error);
   }
 
-  function getDataFromDB(dbLink) {
+  function getDataFromDB(dbLink: string) {
     if (!dbLink) {
       setMessage('Invalid URI, please try again');
       return;
     }
     
-    const request = {
+    const request: Request = {
       method: 'GET',
       url: '/submit',
       params: { dbLink },
@@ -81,12 +85,12 @@ const Dashboard = () => {
           <Grid container spacing={2} align="center" justify="center">
             
             <Grid item xs={12}>
-              <TextField name="urlInput" onChange={(event) => onChangeHandler(event)} fullWidth variant="standard" label="Database URL" />
+              <TextField name="urlInput" onChange={(input) => onChangeHandler(input)} fullWidth variant="standard" label="Database URL" />
               {message}
             </Grid>
     
             <Grid item xs={6}>
-              <Button fullWidth variant="contained" color="primary" style={buttonStyle} onClick={() => getDataFromDB(dataBaseUrl)} endIcon={<SendIcon/>}>Submit</Button>
+              <Button fullWidth variant="contained" color="primary" style={buttonStyle} onClick={() => getDataFromDB(databaseURL)} endIcon={<SendIcon/>}>Submit</Button>
             </Grid>
     
             <Grid item xs={6}>

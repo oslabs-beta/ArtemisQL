@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import ReactFlow, { Background, Controls, Handle } from 'react-flow-renderer';
 import SchemaComponent from '../Components/SchemaComponent';
 
-type Elements = object[];
+// TYPE DEFINITIONS
+type Elements = any[];
 
 type Edge = {
   id: number;
@@ -13,32 +14,47 @@ type Edge = {
   animated: boolean;
 };
 
-const FlowContainer = ({ data, schema, resolvers }) => {
+type Node = {
+  id: string | number;
+  type: string;
+  data: object;
+  position: object; 
+};
+
+type NodeType = {
+  special: object;
+}
+
+type Props = {
+  data: object;
+  schema: string;
+  resolvers: string;
+}
+
+// RENDERS TABLE NODES & SCHEMA COMPONENT
+const FlowContainer = ({ data, schema, resolvers }: Props) => {
   
   // declare elements array to store table nodes and edges
-  const elements: Elements = [];
+  const elements: Elements = new Array();
   
   // declare coordinate variables for table node positions/mapping
   let positionX = 100;
-  let positionY = 200;
+  let positionY = 225;
   let row = 0;
 
   // Iterate through each table...
   for (const key in data) {
-    // initialize tableName, tableName as key, table to value
+    // assign key to tableName and its value(array of columns) as table
     const tableName = key;
-    const title = tableName.toUpperCase();
     const table = data[key];
-
+    // capitalize table name and assign it to node title
+    const title = tableName.toUpperCase();
     // declare primary / foreign key variables
     let primaryKey = false;
-    const foreignKeys: [any] = [''];
-    
-    //console.log('tableName', tableName)
-    //console.log('table', table);
+    const foreignKeys: any = [];
 
-    // Iterate through each column of each table creating creating columnName and dataType rows
-    const columns = table.map((column) => {
+    // iterate through each column of each table creating creating columnName and dataType rows
+    const columns = table.map((column: any) => {
       let count = 0;
       let hasForeignKey = false;
       
@@ -53,7 +69,7 @@ const FlowContainer = ({ data, schema, resolvers }) => {
           source: tableName,
           target: column.foreign_table,
           sourceHandle: column.column_name,
-          style: { stroke: '#00009f' },
+          style: { stroke: "#00009f" },
           animated: true,
         };
         // append edge object to elements array
@@ -65,8 +81,9 @@ const FlowContainer = ({ data, schema, resolvers }) => {
       
       // return new column and data type to render in newNode
       return (
-        <p>{column.column_name} 
-          <span style={{color: 'gray', paddingLeft: 5}}>
+        <p>
+          {column.column_name} 
+          <span style={{color: "gray", paddingLeft: 5}}>
             {column.data_type}
           </span>
         </p>
@@ -74,16 +91,16 @@ const FlowContainer = ({ data, schema, resolvers }) => {
     });
 
     // create a new node object
-    const newNode = {
+    const newNode: Node = {
       id: tableName,
       type: 'special',
       data: { 
         label:
-          <div style={customNodeStyles}>
-            <div style={titleStyles}>
+          <div style={customNodeStyle}>
+            <div style={titleStyle}>
               <h3>{title}</h3>
             </div>
-            <div style={containerStyles}>
+            <div style={containerStyle}>
               {columns}
             </div>
           </div>,
@@ -93,15 +110,15 @@ const FlowContainer = ({ data, schema, resolvers }) => {
       position: { x: positionX, y: positionY }, 
     };
 
-    // assign table position
+    // assign table node position
     row += 1;
     positionY += 600;
     if (row % 2 === 0) {
-      positionY = 200;
+      positionY = 225;
       positionX += 400;
     }
 
-    // push newNode and edge into elements array
+    // append new node to elements array
     elements.push(newNode);
   }
 
@@ -123,8 +140,8 @@ const FlowContainer = ({ data, schema, resolvers }) => {
 
 // Custom Node Component
 const CustomNode = ({ data }) => {
+  // initial handle position
   let index = 111;
-  
   return (
     <div>
       
@@ -137,7 +154,6 @@ const CustomNode = ({ data }) => {
           type="target"
           id={`${data.id}`}
           position="right"
-          
           style={{ top: `${index}px`, borderRadius: 5, backgroundColor: '#E10098' }}
         />
       ) : (
@@ -145,7 +161,7 @@ const CustomNode = ({ data }) => {
       )}
 
       {/* foreign key handles */}
-      {data.fk.map((el) => {
+      {data.fk.map((el: [string, boolean]) => {
         if (el[0] === '_id') index = 111;
         else if (el[1] === true) {
           return (
@@ -153,7 +169,7 @@ const CustomNode = ({ data }) => {
               type="source"
               id={`${el[0]}`}
               position="left"
-              style={{ top: `${index += 37}px`, borderRadius: 5, backgroundColor: '#E10098' }}
+              style={{ top: `${index += 37}px`, borderRadius: 5, backgroundColor: "#E10098" }}
             />
         )} else {
           index += 37;
@@ -164,34 +180,34 @@ const CustomNode = ({ data }) => {
 };
 
 // assign custom node to special type
-const nodeTypes = {
+const nodeTypes: NodeType = {
   special: CustomNode,
 };
 
-// CSS styling for custom node
-const customNodeStyles = {
+// COMPONENT STYLING
+const customNodeStyle = {
   color: "#403D39",
-  backgroundColor: '#eeeeee',
+  backgroundColor: "#eeeeee",
   fontFamily: "JetBrains Mono",
   borderRadius: 5,
   borderStyle: "solid",
   borderWidth: 2,
   borderColor: "#8cbbad",
-  transition: 'all 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+  transition: "all 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
   boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
 };
 
-const titleStyles = {
-  background: '#282b2e',
-  fontSize: '16px',
+const titleStyle = {
+  background: "#282b2e",
+  fontSize: "16px",
   color: "rgb(54, 172, 170)",
-  textAlign: "center",
+  TextAlign: "center",
   padding: "5px 20px",
   borderTopLeftRadius: "5px",
   borderTopRightRadius: "5px"
 };
 
-const containerStyles = {
+const containerStyle = {
   padding: 10,
 };
 

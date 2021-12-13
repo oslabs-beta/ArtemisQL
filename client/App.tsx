@@ -5,6 +5,7 @@ import BioContainer from './Containers/BioContainer'
 import FooterComponent from './Components/FooterComponent'
 import DemoContainer from './Containers/DemoContainer'
 
+// RENDERS landing page
 function App() {
   return (
     <div>
