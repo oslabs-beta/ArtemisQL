@@ -141,7 +141,7 @@ typeConverter.addForeignKeysToTypeDef = (joinTableName, schema, joinTables) => {
 };
 
 /**
- * Adds foreign keys to the type definitions
+ * Convert type defs in schema to a string
  * @param {object} schema 
  * @returns {string} formats the type def as a string for client
  */
