@@ -1,0 +1,26 @@
+name: Testing Suite
+
+on:
+  pull_request:
+    branches: [ dev ]
+
+jobs:
+  test:
+    name: Testing our application on ${{ matrix.node_version }} and ${{ matrix.os }} against our testing suite.
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      matrix:
+        node_version: ['14', '16']
+        os: [ubuntu-latest, macOS-latest]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node_version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node_version }}
+    - name: npm install and test
+      run: |
+        npm install
+        npm test
