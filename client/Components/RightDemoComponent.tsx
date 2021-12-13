@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Grid, CardMedia, Card } from '@mui/material';
-// left or right either containers an image or some text
-const RightDemoComponent = ({image, text, number, stepHeader, stepDetails}) => {
+import { Box, Typography, Grid, CardMedia, Card, Link } from '@mui/material';
+
+type Props = {
+  image: any;
+  text: string;
+  number: string;
+  stepHeader: string;
+  stepDetails: string;
+}
+
+const RightDemoComponent = ({image, text, number, stepHeader, stepDetails}: Props) => {
   return (
     <>
       {/* text */}
@@ -10,7 +18,12 @@ const RightDemoComponent = ({image, text, number, stepHeader, stepDetails}) => {
           <Box my="auto">
             <Typography style={{textAlign: 'right', color: "#E10098"}} variant="h5">{number}</Typography>
             <Typography style={{textAlign: 'right', color: '#00009f'}} variant="h5" gutterBottom={true}>{stepHeader}</Typography>
-            <Typography style={{textAlign: 'right'}} variant="body1" color="textSecondary" paragraph={true}>{stepDetails}</Typography>
+            <Typography style={{textAlign: 'right'}} variant="body1" color="textSecondary" paragraph={true}>
+              {stepDetails}
+              <Link href="/sandbox" target="_blank" style={{textDecoration: "none", color: "#E10098"}}>
+                {text}.
+              </Link>
+            </Typography>
           </Box>
         </Box>
       </Grid>

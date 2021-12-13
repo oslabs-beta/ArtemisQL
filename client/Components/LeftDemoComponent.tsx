@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, Grid, CardMedia, Card } from '@mui/material';
 
+type Props = {
+  image: any;
+  text: string;
+  number: string;
+  stepHeader: string;
+  stepDetails: string;
+}
+
 // left or right either containers an image or some text
-const LeftDemoComponent = ({image, text, number, stepHeader, stepDetails}) => {
+const LeftDemoComponent = ({image, text, number, stepHeader, stepDetails}: Props) => {
   return (
 
     <>

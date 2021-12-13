@@ -42,6 +42,106 @@ section {
   animation-duration: 2s;
 }
 
+.a {
+  animation-name: artemisAppear;
+  animation-duration: 2s;
+}
+
+.r {
+  animation-name: artemisAppear;
+  animation-duration: 2.5s;
+}
+
+.t {
+  animation-name: artemisAppear;
+  animation-duration: 3s;
+}
+
+.e {
+  animation-name: artemisAppear;
+  animation-duration: 3.5s;
+}
+
+.m {
+  animation-name: artemisAppear;
+  animation-duration: 4s;
+}
+
+.i {
+  animation-name: artemisAppear;
+  animation-duration: 4.5s;
+}
+
+.s {
+  animation-name: artemisAppear;
+  animation-duration: 5s;
+}
+
+.q {
+  animation-name: qlAppear;
+  animation-duration: 6s;
+}
+
+.l {
+  animation-name: qlAppear;
+  animation-duration: 7s;
+}
+
+.subheader {
+  animation-name: subheaderAppear;
+  animation-duration: 6s;
+}
+
+.button {
+  animation-name: buttonAppear;
+  animation-duration: 7s;
+}
+
+.icon1 {
+  animation-name: iconAppear;
+  animation-duration: 2s;
+}
+
+.icon2 {
+  animation-name: iconAppear;
+  animation-duration: 4s;
+}
+
+.icon3 {
+  animation-name: iconAppear;
+  animation-duration: 6s;
+}
+
+.vis {
+  animation-name: textAppear;
+  animation-duration: 3s;
+}
+
+.gen {
+  animation-name: textAppear;
+  animation-duration: 5s;
+}
+
+.exp {
+  animation-name: textAppear;
+  animation-duration: 7s;
+}
+
+.body1 {
+  animation-name: bodyAppear;
+  animation-duration: 3s;
+}
+
+.body2 {
+  animation-name: bodyAppear;
+  animation-duration: 5s;
+}
+
+.body3 {
+  animation-name: bodyAppear;
+  animation-duration: 7s;
+}
+
 @keyframes out {
   0% {
     transform: translateX(-1000px);
@@ -60,4 +160,39 @@ section {
   100% {
     transform: translateX(0);
   }
+}
+
+@keyframes artemisAppear {
+  from {color: white;}
+  to {color: #282b2e;}
+}
+
+@keyframes qlAppear {
+  from {color: white;}
+  to {color: #E10098;}
+}
+
+@keyframes subheaderAppear {
+  from {color: white;}
+  to {color: "text-secondary";}
+}
+
+@keyframes buttonAppear {
+  from {background-color: white; border-color: white}
+  to {background-color: #282b2e; border-color: #282b2e}
+}
+
+@keyframes iconAppear {
+  from {color: white;}
+  to {color: #E10098;}
+}
+
+@keyframes textAppear {
+  from {color: white;}
+  to {color: #00009f;}
+}
+
+@keyframes bodyAppear {
+  from {color: white;}
+  to {color: #282b2e;}
 }
