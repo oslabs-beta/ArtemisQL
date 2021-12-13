@@ -70,7 +70,6 @@ const formatQueryResult = (req: Request, res: Response, next: NextFunction) => {
     }
   }
   res.locals.allTables = allTables;
-  console.log('allTables', allTables);
   return next();
 };
 

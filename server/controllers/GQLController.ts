@@ -100,7 +100,6 @@ const createSchemaMutation = (req: Request, res: Response, next: NextFunction) =
 
 // create GraphQL Resolvers
 const createResolver = (req: Request, res: Response, next: NextFunction) => {
-  console.log('createResolver triggered');
   const { 
     baseTableNames,
     mutationObj,

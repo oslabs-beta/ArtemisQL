@@ -18,6 +18,7 @@ router.get(
     // allTables (for SQL visualizer)
     // finalString (GraphQL Schema)
     // resolverString (GraphQL Resolver)
+    console.log('sent all info to client');
     return res.status(200).json(res.locals);
   },
 );

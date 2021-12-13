@@ -2,8 +2,12 @@ const { convertDataType, checkNullable, capitalizeAndSingularize } = require('..
 
 const mutationConverter = {};
 
-// input: baseTableName, array of columns (from base table object)
-// output: single mutation add object (to add as properties in mutation object)
+/**
+ * Creates add mutation for current table
+ * @param {string} tableName
+ * @param {string} arrOfColumns array of columns/fields based on current tableName
+ * @returns {object} returns single mutation add object (to add as properties in mutationObj)
+ */
 mutationConverter.add = (tableName, arrOfColumns) => {
   const addObj = {};
   // iterate through array of columns
@@ -27,8 +31,12 @@ mutationConverter.add = (tableName, arrOfColumns) => {
   return outputArr;
 };
 
-// input: baseTableName, array of columns (from base table object)
-// output: single mutation update object (to add as properties in mutation object)
+/**
+ * Creates update mutation for current table
+ * @param {string} tableName
+ * @param {string} arrOfColumns array of columns/fields based on current tableName
+ * @returns {object} returns single mutation update object (to add as properties in mutationObj)
+ */
 mutationConverter.update = (tableName, arrOfColumns) => {
   const updateObj = {};
 
@@ -49,8 +57,12 @@ mutationConverter.update = (tableName, arrOfColumns) => {
   return outputArr;  
 };
 
-// input: baseTableName, array of columns (from base table object)
-// output: single mutation delete object (to add as properties in mutation object)
+/**
+ * Creates delete mutation for current table
+ * @param {string} tableName
+ * @param {string} arrOfColumns array of columns/fields based on current tableName
+ * @returns {object} returns single mutation delete object (to add as properties in mutationObj)
+ */
 mutationConverter.delete = (tableName, arrOfColumns) => {
   const deleteObj = {};
 
@@ -69,8 +81,11 @@ mutationConverter.delete = (tableName, arrOfColumns) => {
   return outputArr;  
 };
 
-// input: mutation Object
-// output: final mutation string for client
+/**
+ * Converts mutationObj to a string
+ * @param {object} mutationObj
+ * @returns {object} returns final mutation string formatted for client
+ */
 mutationConverter.stringify = (mutationObj) => {
   let mutationString = '\n\ntype Mutation { \n';
   // iterate through mutation object
