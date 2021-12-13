@@ -421,7 +421,7 @@ Samples are shown below for the structure (does not include all properties and e
 ]
 
 /** allTables **/
-allTables {
+{
   films: [
     {
       column_name: '_id',
@@ -1508,7 +1508,7 @@ joinTables {
 ]
 
 /** schema **/
-schema {
+{
   films: {
     _id: 'ID!',
     director: 'String!',

@@ -32,28 +32,28 @@ const DemoContainer = () => {
               text=""
               number="01" 
               stepHeader="Connect to your SQL database" 
-              stepDetails="Enter your PostgresQL URI or use our sample STAR WARS database to connect to our interactive dashboard." 
+              stepDetails="Enter your PostgreSQL URI to connect to our interactive dashboard. Don't have one? No worries! You can still connect by using our provided sample STAR WARS database." 
               />
             <RightDemoComponent 
               image={demo2} 
               text=""
               number="02" 
               stepHeader="Visualize your data" 
-              stepDetails="Gain valuable insight into your database relationships with our interactive GUI. See your tables, columns, and data types rendered, along with each table's primary key, foreign keys, and foreign table connections using React Flow nodes, handles, and edges." 
+              stepDetails="Gain valuable insight into your database relationships with our interactive GUI. See your tables, columns, and data types, along with each table's primary key, foreign keys, and foreign table connections rendered using React Flow's custom nodes, handles, and edges." 
               />
             <LeftDemoComponent 
               image={demo3} 
               text=""
               number="03" 
               stepHeader="Generate accurate GraphQL prototypes" 
-              stepDetails="Access your newly generated GraphQL schema (type definitions, queries, and mutations) and resolvers (with SQL queries derived from your database) to copy and use in your application" 
+              stepDetails="Access real-time generated GraphQL schema (type definitions, queries, and mutations) and resolvers, with custom SQL queries tailored to your unique database specifications, to be exported and implemented in your application." 
               />
             <RightDemoComponent 
               image={demo4} 
-              text=""
+              text="sandbox"
               number="04" 
               stepHeader="Demo your GraphQL queries and mutations" 
-              stepDetails="Explore our Graphiql sandbox to connect to your database and begin experimenting with GraphQL by running queries and mutations using your newly generated schemas as reference." 
+              stepDetails="Explore the full CRUD (create, read, update, and delete) possibilities of GraphQL by querying and mutating your database in our graphiql " 
               />
           </Grid>
         </Box>

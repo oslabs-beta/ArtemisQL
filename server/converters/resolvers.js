@@ -1,8 +1,12 @@
 const { makeCamelCase, makeCamelCaseAndSingularize } = require('../utils/helperFunc.ts');
 
 const resolvers = {};
-// input: base table name
-// output: string
+
+/**
+ * Creates resolvers query to query all and query by id
+ * @param {string} baseTableName 
+ * @returns {string} string of resolvers sql query for query all and to query by id for each table
+ */
 resolvers.createQuery = (baseTableName) => {
   // baseTableName is pluralized version, ex. 'planets'
   let currString = '';
@@ -42,12 +46,15 @@ resolvers.createQuery = (baseTableName) => {
   return currString;
 };
 
-// input: mutation type name, mutationObj
-// output: string
+/**
+ * Creates mutation resolvers (add, update, delete)
+ * @param {string} mutationType 
+ * @param {object} mutationObj 
+ * @returns {string} string of sql resolvers query for mutations of each table
+ */
 resolvers.createMutation = (mutationType, mutationObj) => {
   let currString = '';
-  // baseTable object reference based on key (people)
-  /******************* ADD *****************/
+  // ADD
   if (mutationType.includes('add')) {
     let queryString = '';
     let valuesString = '';
@@ -89,7 +96,7 @@ resolvers.createMutation = (mutationType, mutationObj) => {
       }
     },`;
   } else if (mutationType.includes('delete')) {
-    /******************* DELETE *****************/
+    // DELETE
     currString += `
     ${mutationType}: async (parent, args, context, info) => {
       try {
@@ -104,7 +111,7 @@ resolvers.createMutation = (mutationType, mutationObj) => {
       }
     },`;
   } else if (mutationType.includes('update')) {
-    /******************* UPDATE *****************/
+    // UPDATE
     currString += `
     ${mutationType}: async (parent, args, context, info) => {
       try {
@@ -128,6 +135,7 @@ resolvers.createMutation = (mutationType, mutationObj) => {
       }
     },`;
   } else {
+    // failsafe option
     currString += `
       ${mutationType}: (parent, args, context, info) => {
         try {
@@ -141,9 +149,12 @@ resolvers.createMutation = (mutationType, mutationObj) => {
   return currString;
 };
 
-// 1. check own table columns
-// input: base table name, baseTables object
-// output: resolver function as string
+/**
+ * Check own table for foreign keys to create resolver queries
+ * @param {string} baseTableName 
+ * @param {object} baseTables 
+ * @returns {string} string of sql resolvers query
+ */
 resolvers.checkOwnTable = (baseTableName, baseTables) => {
   let currString = '';
   for (const column of baseTables[baseTableName]) {
@@ -168,9 +179,12 @@ resolvers.checkOwnTable = (baseTableName, baseTables) => {
   return currString;
 };
 
-// 2. check all base table cols
-// input: base table name, base table query array
-// output: resolver function as string
+/**
+ * Check other base table columns/fields for relationships to baseTableName
+ * @param {string} baseTableName 
+ * @param {object} baseTables 
+ * @returns {string} string of sql resolvers query
+ */
 resolvers.checkBaseTableCols = (baseTableName, baseTableQuery) => {
   let currString = '';
   for (const column of baseTableQuery) {
@@ -193,9 +207,12 @@ resolvers.checkBaseTableCols = (baseTableName, baseTableQuery) => {
   return currString;
 };
 
-// 3. check join tables and cols
-// input: base table name, joinTable object
-// output: resolver function as string
+/**
+ * Check join table columns/fields for relationships to baseTableName
+ * @param {string} baseTableName 
+ * @param {object} joinTables 
+ * @returns {string} string of sql resolvers query
+ */
 resolvers.checkJoinTableCols = (baseTableName, joinTables) => {
   let currString = '';
   const relationships = [];
@@ -207,8 +224,7 @@ resolvers.checkJoinTableCols = (baseTableName, joinTables) => {
       }
     }
   }
-  // [people_in_films, pilot]
-  // console.log('relationships', relationships);
+  // relationships = [people_in_films, pilot]
   for (const table of relationships) {
     // const foreignKeys = [];
     const foreignKeysObj = {};
@@ -219,7 +235,6 @@ resolvers.checkJoinTableCols = (baseTableName, joinTables) => {
       }
     }
     // const foreignKeys = {films: 'film_id', species: 'species_id'}
-    // for (let i = 0; i < foreignKeys.length; i += 1) {
     const foreignKeys = Object.keys(foreignKeysObj);
     for (let i = 0; i < foreignKeys.length; i += 1) {
       if (foreignKeys[i] === baseTableName) {

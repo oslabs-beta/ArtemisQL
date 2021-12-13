@@ -18,6 +18,7 @@ router.get(
     // allTables (for SQL visualizer)
     // finalString (GraphQL Schema)
     // resolverString (GraphQL Resolver)
+    console.log('sent all info to client');
     return res.status(200).json(res.locals);
   },
 );
@@ -32,7 +33,7 @@ router.get(
 //   // },
 // });
 
-const defaultQueryString = `
+const queryString = `
 # Welcome to GraphiQL
 #
 # GraphiQL is an in-browser tool for writing, validating, and
@@ -76,7 +77,7 @@ router.use(
     schema,
     graphiql: {
       editorTheme: 'solarized light',
-      defaultQuery: defaultQueryString,
+      defaultQuery: queryString,
     },
   }),
 );
