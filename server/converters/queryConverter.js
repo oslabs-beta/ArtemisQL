@@ -3,7 +3,7 @@ const { capitalizeAndSingularize, makeCamelCase, makeCamelCaseAndSingularize } =
 const queryConverter = {};
 
 /**
- * Adds foreign keys to the type definitions
+ * Creates query schema
  * @param {string} tableName 
  * @returns {void} returns nothing, mutates queryString in outer function scope
  */
