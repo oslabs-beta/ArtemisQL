@@ -3,7 +3,7 @@ import { Link, Container, Box, Typography, Grid, Avatar } from '@mui/material';
 import BioComponent from '../Components/BioComponent';
 import John_Lin from '../assets/john_lin_headshot.jpg';
 import Johnny_Bryan from '../assets/johnnybryan.png';
-import Taras from '../assets/Taras.jpg';
+import Taras from '../assets/taras.jpg';
 import Jennifer_Chau from '../assets/jennifer_chau_headshot.jpg';
 
 const profile = {
