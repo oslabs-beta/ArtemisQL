@@ -10,17 +10,20 @@ const FooterComponent = () => {
   return (
     <AppBar position="static" color="primary">
       <Toolbar >
-        <Typography py={4} variant="body2" color="inherit" justifytext="left">
+        <Typography py={4} variant="body1" color="inherit" justifytext="left">
           © 2021 ArtemisQL
         </Typography>
-        <Button href="/" target="_blank" className="button" color="inherit" style={{marginLeft: "auto"}} startIcon={<MonetizationOnIcon/>}>Buy Us A Coffee</Button>
-        <IconButton className="button" href="https://github.com/oslabs-beta/ArtemisQL" target="_blank" color="inherit">
+        <Typography pr={2} py={4} variant="body1" color="inherit" justifytext="left" style={{marginLeft: "auto"}}>
+          Accelerated by OS Labs
+        </Typography>
+        {/* <Button href="/" target="_blank" className="button" color="inherit" style={{marginLeft: "auto"}} startIcon={<MonetizationOnIcon/>}>Buy Us A Coffee</Button> */}
+        <IconButton href="https://github.com/oslabs-beta/ArtemisQL" target="_blank" color="inherit">
           <GitHubIcon />
         </IconButton>
-        <IconButton className="button" href="https://www.linkedin.com/" target="_blank" color="inherit">
+        <IconButton href="https://www.linkedin.com/company/artemisql" target="_blank" color="inherit">
           <LinkedInIcon />
         </IconButton>
-        <IconButton className="button" href="https://medium.com/" target="_blank" color="inherit">
+        <IconButton href="https://medium.com/" target="_blank" color="inherit">
           <ArticleOutlinedIcon />
         </IconButton>
       </Toolbar>
