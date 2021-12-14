@@ -14,11 +14,11 @@ jobs:
         run: zip -r deploy.zip * -x "**node_modules**"
         
       - name: Get timestamp
-        uses: gerred/actions/current-time@main
+        uses: gerred/actions/current-time@master
         id: current-time
         
       - name: Run string replace
-        uses: frabert/replace-string-action@main
+        uses: frabert/replace-string-action@master
         id: format-time
         with:
           pattern: '[:\.]+'
