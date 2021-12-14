@@ -1,18 +1,21 @@
 export interface MutationConverterType {
-  add: (request, response, next) => void;
+  add: (string, ArrayOfColumns) => [string, object];
+  update: (string, ArrayOfColumns) => [string, object];
+  del: (string, ArrayOfColumns) => [string, object];
+  stringify: (MutationObject) => string;
 }
 
 export interface QueryConverterType {
   createQuerySchema: (string) => void;
 }
 
-interface SimpleObject {
-  [key: string]: any;
-}
+// export interface SimpleObject {
+//   [key: string]: any;
+// }
 
-interface EnumServiceItems extends Array<EnumServiceItem>{}
+// interface EnumServiceItems extends Array<EnumServiceItem>{}
 
-// https://stackoverflow.com/questions/25469244/how-can-i-define-an-interface-for-an-array-of-objects
+// // https://stackoverflow.com/questions/25469244/how-can-i-define-an-interface-for-an-array-of-objects
 export interface Column {
   column_name: string,
   table_name: string,
@@ -31,6 +34,15 @@ export interface Tables {
   [key: string]: ArrayOfColumns
 }
 
-export interface SchemaTable {
+// export interface SchemaTable {
+//   [key: string]: string
+// }
+
+export interface MutationTable {
   [key: string]: string
 }
+
+export interface MutationObject {
+  [key: string]: MutationTable
+}
+// export type MutationArray = []

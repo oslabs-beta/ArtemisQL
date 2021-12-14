@@ -1,15 +1,20 @@
+import { MutationConverterType, MutationTable, ArrayOfColumns, MutationObject } from './converterTypes';
+// import MutationTable from './converterTypes'
+// import ArrayOfColumns from './converterTypes'
+// import MutationObject from './converterTypes'
 const { convertDataType, checkNullable, capitalizeAndSingularize } = require('../utils/helperFunc.ts');
 
-const mutationConverter = {};
+// const mutationConverter = {};
 
 /**
  * Creates add mutation for current table
  * @param {string} tableName
- * @param {string} arrOfColumns array of columns/fields based on current tableName
- * @returns {object} returns single mutation add object (to add as properties in mutationObj)
+ * @param {array} arrOfColumns array of columns/fields based on current tableName
+ * @returns {array} returns a tuple with 2 elements: add string and 
+ *   single mutation add object (to add as properties in mutationObj)
  */
-mutationConverter.add = (tableName, arrOfColumns) => {
-  const addObj = {};
+const add = (tableName: string, arrOfColumns: ArrayOfColumns): [string, object] => {
+  const addObj: MutationTable = {};
   // iterate through array of columns
   for (const column of arrOfColumns) {
     if (column.column_name !== '_id') {
@@ -27,18 +32,19 @@ mutationConverter.add = (tableName, arrOfColumns) => {
   addObj.table_name_for_dev_use = tableName;
   
   const addKey = `add${formattedTableName}`;
-  const outputArr = [addKey, addObj];
+  const outputArr: [string, object] = [addKey, addObj];
   return outputArr;
 };
 
 /**
  * Creates update mutation for current table
  * @param {string} tableName
- * @param {string} arrOfColumns array of columns/fields based on current tableName
- * @returns {object} returns single mutation update object (to add as properties in mutationObj)
+ * @param {array} arrOfColumns array of columns/fields based on current tableName
+ * @returns {array} returns a tuple with 2 elements: update string and 
+ *   single mutation update object (to add as properties in mutationObj)
  */
-mutationConverter.update = (tableName, arrOfColumns) => {
-  const updateObj = {};
+const update = (tableName: string, arrOfColumns: ArrayOfColumns): [string, object] => {
+  const updateObj: MutationTable = {};
 
   // iterate through array of columns
   for (const column of arrOfColumns) {
@@ -53,18 +59,19 @@ mutationConverter.update = (tableName, arrOfColumns) => {
   updateObj.table_name_for_dev_use = tableName;
 
   const updateKey = `update${formattedTableName}`;
-  const outputArr = [updateKey, updateObj];
+  const outputArr: [string, object] = [updateKey, updateObj];
   return outputArr;  
 };
 
 /**
  * Creates delete mutation for current table
  * @param {string} tableName
- * @param {string} arrOfColumns array of columns/fields based on current tableName
- * @returns {object} returns single mutation delete object (to add as properties in mutationObj)
+ * @param {array} arrOfColumns array of columns/fields based on current tableName
+ * @returns {array} returns a tuple with 2 elements: add string and 
+ *   single mutation add object (to add as properties in mutationObj)
  */
-mutationConverter.delete = (tableName, arrOfColumns) => {
-  const deleteObj = {};
+const del = (tableName: string, arrOfColumns: ArrayOfColumns): [string, object] => {
+  const deleteObj: MutationTable = {};
 
   // iterate through array of columns
   for (const column of arrOfColumns) {
@@ -77,16 +84,16 @@ mutationConverter.delete = (tableName, arrOfColumns) => {
   deleteObj.formatted_table_name_for_dev_use = formattedTableName;
   deleteObj.table_name_for_dev_use = tableName;
   const deleteKey = `delete${formattedTableName}`;
-  const outputArr = [deleteKey, deleteObj];
+  const outputArr: [string, object] = [deleteKey, deleteObj];
   return outputArr;  
 };
 
 /**
  * Converts mutationObj to a string
  * @param {object} mutationObj
- * @returns {object} returns final mutation string formatted for client
+ * @returns {string} returns final mutation string formatted for client
  */
-mutationConverter.stringify = (mutationObj) => {
+const stringify = (mutationObj: MutationObject): string => {
   let mutationString = '\n\ntype Mutation { \n';
   // iterate through mutation object
   for (const mutationType in mutationObj) {
@@ -104,4 +111,11 @@ mutationConverter.stringify = (mutationObj) => {
   return mutationString;
 };
 
-module.exports = mutationConverter;
+const mutationConverter: MutationConverterType = { 
+  add,
+  update,
+  del,
+  stringify,
+};
+
+export default mutationConverter;
