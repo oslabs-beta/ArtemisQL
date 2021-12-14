@@ -10,13 +10,12 @@ export interface QueryConverterType {
 }
 
 export interface typeConverterType {
-  sortTables: (string) => void;
-  createBaseTableQuery:
-  addForeignKeysToTypeDef:
-  finalizeTypeDef:
+  sortTables: (allTables, baseTables, joinTables) => any;
+  createBaseTableQuery: (baseTables) => ArrayOfColumns;
+  createInitialTypeDef: (baseTableName, baseTables, baseTableQuery) => StringObject;
+  addForeignKeysToTypeDef: (joinTableName, schema, joinTables) => void;
+  finalizeTypeDef: (schema) => string;
 }
-
-
 
 // interface EnumServiceItems extends Array<EnumServiceItem>{}
 
@@ -54,4 +53,14 @@ export interface MutationTable {
 export interface MutationObject {
   [key: string]: MutationTable
 }
+
+
+
+// export interface typeConverterType {
+//   sortTables: () => object;
+//   createBaseTableQuery: () => ArrayOfColumns;
+//   createInitialTypeDef: () => StringObject;
+//   addForeignKeysToTypeDef: () => void;
+//   finalizeTypeDef: () => string;
+// }
 // export type MutationArray = []

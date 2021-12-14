@@ -1,6 +1,5 @@
-import { Tables, ArrayOfColumns, SchemaTable } from './converterTypes';
+import { Tables, ArrayOfColumns, SchemaTable, StringObject, typeConverterType } from './converterTypes';
 const { convertDataType, checkNullable, capitalizeAndSingularize, makeCamelCase } = require('../utils/helperFunc.ts');
-const typeConverter = {};
 
 /**
  * Checks if the current table is a join table or not
@@ -40,7 +39,7 @@ const checkIfJoinTable = (allTables: Tables, tableName: string): boolean => {
  * @returns {object} returns an object with two properties: baseTables and joinTables that 
  *    were mutated during this function invocation
  */
-const sortTables = (allTables: Tables, baseTables: Tables, joinTables: Tables) => {
+const sortTables = (allTables: Tables, baseTables: Tables, joinTables: Tables): any => {
   for (const key in allTables) {
     if (checkIfJoinTable(allTables, key)) joinTables[key] = allTables[key];
     else baseTables[key] = allTables[key]; 
@@ -73,8 +72,8 @@ const createBaseTableQuery = (baseTables: Tables): ArrayOfColumns => {
  * @returns {object} returns an object where each property is a column from one table and 
  *   its GraphQL data type. This object represents ONE table's columns.
  */
-const createInitialTypeDef = (baseTableName: string, baseTables: Tables, baseTableQuery: ArrayOfColumns) => {
-  const tableType = {};
+const createInitialTypeDef = (baseTableName: string, baseTables: Tables, baseTableQuery: ArrayOfColumns): StringObject => {
+  const tableType: StringObject = {};
   // iterate through array of objects/columns
   for (let i = 0; i < baseTables[baseTableName].length; i += 1) {
     const column = baseTables[baseTableName][i];
@@ -165,4 +164,13 @@ const finalizeTypeDef = (schema: SchemaTable): string => {
   return typeString;
 };
 
-module.exports = typeConverter;
+const typeConverter: typeConverterType = { 
+  sortTables, 
+  createBaseTableQuery,
+  createInitialTypeDef,
+  addForeignKeysToTypeDef,
+  finalizeTypeDef,
+};
+
+export default typeConverter;
+// module.exports = typeConverter;
