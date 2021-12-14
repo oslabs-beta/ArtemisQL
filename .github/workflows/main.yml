@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Latest Repo
-        uses: actions/checkout@main
+        uses: actions/checkout@v2
         
       - name: Generate Deployment Package 
         run: zip -r deploy.zip * -x "**node_modules**"
@@ -27,7 +27,7 @@ jobs:
           flags: 'g'
           
       - name: Deploy to EB
-        uses: einaregilsson/beanstalk-deploy@v14
+        uses: einaregilsson/beanstalk-deploy@v19
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
