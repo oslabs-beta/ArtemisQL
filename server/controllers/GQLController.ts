@@ -87,7 +87,7 @@ const createSchemaMutation = (req: Request, res: Response, next: NextFunction) =
 
     // invoke delete
     const [del, deleteMutations] = mutationConverter
-      .delete(key, baseTables[key]) as [string, object];
+      .del(key, baseTables[key]) as [string, object];
     mutationObj[del] = deleteMutations;
   }
 
