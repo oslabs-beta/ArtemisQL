@@ -9,9 +9,14 @@ export interface QueryConverterType {
   createQuerySchema: (string) => void;
 }
 
-// export interface SimpleObject {
-//   [key: string]: any;
-// }
+export interface typeConverterType {
+  sortTables: (string) => void;
+  createBaseTableQuery:
+  addForeignKeysToTypeDef:
+  finalizeTypeDef:
+}
+
+
 
 // interface EnumServiceItems extends Array<EnumServiceItem>{}
 
@@ -28,15 +33,19 @@ export interface Column {
   foreign_column: string | null
 }
 
+export interface StringObject {
+  [key: string]: string;
+}
+
 export type ArrayOfColumns = Column[];
 
 export interface Tables {
   [key: string]: ArrayOfColumns
 }
 
-// export interface SchemaTable {
-//   [key: string]: string
-// }
+export interface SchemaTable {
+  [key: string]: StringObject
+}
 
 export interface MutationTable {
   [key: string]: string

@@ -1,5 +1,5 @@
+import { Tables, ArrayOfColumns, SchemaTable } from './converterTypes';
 const { convertDataType, checkNullable, capitalizeAndSingularize, makeCamelCase } = require('../utils/helperFunc.ts');
-
 const typeConverter = {};
 
 /**
@@ -12,7 +12,7 @@ const typeConverter = {};
  * TWO tables you want to relate
  * https://docs.microsoft.com/en-us/sql/ssms/visual-db-tools/map-many-to-many-relationships-visual-database-tools?view=sql-server-ver15
  */
-const checkIfJoinTable = (allTables, tableName) => {
+const checkIfJoinTable = (allTables: Tables, tableName: string): boolean => {
   // initialize counter of foreign keys
   let fKCounter = 0;
   // loop through array
@@ -40,7 +40,7 @@ const checkIfJoinTable = (allTables, tableName) => {
  * @returns {object} returns an object with two properties: baseTables and joinTables that 
  *    were mutated during this function invocation
  */
-typeConverter.sortTables = (allTables, baseTables, joinTables) => {
+const sortTables = (allTables: Tables, baseTables: Tables, joinTables: Tables) => {
   for (const key in allTables) {
     if (checkIfJoinTable(allTables, key)) joinTables[key] = allTables[key];
     else baseTables[key] = allTables[key]; 
@@ -55,10 +55,10 @@ typeConverter.sortTables = (allTables, baseTables, joinTables) => {
  * @param {object} baseTables 
  * @returns {array} returns an array of objects, where each object is a non-join table column/field
  */
-typeConverter.createBaseTableQuery = (baseTable) => {
-  const array = [];
-  for (const baseTableName in baseTable) {
-    for (const column of baseTable[baseTableName]) {
+const createBaseTableQuery = (baseTables: Tables): ArrayOfColumns => {
+  const array: ArrayOfColumns = [];
+  for (const baseTableName in baseTables) {
+    for (const column of baseTables[baseTableName]) {
       array.push(column);
     }
   }
@@ -73,7 +73,7 @@ typeConverter.createBaseTableQuery = (baseTable) => {
  * @returns {object} returns an object where each property is a column from one table and 
  *   its GraphQL data type. This object represents ONE table's columns.
  */
-typeConverter.createInitialTypeDef = (baseTableName, baseTables, baseTableQuery) => {
+const createInitialTypeDef = (baseTableName: string, baseTables: Tables, baseTableQuery: ArrayOfColumns) => {
   const tableType = {};
   // iterate through array of objects/columns
   for (let i = 0; i < baseTables[baseTableName].length; i += 1) {
@@ -111,9 +111,9 @@ typeConverter.createInitialTypeDef = (baseTableName, baseTables, baseTableQuery)
  * @param {object} joinTables 
  * @returns {void} returns nothing, mutates schema object in argument
  */
-typeConverter.addForeignKeysToTypeDef = (joinTableName, schema, joinTables) => {
+const addForeignKeysToTypeDef = (joinTableName: string, schema: SchemaTable, joinTables: Tables): void => {
   // iterate through array (ex. vessels_in_films)
-  const foreignKeys = [];
+  const foreignKeys: string[] = [];
   for (let i = 0; i < joinTables[joinTableName].length; i += 1) {
     const column = joinTables[joinTableName][i];
     // get both foreign keys (using constraint_type) and push foreign_table to an array 
@@ -145,7 +145,7 @@ typeConverter.addForeignKeysToTypeDef = (joinTableName, schema, joinTables) => {
  * @param {object} schema 
  * @returns {string} formats the type def as a string for client
  */
-typeConverter.finalizeTypeDef = (schema) => {
+const finalizeTypeDef = (schema: SchemaTable): string => {
   let typeString = '';
 
   for (const key in schema) {
