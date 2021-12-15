@@ -1,9 +1,12 @@
 const request = require('supertest');
-// const app = require('../server/server');
-describe('Server Tests', () => {
+
+const server = 'http://localhost:3000';
+const app = require('../server/server');
+
+describe('Route Integration Tests', () => {
   describe('/', () => {
-    describe('GET - root endpoint', () => {
-      const server = 'http://localhost:3000';
+    describe('GET', () => {
+      // const server = 'http://localhost:3000';
       it('responds with 200 status and text/html content type', () => {
         return request(server)
           .get('/')
@@ -12,45 +15,16 @@ describe('Server Tests', () => {
       });
     });
   });
-  // describe('Route integration', () => {
-  // describe('/', () => { 
-  //   describe('GET', () => {
-  //     it('responds with 200 status and text/html content type', () => {
-  //       return request(server)
-  //         .get('/')
-  //         .expect('Content-Type', /text\/html/)
-  //         .expect(200);
-  //     });
-  //   });
-  // });
 
-  // describe('/', () => { 
-  //   it('responds with 200 status and text/html content type', () => {
-  //     return request(server)
-  //       .get('/')
-  //       .expect('Content-Type', /text\/html/)
-  //       .expect(200);
-  //   });
-  // });
-  // describe('/submit', () => {
-  //   describe('GET', () => {
-  //     it('responds with 200 status', () => {
-  //       return request(server)
-  //         .get('/submit')
-  //         .send()
-  //         .expect(200);
-  //     });
-  //   });
-
-  //   describe('/login', () => {
-  //     describe('POST', () => {
-  //       it('responds with 200 status', () => {
-  //         return request(server)
-  //           .post('/login')
-  //           .send({ userInfo: { username: 'test', password: 'testtest' } })
-  //           .expect(200);
-  //       });
-  //     });
-  //   });
-  // });
+  describe('/submit', () => {
+    describe('GET', () => {
+      it('responds with 200 status and application/json content type', () => {
+        return request(server)
+          .get('/submit')
+          .send('postgres://nhiumazy:oys61uE526v3wjfIhANYXURgyoo-ty28@fanny.db.elephantsql.com/nhiumazy')
+          .expect('Content-type', 'application/json; charset=utf-8')
+          .expect(200);
+      });
+    });
+  });
 });
