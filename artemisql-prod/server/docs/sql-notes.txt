@@ -1,0 +1,37 @@
+
+/* SELECT * FROM pg_catalog.pg_tables
+    WHERE schemaname ='public' */
+***** pg_catalog.pg_tables *****
+- tablename (planets / people_in_films)
+
+/* SELECT * FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE'*/
+***** information_schema.tables *****
+- table_name (planets / people_in_films)
+
+
+/* select * FROM information_schema.columns where table_name = 'planets' */
+for every table, get all the columns (fields)
+for each column, we want info like:
+***** information_schema.columns *****
+- table_name (people) (kcu)
+- column_name (_id) (kcu)
+- ordinal_position (1)
+- column_default (nextval('people__id_seq'::regclass)	)
+- is_nullable (NO)
+- data_type (integer)
+- udt_name (int4)
+
+
+***** information_schema.key_column_usage (returns one row for each column that is constrained as a key) *****
+foreign keys, primary keys
+- constraint_name (people_fk0 / people_fk1 /people_pk)
+- table_name (people / people / people)
+- column_name (species_id / homeworld_id / _id)
+
+***** information_schema.table_constraints (returns one row for each table constraint) *****
+- constraint_type (PRIMARY KEY) / (FOREIGN KEY)
+- table_name (people) / (people)
+- constraint_name (people_pk) / (people_fk0)
+
+***** information_schema.referential_constraints (returns one row for each foreign key constraint) *****
+
