@@ -42,7 +42,7 @@ Accelerated by <a href="https://github.com/oslabs-beta/" />OS Labs</a>.
 
 <img src="client/assets/demo4.gif" width="560" height="400" /><br />
 
-## 🏗️ How to Contribute
+## 🏗️ For Developers - How to Contribute
 We would love for you to test our application and submit any issues you encouter. Please feel free to fork your own repository to and submit your own pull requests.
 
 How you can contribute:
@@ -50,6 +50,39 @@ How you can contribute:
 - Implementing features
 - Helping market our application
 
+Please make sure you have the following:
+- [NodeJS](https://nodejs.org/en/)
+- [NPM ](https://www.npmjs.com/)
+
+1. Clone the repo.
+   ```sh
+   git clone https://github.com/oslabs-beta/artemisql.git
+   ```
+2. Install the package dependencies.
+   ```sh
+   npm install
+   ```
+3. Create an `.env` file in the project root directory and initialize PG_URI constant. If you want to use your own PostgresQL database, feel free to put your URI here. If you would like to use our sample Starwars database, please contact us at helloartemisql@gmail.com.
+   ```sh
+   PG_URI= 
+   ```
+4. To run the application in development mode, please run following command and navigate to http://localhost:8080/.
+
+   ```sh
+   npm run dev
+   ```
+
+5. To run the application in production mode, please run the following commands and navigate to http://localhost:3000/.
+   ```sh
+   npm start
+
+   npm run build
+   ```
+
+6. To run the application against our testing suite, please run the following command.
+   ```sh
+   npm run test
+   ```
 ## 🧬 Built With
 
 - [React](https://reactjs.org/)
