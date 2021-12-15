@@ -56,7 +56,7 @@ Please make sure you have the following:
 
 1. Clone the repo.
    ```sh
-   git clone https://github.com/oslabs-beta/artemisql.git
+   git clone https://github.com/oslabs-beta/ArtemisQL.git
    ```
 2. Install the package dependencies.
    ```sh
