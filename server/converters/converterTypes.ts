@@ -5,6 +5,14 @@ export interface MutationConverterType {
   stringify: (MutationObject) => string;
 }
 
+export interface ResolversType {
+  createQuery: (string) => string;
+  createMutation: (string, MutationObject) => string;
+  checkOwnTable: (string, Tables) => string;
+  checkBaseTableCols: (string, ArrayOfColumns) => string;
+  checkJoinTableCols: (string, Tables) => string;
+}
+
 export interface QueryConverterType {
   createQuerySchema: (string) => void;
 }
@@ -64,3 +72,5 @@ export interface MutationObject {
 //   finalizeTypeDef: () => string;
 // }
 // export type MutationArray = []
+// export type MutationArray = []
+ 

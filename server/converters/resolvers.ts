@@ -1,13 +1,13 @@
-const { makeCamelCase, makeCamelCaseAndSingularize } = require('../utils/helperFunc.ts');
+import { Tables, MutationObject, ArrayOfColumns, ResolversType } from './converterTypes';
 
-const resolvers = {};
+const { makeCamelCase, makeCamelCaseAndSingularize } = require('../utils/helperFunc.ts');
 
 /**
  * Creates resolvers query to query all and query by id
  * @param {string} baseTableName 
  * @returns {string} string of resolvers sql query for query all and to query by id for each table
  */
-resolvers.createQuery = (baseTableName) => {
+const createQuery = (baseTableName: string): string => {
   // baseTableName is pluralized version, ex. 'planets'
   let currString = '';
   // first, append query strings for baseTableName
@@ -52,7 +52,7 @@ resolvers.createQuery = (baseTableName) => {
  * @param {object} mutationObj 
  * @returns {string} string of sql resolvers query for mutations of each table
  */
-resolvers.createMutation = (mutationType, mutationObj) => {
+const createMutation = (mutationType: string, mutationObj: MutationObject): string => {
   let currString = '';
   // ADD
   if (mutationType.includes('add')) {
@@ -155,7 +155,7 @@ resolvers.createMutation = (mutationType, mutationObj) => {
  * @param {object} baseTables 
  * @returns {string} string of sql resolvers query
  */
-resolvers.checkOwnTable = (baseTableName, baseTables) => {
+const checkOwnTable = (baseTableName: string, baseTables: Tables): string => {
   let currString = '';
   for (const column of baseTables[baseTableName]) {
     if (column.constraint_type === 'FOREIGN KEY') {
@@ -185,7 +185,7 @@ resolvers.checkOwnTable = (baseTableName, baseTables) => {
  * @param {object} baseTables 
  * @returns {string} string of sql resolvers query
  */
-resolvers.checkBaseTableCols = (baseTableName, baseTableQuery) => {
+const checkBaseTableCols = (baseTableName: string, baseTableQuery: ArrayOfColumns): string => {
   let currString = '';
   for (const column of baseTableQuery) {
     if (column.foreign_table === baseTableName) {
@@ -213,9 +213,9 @@ resolvers.checkBaseTableCols = (baseTableName, baseTableQuery) => {
  * @param {object} joinTables 
  * @returns {string} string of sql resolvers query
  */
-resolvers.checkJoinTableCols = (baseTableName, joinTables) => {
+const checkJoinTableCols = (baseTableName: string, joinTables: Tables): string => {
   let currString = '';
-  const relationships = [];
+  const relationships: string[] = [];
 
   for (const currJoinTable in joinTables) {
     for (const column of joinTables[currJoinTable]) {
@@ -229,7 +229,7 @@ resolvers.checkJoinTableCols = (baseTableName, joinTables) => {
     // const foreignKeys = [];
     const foreignKeysObj = {};
     for (const column of joinTables[table]) {
-      if (column.constraint_type === 'FOREIGN KEY') {
+      if (column.constraint_type === 'FOREIGN KEY' && column.foreign_table !== null) {
         // foreignKeys.push(column.foreign_table);
         foreignKeysObj[column.foreign_table] = column.column_name;
       }
@@ -259,4 +259,12 @@ resolvers.checkJoinTableCols = (baseTableName, joinTables) => {
   return currString;
 };
 
-module.exports = resolvers;
+const resolvers: ResolversType = {
+  createQuery,
+  createMutation,
+  checkOwnTable, 
+  checkBaseTableCols,
+  checkJoinTableCols,
+};
+// module.exports = resolvers;
+export default resolvers;
