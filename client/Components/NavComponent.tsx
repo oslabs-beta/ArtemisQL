@@ -29,10 +29,10 @@ const NavComponent = () => {
           <IconButton style={{ marginLeft: 'auto'}} href="https://github.com/oslabs-beta/ArtemisQL" target="_blank" color="inherit">
             <GitHubIcon />
           </IconButton>
-          <IconButton href="https://www.linkedin.com/" target="_blank" color="inherit">
+          <IconButton href="https://www.linkedin.com/company/artemisql" target="_blank" color="inherit">
             <LinkedInIcon />
           </IconButton>
-          <IconButton href="https://medium.com/" target="_blank" color="inherit">
+          <IconButton href="https://medium.com/@helloartemisql/introducing-artemisql-2d39cf391437" target="_blank" color="inherit">
             <ArticleOutlinedIcon />
           </IconButton>
         </Toolbar>
