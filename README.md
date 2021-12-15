@@ -12,35 +12,35 @@
 ## 🔎 Overview
 ArtemisQL is an open-source web application providing a SQL (Postgres) database GUI and custom-generated GraphQL schema (type defs, queries, mutations) and resolvers created by developers for developers, to ease the transition from REST to GraphQL. 
 
-Read more on <a href="https://medium.com/">Medium.</a><br/>
+Read more on <a href="https://medium.com/@helloartemisql/introducing-artemisql-2d39cf391437">Medium.</a><br/>
 Accelerated by <a href="https://github.com/oslabs-beta/" />OS Labs</a>.
 
 ## ⚙️ Getting Started
-### Visit [ArtemisQL.io](www.artemisQL.io) to utilize the tool.
+### Visit <a href="https://artemisql.io/">ArtemisQL.io</a> to utilize the tool.
 
 #### Connect to a database
 * Input your PostgreSQL URI
 * OR use the sample database to view data rendered in an interactive diagram.
 
-<img src="client/assets/demo1.gif" width="700" height="500" /><br />
+<img src="client/assets/demo1.gif" width="560" height="400" /><br />
 
 #### Visualize your data
 * Easily view the relationships between the tables via the links that highlight the foreign key constraints.
 * Move any table and arrange them to optimally view the structure of the database and the relationships between the tables.
   
-<img src="client/assets/demo2.gif" width="700" height="500" />
+<img src="client/assets/demo2.gif" width="560" height="400" /><br />
 
 #### Generate GraphQL Schema
 * View the generated GraphQL schema, including the types and associated resolvers.
 * Use the copy button to effortlessly integrate the code into your project.
 
-<img src="client/assets/demo3.gif" width="700" height="500" />
+<img src="client/assets/demo3.gif" width="560" height="400" /><br />
 
 #### GraphQL Sandbox
 * Interactively construct full queries using the sample database.
 * Use the "Docs" to explore the possible queries, fields, types, mutations, and more.
 
-<img src="client/assets/demo4.gif" width="700" height="500" />
+<img src="client/assets/demo4.gif" width="560" height="400" /><br />
 
 ## 🏗️ How to Contribute
 We would love for you to test our application and submit any issues you encouter. Please feel free to fork your own repository to and submit your own pull requests.
@@ -64,10 +64,11 @@ How you can contribute:
 
 ## 🤖 Developers
 
-* John Bryan – [@Johnny Bryan](https://github.com/JohnnyBryan) <br/>
-* Jennifer Chau – [@Jennifer Chau](https://github.com/jenniferchau)  <br/>
-* John Lin – [@itzJohn](https://github.com/itzJohn)  <br/>
-* Taras Sukhoverskyi – [@Taras Sukhoverskyi](https://github.com/Tarantino23) 
+[![JohnnyBryan][johnny-bryan-shield]][johnny-bryan-linkedin-url] <br/>
+[![JenniferChau][jennifer-chau-shield]][jennifer-chau-linkedin-url] <br/>
+[![JohnLin][john-lin-shield]][john-lin-linkedin-url] <br/>
+[![TarasSukhoverskyi][taras-sukhoverskyi-shield]][taras-sukhoverskyi-linkedin-url]
+
 
 ## License 
 This product is licensed under the MIT License.
@@ -80,3 +81,12 @@ This product is licensed under the MIT License.
 [issues-url]: https://github.com/oslabs-beta/artemisql/issues
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/company/artemisql
+
+[johnny-bryan-shield]: https://img.shields.io/badge/-Johnny%20Bryan-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[johnny-bryan-linkedin-url]: https://www.linkedin.com/in/john-bryan-10a3bbb9/
+[jennifer-chau-shield]: https://img.shields.io/badge/-Jennifer%20Chau-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[jennifer-chau-linkedin-url]: https://www.linkedin.com/in/jenniferchau512/
+[john-lin-shield]: https://img.shields.io/badge/-John%20Lin-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[john-lin-linkedin-url]: https://www.linkedin.com/in/john-lin-/
+[taras-sukhoverskyi-shield]: https://img.shields.io/badge/-Taras%20Sukhoverskyi-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[taras-sukhoverskyi-linkedin-url]: https://www.linkedin.com/in/taras-sukhoverskyi-628642145/
