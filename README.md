@@ -42,7 +42,7 @@ Accelerated by <a href="https://github.com/oslabs-beta/" />OS Labs</a>.
 
 <img src="client/assets/demo4.gif" width="700" height="500" />
 
-## 🏗️ How to Contribute:
+## 🏗️ How to Contribute
 We would love for you to test our application and submit any issues you encouter. Please feel free to fork your own repository to and submit your own pull requests.
 
 How you can contribute:
