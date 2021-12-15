@@ -1,3 +1,4 @@
+// Converter Function Interfaces
 export interface MutationConverterType {
   add: (string, ArrayOfColumns) => [string, object];
   update: (string, ArrayOfColumns) => [string, object];
@@ -25,9 +26,7 @@ export interface typeConverterType {
   finalizeTypeDef: (schema) => string;
 }
 
-// interface EnumServiceItems extends Array<EnumServiceItem>{}
-
-// // https://stackoverflow.com/questions/25469244/how-can-i-define-an-interface-for-an-array-of-objects
+// interfaces for data structures used throughout controllers
 export interface Column {
   column_name: string,
   table_name: string,
@@ -61,16 +60,3 @@ export interface MutationTable {
 export interface MutationObject {
   [key: string]: MutationTable
 }
-
-
-
-// export interface typeConverterType {
-//   sortTables: () => object;
-//   createBaseTableQuery: () => ArrayOfColumns;
-//   createInitialTypeDef: () => StringObject;
-//   addForeignKeysToTypeDef: () => void;
-//   finalizeTypeDef: () => string;
-// }
-// export type MutationArray = []
-// export type MutationArray = []
- 

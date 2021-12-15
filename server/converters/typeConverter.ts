@@ -79,7 +79,7 @@ const createInitialTypeDef = (baseTableName: string, baseTables: Tables, baseTab
     const column = baseTables[baseTableName][i];
     // if its a foreign key, singularize the foreign table as the value
     // foreign table : [singularize the foreign table and make PascalCase]
-    if (column.constraint_type === 'FOREIGN KEY') {
+    if (column.constraint_type === 'FOREIGN KEY' && column.foreign_table !== null) {
       const key = column.foreign_table;
 
       const formattedTableName = capitalizeAndSingularize(key);
@@ -117,7 +117,7 @@ const addForeignKeysToTypeDef = (joinTableName: string, schema: SchemaTable, joi
     const column = joinTables[joinTableName][i];
     // get both foreign keys (using constraint_type) and push foreign_table to an array 
     // (ex. ['films', 'vessels'])
-    if (column.constraint_type === 'FOREIGN KEY') {
+    if (column.constraint_type === 'FOREIGN KEY' && column.foreign_table !== null) {
       foreignKeys.push(column.foreign_table);
     }
   }
