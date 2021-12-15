@@ -28,7 +28,7 @@ app.get('/schema', (req: Request, res: Response) => {
 });
 
 // catch-all route handler
-app.use('*', (req: Request, res: Response) => res.status(400).send('This1 is not the page you\'re looking for...'));
+app.use('*', (req: Request, res: Response) => res.status(400).send('This is not the page you\'re looking for...'));
 
 // global error handler
 app.use((err, req: Request, res: Response, next: NextFunction) => {
@@ -45,3 +45,5 @@ app.use((err, req: Request, res: Response, next: NextFunction) => {
 app.listen(3000, () => {
   console.log(`⚡Server is listening on port ${PORT}... 🚀`);
 });
+
+export default app;
