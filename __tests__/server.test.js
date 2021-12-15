@@ -7,7 +7,7 @@ describe('Route Integration Tests', () => {
   describe('/', () => {
     describe('GET', () => {
       // const server = 'http://localhost:3000';
-      it('responds with 200 status and text/html content type', () => {
+      xit('responds with 200 status and text/html content type', () => {
         return request(server)
           .get('/')
           .expect('Content-type', /text\/html/)
@@ -18,7 +18,7 @@ describe('Route Integration Tests', () => {
 
   describe('/submit', () => {
     describe('GET', () => {
-      it('responds with 200 status and application/json content type', () => {
+      xit('responds with 200 status and application/json content type', () => {
         return request(server)
           .get('/submit')
           .send('postgres://nhiumazy:oys61uE526v3wjfIhANYXURgyoo-ty28@fanny.db.elephantsql.com/nhiumazy')
@@ -30,7 +30,7 @@ describe('Route Integration Tests', () => {
 
   describe('/nonexistentendpoint', () => {
     describe('GET', () => {
-      it('responds with 400 status', () => {
+      xit('responds with 400 status', () => {
         return request(server)
           .get('/doesnotexist')
           .expect(400);
@@ -40,7 +40,7 @@ describe('Route Integration Tests', () => {
 
   describe('/schema', () => {
     describe('GET', () => {
-      it('responds with 200 status and text/html content type', () => {
+      xit('responds with 200 status and text/html content type', () => {
         return request(server)
           .get('/schema')
           .expect('Content-type', /text\/html/)
