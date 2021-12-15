@@ -44,6 +44,15 @@ Accelerated by <a href="https://github.com/oslabs-beta/" />OS Labs</a>.
 
 ## 🏗️ Planned Features:
 
+## 🏗️ How to Contribute:
+* We would love for you to test our application and submit any issues you encouter. Please feel free to fork your own repository to and submit your own pull requests.
+
+* How you can contribute:
+- Submitting or fixing bugs
+- Implementing features
+- Submitting or resolving GitHub issues
+- Help market our application
+
 ## 🧬 Built With
 
 - [React](https://reactjs.org/)
