@@ -22,4 +22,4 @@ jobs:
           environment_name: Artemisql-env
           version_label: "artemisql-source"
           region: us-east-1
-          deployment_package: deploy.zip
+#           deployment_package: deploy.zip
