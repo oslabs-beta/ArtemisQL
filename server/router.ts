@@ -1,10 +1,12 @@
 import express, { Request, Response } from 'express';
 import SQLController from './controllers/SQLController';
 import GQLController from './controllers/GQLController';
+import schema from './schema';
 
 const router = express.Router();
 const { graphqlHTTP } = require('express-graphql');
-const schema = require('./schema.js');
+
+// const schema = require('./schema.ts');
 
 router.get(
   '/submit',

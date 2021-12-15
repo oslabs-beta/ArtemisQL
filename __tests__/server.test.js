@@ -1,7 +1,7 @@
 const request = require('supertest');
 
 const server = 'http://localhost:3000';
-const app = require('../server/server');
+//const app = require('../server/server');
 
 describe('Route Integration Tests', () => {
   describe('/', () => {
