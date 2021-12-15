@@ -20,5 +20,6 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: ArtemisQL
           environment_name: Artemisql-env
-          version_label: "artemisql-5"
+          version_label: "artemisql-source"
           region: us-east-1
+          deployment_package: deploy.zip
