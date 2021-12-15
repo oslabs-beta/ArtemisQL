@@ -27,4 +27,25 @@ describe('Route Integration Tests', () => {
       });
     });
   });
+
+  describe('/nonexistentendpoint', () => {
+    describe('GET', () => {
+      it('responds with 400 status', () => {
+        return request(server)
+          .get('/doesnotexist')
+          .expect(400);
+      });
+    });
+  });
+
+  describe('/schema', () => {
+    describe('GET', () => {
+      it('responds with 200 status and text/html content type', () => {
+        return request(server)
+          .get('/schema')
+          .expect('Content-type', /text\/html/)
+          .expect(200);
+      });
+    });
+  });
 });
