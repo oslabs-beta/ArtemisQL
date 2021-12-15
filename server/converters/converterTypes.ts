@@ -1,3 +1,4 @@
+// Converter Function Interfaces
 export interface MutationConverterType {
   add: (string, ArrayOfColumns) => [string, object];
   update: (string, ArrayOfColumns) => [string, object];
@@ -5,17 +6,27 @@ export interface MutationConverterType {
   stringify: (MutationObject) => string;
 }
 
+export interface ResolversType {
+  createQuery: (string) => string;
+  createMutation: (string, MutationObject) => string;
+  checkOwnTable: (string, Tables) => string;
+  checkBaseTableCols: (string, ArrayOfColumns) => string;
+  checkJoinTableCols: (string, Tables) => string;
+}
+
 export interface QueryConverterType {
   createQuerySchema: (string) => void;
 }
 
-// export interface SimpleObject {
-//   [key: string]: any;
-// }
+export interface typeConverterType {
+  sortTables: (allTables, baseTables, joinTables) => any;
+  createBaseTableQuery: (baseTables) => ArrayOfColumns;
+  createInitialTypeDef: (baseTableName, baseTables, baseTableQuery) => StringObject;
+  addForeignKeysToTypeDef: (joinTableName, schema, joinTables) => void;
+  finalizeTypeDef: (schema) => string;
+}
 
-// interface EnumServiceItems extends Array<EnumServiceItem>{}
-
-// // https://stackoverflow.com/questions/25469244/how-can-i-define-an-interface-for-an-array-of-objects
+// interfaces for data structures used throughout controllers
 export interface Column {
   column_name: string,
   table_name: string,
@@ -28,15 +39,19 @@ export interface Column {
   foreign_column: string | null
 }
 
+export interface StringObject {
+  [key: string]: string;
+}
+
 export type ArrayOfColumns = Column[];
 
 export interface Tables {
   [key: string]: ArrayOfColumns
 }
 
-// export interface SchemaTable {
-//   [key: string]: string
-// }
+export interface SchemaTable {
+  [key: string]: StringObject
+}
 
 export interface MutationTable {
   [key: string]: string
@@ -45,4 +60,3 @@ export interface MutationTable {
 export interface MutationObject {
   [key: string]: MutationTable
 }
-// export type MutationArray = []

@@ -23,7 +23,7 @@ const profile = {
     fullName: 'John Lin',
     profilePic: John_Lin,
     gitHubLink:'https://github.com/itzJohn',
-    linkedInLink:''
+    linkedInLink:'https://www.linkedin.com/in/john-lin-/'
   },
   TS: {
     fullName: 'Taras Sukhoverskyi',
