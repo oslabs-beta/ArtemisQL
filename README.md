@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://i.imgur.com/KetW39Y.png">
+  <img src="/client/assets/logo.png" width="300" >
   <h1>Artemis<span color="red">QL</span></h1>
   <h3>A GraphQL migration tool and relational database visualizer</h4>
 
