@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { SQLControllerType } from './controllerTypes';
-
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 const { Pool } = require('pg');
 
 // get all database metadata (tables and columns) from user's selected DB
