@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Grid, Container } from '@mui/material';
+import { Box, Typography, Grid, Container, Link } from '@mui/material';
 import LeftDemoComponent from '../Components/LeftDemoComponent';
 import RightDemoComponent from '../Components/RightDemoComponent';
 import demo1 from '../assets/demo1.gif'
@@ -15,8 +15,11 @@ const DemoContainer = () => {
         <Box pt={8} textAlign="center">
           <Typography variant="h4" component="h2" gutterBottom={true}>How to use ArtemisQL</Typography>
           <Typography variant="body1" color="textSecondary">
-            We've designed a simple and intuitive process to help you migrate from a REST API to 
-            <span style={{color: '#E10098'}}> GraphQL</span>
+            We've designed a simple and intuitive process to help you migrate from a REST API to   
+            {/* <span style={{color: '#E10098'}}> GraphQL</span> */}
+            <Link href="https://graphql.org/learn/" target="_blank" style={{textDecoration: "none", color: "#E10098"}}>
+              <span> GraphQL</span>
+            </Link>
             . Here's how it works.
           </Typography>
         </Box>
