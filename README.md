@@ -1,5 +1,6 @@
 <div align="center">
   <img src="https://i.imgur.com/KetW39Y.png">
+  ![logo](https://user-images.githubusercontent.com/82518853/146285132-196e2850-e3e9-4396-8124-072154bc1fda.png)
   <h1>Artemis<span color="red">QL</span></h1>
   <h3>A GraphQL migration tool and relational database visualizer</h4>
 
