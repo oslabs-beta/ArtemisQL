@@ -39,7 +39,7 @@ const FlowContainer = ({ data, schema, resolvers }: Props) => {
   
   // declare coordinate variables for table node positions/mapping
   let positionX = 100;
-  let positionY = 225;
+  let positionY = 250;
   let row = 0;
 
   // Iterate through each table...
@@ -114,7 +114,7 @@ const FlowContainer = ({ data, schema, resolvers }: Props) => {
     row += 1;
     positionY += 600;
     if (row % 2 === 0) {
-      positionY = 225;
+      positionY = 250;
       positionX += 400;
     }
 
@@ -124,7 +124,7 @@ const FlowContainer = ({ data, schema, resolvers }: Props) => {
 
   return (
     <div>
-      <ReactFlow elements={elements} nodeTypes={nodeTypes} defaultZoom={0.66}>
+      <ReactFlow elements={elements} nodeTypes={nodeTypes} defaultZoom={0.6}>
         <Background
           style={{backgroundColor: '#fafafa'}}   
           variant="dots"
