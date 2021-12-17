@@ -12,7 +12,7 @@ import '@fontsource/roboto/700.css';
 /* 
   APP COLOR PALETTE:
   dark gray: '#282b2e'
-  aquablue: 'rgb(54, 172, 170)'
+  aquablue: 'rgb(54, 172, 170)' || '#36acaa'
   lime green: '#93C763'
   light gray: '#eeeeee'
   graphql pink: '#E10098'
@@ -26,7 +26,7 @@ const theme = createTheme({
       main: '#282b2e',
     },
     secondary: {
-      main: 'rgb(54, 172, 170)',
+      main: '#36acaa',
     },
     warning: {
       main: '#E10098'
@@ -44,7 +44,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '&:hover': {
-            color: 'rgb(54, 172, 170)',
+            color: '#36acaa',
           },
         },
       },
@@ -53,7 +53,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '&:hover': {
-            color: 'rgb(54, 172, 170)',
+            color: '#36acaa',
           },
         },
       },
