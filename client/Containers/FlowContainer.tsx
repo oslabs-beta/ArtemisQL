@@ -200,7 +200,7 @@ const customNodeStyle = {
 const titleStyle = {
   background: "#282b2e",
   fontSize: "16px",
-  color: "rgb(54, 172, 170)",
+  color: "#36acaa",
   TextAlign: "center",
   padding: "5px 20px",
   borderTopLeftRadius: "5px",
