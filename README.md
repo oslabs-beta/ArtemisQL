@@ -16,7 +16,7 @@ Read more on <a href="https://medium.com/@helloartemisql/introducing-artemisql-2
 Accelerated by <a href="https://github.com/oslabs-beta/" />OS Labs</a>.
 
 ## ⚙️ Getting Started
-### Visit <a href="https://artemisql.io/">ArtemisQL.io</a> to utilize the tool.
+### Visit <a href="http://artemisql.io/">ArtemisQL.io</a> to utilize the tool.
 
 #### Connect to a database
 * Input your PostgreSQL URI
