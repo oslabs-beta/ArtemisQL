@@ -75,7 +75,7 @@ const containerStyle = {
 const switchStyle = {
   display: 'flex', 
   alignItems: 'center', 
-  marginTop: '40px', 
+  marginTop: '35px', 
   marginBottom: '10px', 
   marginRight: '25px', 
   paddingLeft: '10px', 
