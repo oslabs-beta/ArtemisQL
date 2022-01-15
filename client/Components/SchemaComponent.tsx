@@ -46,8 +46,8 @@ function SchemaComponent({schema, resolvers}: Props) {
               {text}
             </Highlight>
           </div>
-          <br />
-          <Grid container spacing={1} align="center" justify="space-around" mb={4}>
+          {/* <br /> */}
+          <Grid container spacing={1} align="center" justify="space-around" mt={1} mb={4}>
             <Grid item xs={3.6}>
               <Button id="schemaButton" fullWidth variant="contained" style={buttonStyle} onClick={() => setText(schema)}>Schema</Button>
             </Grid>
@@ -67,7 +67,7 @@ function SchemaComponent({schema, resolvers}: Props) {
 // COMPONENT STYLING
 const containerStyle = {
   position: 'absolute', 
-  top: '5vh', 
+  top: '8vh', 
   right: '0px', 
   zIndex: '99'
 }
@@ -75,8 +75,8 @@ const containerStyle = {
 const switchStyle = {
   display: 'flex', 
   alignItems: 'center', 
-  marginTop: '5vh', 
-  marginBottom: '10px', 
+  marginTop: '2vh', 
+  marginBottom: '1vh', 
   marginRight: '25px', 
   paddingLeft: '10px', 
   borderStyle: 'solid', 
