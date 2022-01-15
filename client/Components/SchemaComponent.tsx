@@ -41,7 +41,7 @@ function SchemaComponent({schema, resolvers}: Props) {
       </div>
       <Grid item xs={12}>
         <Container maxWidth="xs" id="tab" style={{ position: 'absolute', right: `${position}`, zIndex: '99' }}>
-          <div style={{ height: '750px', overflow: 'scroll', borderRadius: '5px' }}>
+          <div style={{ height: '75vh', overflow: 'scroll', borderRadius: '5px' }}>
             <Highlight language="javascript" style={{borderRadius: '5px'}}>
               {text}
             </Highlight>
@@ -67,7 +67,7 @@ function SchemaComponent({schema, resolvers}: Props) {
 // COMPONENT STYLING
 const containerStyle = {
   position: 'absolute', 
-  top: '6vh', 
+  top: '5vh', 
   right: '0px', 
   zIndex: '99'
 }
@@ -75,7 +75,7 @@ const containerStyle = {
 const switchStyle = {
   display: 'flex', 
   alignItems: 'center', 
-  marginTop: '35px', 
+  marginTop: '5vh', 
   marginBottom: '10px', 
   marginRight: '25px', 
   paddingLeft: '10px', 
