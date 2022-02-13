@@ -41,13 +41,13 @@ function SchemaComponent({schema, resolvers}: Props) {
       </div>
       <Grid item xs={12}>
         <Container maxWidth="xs" id="tab" style={{ position: 'absolute', right: `${position}`, zIndex: '99' }}>
-          <div style={{ height: '750px', overflow: 'scroll', borderRadius: '5px' }}>
+          <div style={{ height: '75vh', overflow: 'scroll', borderRadius: '5px' }}>
             <Highlight language="javascript" style={{borderRadius: '5px'}}>
               {text}
             </Highlight>
           </div>
-          <br />
-          <Grid container spacing={1} align="center" justify="space-around">
+          {/* <br /> */}
+          <Grid container spacing={1} align="center" justify="space-around" mt={1} mb={4}>
             <Grid item xs={3.6}>
               <Button id="schemaButton" fullWidth variant="contained" style={buttonStyle} onClick={() => setText(schema)}>Schema</Button>
             </Grid>
@@ -67,7 +67,7 @@ function SchemaComponent({schema, resolvers}: Props) {
 // COMPONENT STYLING
 const containerStyle = {
   position: 'absolute', 
-  top: '6vh', 
+  top: '8vh', 
   right: '0px', 
   zIndex: '99'
 }
@@ -75,8 +75,8 @@ const containerStyle = {
 const switchStyle = {
   display: 'flex', 
   alignItems: 'center', 
-  marginTop: '35px', 
-  marginBottom: '10px', 
+  marginTop: '2vh', 
+  marginBottom: '1vh', 
   marginRight: '25px', 
   paddingLeft: '10px', 
   borderStyle: 'solid', 
