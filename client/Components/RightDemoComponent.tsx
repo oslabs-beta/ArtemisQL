@@ -29,7 +29,7 @@ const RightDemoComponent = ({image, text, number, stepHeader, stepDetails}: Prop
       </Grid>
 
       {/* image */}
-      <Grid item >
+      <Grid item xs={12} md={6}>
         <Card style={{borderColor: '#93c763', borderWidth: 1, borderStyle: "solid"}}>
           <CardMedia className="media" image={image} />
         </Card>
