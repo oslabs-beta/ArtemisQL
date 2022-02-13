@@ -2,9 +2,10 @@ import express, { Request, Response } from 'express';
 import SQLController from './controllers/SQLController';
 import GQLController from './controllers/GQLController';
 import schema from './schema';
+import { graphqlHTTP } from 'express-graphql';
 
 const router = express.Router();
-const { graphqlHTTP } = require('express-graphql');
+
 
 // const schema = require('./schema.ts');
 

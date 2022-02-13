@@ -2,7 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-const config: webpack.Configuration = {
+const config: any = {
   mode: 'development', // process.env.NODE_ENV
   entry: './client/index.tsx',
   devtool: 'inline-source-map',
